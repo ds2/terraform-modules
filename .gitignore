@@ -1,0 +1,54 @@
+# famous directories
+target
+bin
+build
+logs
+work
+out
+lib
+bower_components
+dist
+node_modules
+test-output
+#famous file extensions
+.*
+*.iml
+*.iws
+*.ipr
+*~
+*.swp
+*.log
+*.orig
+*.class
+*.releaseBackup
+*.retry
+dependency-reduced-pom.xml
+pom.xml.tag
+*.versionsBackup
+pom.xml.next
+release.properties
+buildNumber.properties
+#Windows
+Thumbs.db
+*.obj
+*.exe
+*.dll
+# go
+pkg
+*.swp
+# Terraform
+*.tftstate
+*.tfplan
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+coverage
+# e2e
+/e2e/*.js
+/e2e/*.map
+*.launch
+*.sublime-workspace
+!.angular-cli.json
+local.properties
+*.hprof

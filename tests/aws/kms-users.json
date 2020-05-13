@@ -1,0 +1,23 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "k1",
+            "Effect": "Allow",
+            "Action": [
+                "kms:DescribeKey",
+                "kms:GetKeyPolicy",
+                "kms:GetKeyRotationStatus",
+                "kms:GetPublicKey",
+                "kms:ListKeys",
+                "kms:ListAliases",
+                "kms:ListKeyPolicies",
+                "iam:ListUsers",
+                "iam:ListRoles",
+                "kms:Encrypt",
+                "kms:Decrypt"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
