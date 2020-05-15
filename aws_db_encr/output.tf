@@ -9,3 +9,15 @@ output "arn" {
 output "address" {
   value = aws_db_instance.db.address
 }
+
+output "address" {
+  value = aws_db_instance.db.engine_version
+}
+
+output "allocated_storage" {
+  value = aws_db_instance.db.allocated_storage
+}
+
+output "id" {
+  value = aws_db_instance.db.id
+}
