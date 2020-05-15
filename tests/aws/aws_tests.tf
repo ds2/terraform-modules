@@ -1,6 +1,6 @@
 provider "aws" {
   region  = var.region
-  version = ">=2.50"
+  version = ">=2.60"
   profile = var.awsProfile
 }
 
@@ -22,13 +22,13 @@ resource "aws_cloudfront_origin_access_identity" "oai" {
 }
 
 module "role_test" {
-  source     = "../../modules/aws_iam_role"
+  source     = "../../aws_iam_role"
   roleName   = "kms-users"
   policyData = file("kms-users.json")
 }
 
 module "user1" {
-  source   = "../../modules/aws_iam_user"
+  source   = "../../aws_iam_user"
   username = "tim"
   roleArns = [module.role_test.arn]
 }
