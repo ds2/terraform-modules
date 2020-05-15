@@ -9,11 +9,11 @@ provider "template" {
 }
 
 terraform {
-  backend "gcs" {
-    bucket = "ds2"
-    prefix = "terraform/tests/aws"
-    # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/my-credentials.json
-  }
+  # backend "gcs" {
+  #   bucket = "ds2"
+  #   prefix = "terraform/tests/aws"
+  #   # export GOOGLE_APPLICATION_CREDENTIALS=$HOME/my-credentials.json
+  # }
   required_version = ">= 0.12"
 }
 
