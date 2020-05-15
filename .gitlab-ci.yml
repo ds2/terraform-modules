@@ -33,4 +33,4 @@ validate:
   stage: validate
   script:
     - echo "pwd is $(pwd)"
-    - terraform validate -input=false .
+    - terraform validate
