@@ -36,8 +36,8 @@ variable "kmsKeyArn" {
 }
 
 variable "multiAZ" {
-  type=bool
-  default=false
+  type    = bool
+  default = false
 }
 
 variable "storageScaler" {
@@ -51,12 +51,11 @@ variable "vpcId" {
 
 variable "dbVersion" {
   type    = string
-  default = "11.5"
+  default = "12.2"
 }
 
 variable "dbName" {
-  type    = string
-  default = "mydb"
+  type = string
 }
 
 variable "backupRetentionDays" {
