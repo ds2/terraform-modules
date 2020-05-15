@@ -10,7 +10,7 @@ output "address" {
   value = aws_db_instance.db.address
 }
 
-output "address" {
+output "engine_version" {
   value = aws_db_instance.db.engine_version
 }
 
