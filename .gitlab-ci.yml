@@ -17,7 +17,6 @@ variables:
 
 cache:
   paths:
-    - .terraform
     - tests/aws/.terraform
 
 before_script:
