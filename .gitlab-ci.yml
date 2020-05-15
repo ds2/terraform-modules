@@ -17,7 +17,7 @@ variables:
 
 cache:
   paths:
-    - .terraform
+    - tests/aws/.terraform
 
 before_script:
   - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
@@ -27,37 +27,9 @@ before_script:
 
 stages:
   - validate
-  - build
-  - test
-  # - deploy
 
 validate:
   stage: validate
   script:
-    - terraform validate -input=false
-
-plan:
-  stage: build
-  script:
-    - terraform plan -input=false -out=$PLAN
-    - "terraform show --json $PLAN | convert_report > $JSON_PLAN_FILE"
-  artifacts:
-    name: plan
-    paths:
-      - $PLAN
-    reports:
-      terraform: $JSON_PLAN_FILE
-
-# Separate apply job for manual launching Terraform as it can be destructive
-# action.
-# apply:
-#   stage: deploy
-#   environment:
-#     name: production
-#   script:
-#     - terraform apply -input=false $PLAN
-#   dependencies:
-#     - plan
-#   when: manual
-#   only:
-#     - master
+    - echo "pwd is $(pwd)"
+    - terraform validate

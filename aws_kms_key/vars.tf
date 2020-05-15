@@ -37,6 +37,7 @@ variable "keyUsage" {
 }
 
 variable "keySpec" {
-  type    = string
-  default = "RSA_4096"
+  type        = string
+  description = "the usage type. If unsure, use SYMMETRIC_DEFAULT for using in RDS encryption"
+  default     = "RSA_4096"
 }
