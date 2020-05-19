@@ -7,7 +7,6 @@
 *.tfvars filter=git-crypt diff=git-crypt
 *.tfstate filter=git-crypt diff=git-crypt
 *.tfstate.backup filter=git-crypt diff=git-crypt
-*.properties filter=git-crypt diff=git-crypt
 *.pem filter=git-crypt diff=git-crypt
 *.crt filter=git-crypt diff=git-crypt
 *.key filter=git-crypt diff=git-crypt
