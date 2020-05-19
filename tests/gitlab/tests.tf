@@ -9,5 +9,5 @@ terraform {
 
 module "gitlab_test" {
   source = "../../gitlab_project"
-  name   = "infra001-test-bucket-20200212"
+  name   = "infra001-test-bucket-20200519"
 }

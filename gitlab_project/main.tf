@@ -36,7 +36,7 @@ resource "gitlab_branch_protection" "release_protect" {
 }
 
 resource "gitlab_service_jira" "jira" {
-  for_each    = var.jiraUrl != null ? [1] : []
+  for_each    = var.jiraUrl != null ? toset([""]) : []
   project     = gitlab_project.project.id
   project_key = var.jiraProjectKey
   url         = var.jiraUrl
