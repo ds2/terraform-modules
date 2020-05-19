@@ -1,5 +1,7 @@
 # DS/2 Terraform Modules
 
+[![pipeline status](https://gitlab.com/ds_2/terraform-modules/badges/develop/pipeline.svg)](https://gitlab.com/ds_2/terraform-modules/-/commits/develop)
+
 Some terraform modules.
 
 ## Import
