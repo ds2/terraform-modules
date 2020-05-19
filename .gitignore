@@ -38,6 +38,7 @@ pkg
 *.swp
 # Terraform
 *.tftstate
+*.tfstate
 *.tfplan
 !.vscode/settings.json
 !.vscode/tasks.json

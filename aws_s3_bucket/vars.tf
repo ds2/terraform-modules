@@ -51,7 +51,7 @@ variable "kmsKeyArn" {
 
 variable "encryptContent" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "isWebsite" {
