@@ -3,7 +3,7 @@ data "aws_vpc" "vpc" {
 }
 
 data "aws_subnet" "subnets" {
-  for_each = toset(var.subnetGrpIds)
+  for_each = var.subnetGrpIds
   id       = each.value
 }
 
