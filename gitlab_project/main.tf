@@ -17,6 +17,20 @@ resource "gitlab_project" "project" {
 resource "gitlab_branch_protection" "master_protect" {
   project            = gitlab_project.project.id
   branch             = "master"
-  push_access_level  = "developer"
+  push_access_level  = "maintainer"
+  merge_access_level = "developer"
+}
+
+resource "gitlab_branch_protection" "develop_protect" {
+  project            = gitlab_project.project.id
+  branch             = "develop"
+  push_access_level  = "maintainer"
+  merge_access_level = "developer"
+}
+
+resource "gitlab_branch_protection" "release_protect" {
+  project            = gitlab_project.project.id
+  branch             = "release/*"
+  push_access_level  = "maintainer"
   merge_access_level = "developer"
 }
