@@ -1,8 +1,10 @@
 resource "aws_iam_role" "role" {
-  assume_role_policy = var.assumeRolePolicy
-  description        = var.description != null ? var.description : "the role for ${var.name}"
-  name_prefix        = var.useNameNotPrefix ? null : "${var.name}-"
-  name               = var.useNameNotPrefix ? var.name : null
+  assume_role_policy   = var.assumeRolePolicy
+  description          = var.description != null ? var.description : "the role for ${var.name}"
+  name_prefix          = var.useNameNotPrefix ? null : "${var.name}-"
+  name                 = var.useNameNotPrefix ? var.name : null
+  path                 = var.rolePath
+  max_session_duration = var.maxSessionSeconds
   tags = {
     Terraformed = true
     Name        = var.name

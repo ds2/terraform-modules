@@ -40,3 +40,13 @@ variable "templateData" {
   type    = string
   default = null
 }
+
+variable "rolePath" {
+  type    = string
+  default = null
+}
+
+variable "maxSessionSeconds" {
+  type    = number
+  default = null
+}
