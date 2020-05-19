@@ -86,16 +86,10 @@ variable "adminPermissions" {
     "s3:GetObject*",
     "s3:PutObject*",
     "s3:DeleteObject*",
-    # "s3:GetBucket*",
-    # "s3:ListBucket*",
-    # "s3:CreateMultipartUpload",
-    # "s3:ListMultipartUploadParts",
-    # "s3:AbortMultipartUpload"
-    # "kms:Encrypt",
-    # "kms:Decrypt",
-    # "kms:ReEncrypt*",
-    # "kms:GenerateDataKey*",
-    # "kms:DescribeKey"
+    "s3:GetBucket*",
+    "s3:ListBucket*",
+    "s3:ListMultipartUploadParts",
+    "s3:AbortMultipartUpload"
   ]
 }
 

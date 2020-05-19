@@ -26,7 +26,7 @@ variable "dbAdminPw" {
 }
 
 variable "subnetGrpIds" {
-  type = list(string)
+  type = set(string)
 }
 
 variable "kmsKeyArn" {
