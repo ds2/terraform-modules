@@ -27,6 +27,11 @@ variable "lfsEnabled" {
   default = true
 }
 
+variable "snippetsEnabled" {
+  type    = bool
+  default = true
+}
+
 variable "pipelinesEnabled" {
   type    = bool
   default = true

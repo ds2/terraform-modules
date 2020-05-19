@@ -10,6 +10,7 @@ resource "gitlab_project" "project" {
   approvals_before_merge     = var.approvalsBeforeMerge
   container_registry_enabled = var.dockerRegistryEnabled
   pipelines_enabled          = var.pipelinesEnabled
+  snippets_enabled           = var.snippetsEnabled
   visibility_level           = var.visibility
   default_branch             = var.defaultBranch
 }
