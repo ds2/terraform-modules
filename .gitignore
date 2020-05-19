@@ -53,3 +53,7 @@ coverage
 !.angular-cli.json
 local.properties
 *.hprof
+
+# Ignore Gradle project-specific cache directory
+.gradle
+!.git-crypt
