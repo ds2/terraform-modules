@@ -9,12 +9,8 @@ Some terraform modules.
 In your tf file, create a new module and reference this repository:
 
     module "aws1" {
-        source = "git::git@gitlab.com:ds_2/terraform-modules.git//aws_s3_bucket"
+        source = "git::git@gitlab.com:ds_2/terraform-modules.git//aws_s3_bucket?ref=v0.1.2"
         name   = "my-bucket"
     }
 
-If a specific version/tag is required, use
-
-    ?ref=v1.2.0
-
-in the source url
+The ref parameter defines the tag name to checkout. You should update it to the latest stable version. If omitted, you usually get the master branch content which may change over time (which is not good for YOUR recipes!!).
