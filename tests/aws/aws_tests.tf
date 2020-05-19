@@ -76,3 +76,8 @@ module "aws_s3_test" {
   adminIamArn    = [module.user1.arn]
   versioned      = true
 }
+
+module "gitlab_test" {
+  source = "../../gitlab_project"
+  name   = "infra001-test-bucket-20200212"
+}
