@@ -22,9 +22,10 @@ resource "aws_cloudfront_origin_access_identity" "oai" {
 }
 
 module "role_test" {
-  source     = "../../aws_iam_role"
-  roleName   = "kms-users"
-  policyData = file("kms-users.json")
+  source           = "../../aws_iam_role"
+  name             = "test-kms-users-role"
+  policyData       = file("kms-users.json")
+  useNameNotPrefix = true
 }
 
 module "user1" {

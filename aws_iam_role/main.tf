@@ -1,18 +1,25 @@
 resource "aws_iam_role" "role" {
-  assume_role_policy = var.assumeRolePolicy
-  description        = "the role for ${var.roleName}"
-  name_prefix        = "${var.roleName}-"
+  assume_role_policy   = var.assumeRolePolicy
+  description          = var.description != null ? var.description : "the role for ${var.name}"
+  name_prefix          = var.useNameNotPrefix ? null : "${var.name}-"
+  name                 = var.useNameNotPrefix ? var.name : null
+  path                 = var.rolePath
+  max_session_duration = var.maxSessionSeconds
   tags = {
     Terraformed = true
-    Name        = var.roleName
+    Name        = var.name
   }
 }
 
-resource "aws_iam_policy" "policy" {
-  name        = "${var.roleName}-policy"
-  description = "the policy for ${var.roleName}"
+data "template_file" "policy_template" {
+  template = var.templateData
+}
 
-  policy = var.policyData
+resource "aws_iam_policy" "policy" {
+  name_prefix = "${var.name}-policy-"
+  description = "the policy for ${var.name}"
+
+  policy = var.templateData != null ? data.template_file.policy_template.rendered : var.policyData
 }
 
 resource "aws_iam_role_policy_attachment" "policy-attach" {

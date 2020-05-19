@@ -1,9 +1,15 @@
-variable "roleName" {
+variable "name" {
   type = string
 }
 
+variable "description" {
+  type    = string
+  default = null
+}
+
 variable "policyData" {
-  type = string
+  type    = string
+  default = null
 }
 
 variable "assumeRolePolicy" {
@@ -23,4 +29,24 @@ variable "assumeRolePolicy" {
       ]
     }
 EOF
+}
+
+variable "useNameNotPrefix" {
+  type    = bool
+  default = false
+}
+
+variable "templateData" {
+  type    = string
+  default = null
+}
+
+variable "rolePath" {
+  type    = string
+  default = null
+}
+
+variable "maxSessionSeconds" {
+  type    = number
+  default = null
 }
