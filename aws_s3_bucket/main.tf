@@ -4,8 +4,9 @@ resource "aws_s3_bucket" "bucket" {
   region = var.region
 
   tags = {
-    Name        = var.name
-    Terraformed = true
+    Name         = var.name
+    Terraformed  = true
+    s3BucketName = var.name
   }
   versioning {
     enabled = var.versioned
