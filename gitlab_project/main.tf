@@ -13,6 +13,7 @@ resource "gitlab_project" "project" {
   snippets_enabled           = var.snippetsEnabled
   visibility_level           = var.visibility
   default_branch             = var.defaultBranch
+  shared_runners_enabled     = var.sharedRunnersEnabled
 }
 
 resource "gitlab_branch_protection" "master_protect" {
