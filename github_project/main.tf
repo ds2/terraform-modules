@@ -34,25 +34,68 @@ resource "github_team_repository" "teams" {
   permission = "push"
 }
 
-# resource "github_branch_protection" "protect_master" {
-#   repository     = github_repository.project.name
-#   branch         = "master"
-#   enforce_admins = true
+resource "github_branch" "branch_develop" {
+  repository = github_repository.project.name
+  branch     = "develop"
+}
 
-#   required_status_checks {
-#     strict   = false
-#     contexts = ["ci/travis"]
-#   }
-
-#   required_pull_request_reviews {
-#     dismiss_stale_reviews = true
-#     dismissal_users       = ["foo-user"]
-#     dismissal_teams       = ["${github_team.example.slug}", "${github_team.second.slug}"]
-#   }
-
-#   restrictions {
-#     users = ["foo-user"]
-#     teams = ["${github_team.example.slug}"]
-#     apps  = ["foo-app"]
-#   }
+# resource "github_branch" "branch_master" {
+#   repository = github_repository.project.name
+#   branch     = "master"
 # }
+
+
+resource "github_branch_protection" "protect_master" {
+  repository             = github_repository.project.name
+  branch                 = "master"
+  enforce_admins         = var.masterProtection.enforceAdmins
+  require_signed_commits = var.masterProtection.signed
+
+  required_status_checks {
+    strict   = var.masterProtection.ciSuccessful
+    contexts = var.masterProtection.statusCheckContexts
+  }
+
+  required_pull_request_reviews {
+    require_code_owner_reviews      = var.masterProtection.prCodeOwnerReview
+    required_approving_review_count = var.masterProtection.prApprovalCount
+    dismiss_stale_reviews           = true
+    dismissal_users                 = var.masterProtection.prDismissFromUsers
+    dismissal_teams                 = var.masterProtection.prDismissFromTeamSlugs
+  }
+
+  restrictions {
+    users = var.masterProtection.restrictToUsers
+    teams = var.masterProtection.restrictToTeamSlugs
+    apps  = var.masterProtection.restrictToApps
+  }
+  # depends_on = [github_branch.branch_master]
+
+}
+
+resource "github_branch_protection" "protect_develop" {
+  repository             = github_repository.project.name
+  branch                 = "develop"
+  enforce_admins         = var.developProtection.enforceAdmins
+  require_signed_commits = var.developProtection.signed
+
+  required_status_checks {
+    strict   = var.developProtection.ciSuccessful
+    contexts = var.developProtection.statusCheckContexts
+  }
+
+  required_pull_request_reviews {
+    require_code_owner_reviews      = var.developProtection.prCodeOwnerReview
+    required_approving_review_count = var.developProtection.prApprovalCount
+    dismiss_stale_reviews           = true
+    dismissal_users                 = var.developProtection.prDismissFromUsers
+    dismissal_teams                 = var.developProtection.prDismissFromTeamSlugs
+  }
+
+  restrictions {
+    users = var.developProtection.restrictToUsers
+    teams = var.developProtection.restrictToTeamSlugs
+    apps  = var.developProtection.restrictToApps
+  }
+  depends_on = [github_branch.branch_develop]
+}

@@ -69,3 +69,86 @@ variable "gitignoreTemplateId" {
   type        = string
   default     = null
 }
+
+variable "protect_master_inclAdmins" {
+  type    = bool
+  default = false
+}
+
+variable "protect_master_admins" {
+  type    = set(string)
+  default = []
+}
+
+variable "protect_master_teams" {
+  type    = set(string)
+  default = []
+}
+
+variable "protect_master_apps" {
+  type    = set(string)
+  default = []
+}
+
+variable "masterProtection" {
+  type = object({
+    signed                 = bool
+    enforceAdmins          = bool
+    restrictToUsers        = set(string)
+    restrictToTeamSlugs    = set(string)
+    restrictToApps         = set(string)
+    statusCheckContexts    = set(string)
+    prCodeOwnerReview      = bool
+    prApprovalCount        = number
+    prDismissFromUsers     = set(string)
+    prDismissFromTeamSlugs = set(string)
+    ciSuccessful           = bool
+    }
+  )
+  default = {
+    signed                 = false
+    enforceAdmins          = false
+    ciSuccessful           = false
+    restrictToUsers        = []
+    restrictToTeamSlugs    = []
+    restrictToApps         = []
+    statusCheckContexts    = ["ci/travis"]
+    prCodeOwnerReview      = true
+    prApprovalCount        = 1
+    prDismissFromUsers     = []
+    prDismissFromTeamSlugs = []
+  }
+
+}
+
+
+variable "developProtection" {
+  type = object({
+    signed                 = bool
+    enforceAdmins          = bool
+    restrictToUsers        = set(string)
+    restrictToTeamSlugs    = set(string)
+    restrictToApps         = set(string)
+    statusCheckContexts    = set(string)
+    prCodeOwnerReview      = bool
+    prApprovalCount        = number
+    prDismissFromUsers     = set(string)
+    prDismissFromTeamSlugs = set(string)
+    ciSuccessful           = bool
+    }
+  )
+  default = {
+    signed                 = false
+    enforceAdmins          = false
+    ciSuccessful           = false
+    restrictToUsers        = []
+    restrictToTeamSlugs    = []
+    restrictToApps         = []
+    statusCheckContexts    = ["ci/travis"]
+    prCodeOwnerReview      = true
+    prApprovalCount        = 1
+    prDismissFromUsers     = []
+    prDismissFromTeamSlugs = []
+  }
+
+}
