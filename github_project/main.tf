@@ -10,6 +10,14 @@ resource "github_repository" "project" {
   default_branch         = var.defaultBranch
   delete_branch_on_merge = true
   topics                 = var.topics
+  auto_init              = var.initialize
+  allow_rebase_merge     = true
+  allow_squash_merge     = false
+  allow_merge_commit     = true
+  is_template            = false
+  license_template       = var.projectLicenseId
+  gitignore_template     = var.gitignoreTemplateId
+  archived               = false
 }
 
 resource "github_repository_collaborator" "admins" {

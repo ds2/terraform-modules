@@ -40,15 +40,32 @@ variable "isPrivate" {
 
 variable "admins" {
   type    = set(string)
-  default = null
+  default = []
 }
 
 variable "teamIds" {
   type    = set(string)
-  default = null
+  default = []
 }
 
 variable "topics" {
   type    = set(string)
   default = null
+}
+
+variable "initialize" {
+  type    = bool
+  default = null
+}
+
+variable "projectLicenseId" {
+  description = "See https://github.com/github/choosealicense.com/tree/gh-pages/_licenses"
+  type        = string
+  default     = null
+}
+
+variable "gitignoreTemplateId" {
+  description = "See https://github.com/github/gitignore"
+  type        = string
+  default     = null
 }

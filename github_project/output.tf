@@ -14,6 +14,14 @@ output "http_clone_url" {
   value = github_repository.project.http_clone_url
 }
 
-output "http_url" {
-  value = github_repository.project.http_url
+output "html_url" {
+  value = github_repository.project.html_url
+}
+
+output "etag" {
+  value = github_repository.project.etag
+}
+
+output "id" {
+  value = github_repository.project.id
 }
