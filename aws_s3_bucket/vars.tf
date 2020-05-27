@@ -100,3 +100,18 @@ variable "readPermissions" {
     "s3:GetObject"
   ]
 }
+
+variable "delCurrObjAfterDays" {
+  type    = number
+  default = 0
+}
+
+variable "delObjPrefix" {
+  type    = string
+  default = null
+}
+
+variable "versionObjPrefix" {
+  type    = string
+  default = null
+}

@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "bucket" {
   lifecycle_rule {
     id = "agingOutdatedVersions"
 
-    # prefix  = "config/"
+    prefix  = var.versionObjPrefix
     enabled = var.versioned
 
     abort_incomplete_multipart_upload_days = var.maxUploadDays
@@ -28,7 +28,25 @@ resource "aws_s3_bucket" "bucket" {
     noncurrent_version_expiration {
       days = var.ncvExpireDays
     }
+
+    expiration {
+      days                         = var.delCurrObjAfterDays
+      expired_object_delete_marker = true
+    }
   }
+
+  lifecycle_rule {
+    id      = "deleteAfterDays"
+    enabled = var.delCurrObjAfterDays > 0 && ! var.versioned
+    prefix  = var.delObjPrefix
+
+    expiration {
+      days                         = var.delCurrObjAfterDays
+      expired_object_delete_marker = true
+    }
+    abort_incomplete_multipart_upload_days = var.maxUploadDays
+  }
+
   cors_rule {
     allowed_headers = ["Authorization"]
     allowed_methods = ["GET"]
