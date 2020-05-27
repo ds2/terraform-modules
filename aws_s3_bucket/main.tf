@@ -79,6 +79,8 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 data "aws_iam_policy_document" "cdnPolicy" {
+  policy_id = "${var.name}-cdn-policy"
+  version   = "2012-10-17"
   dynamic "statement" {
     for_each = var.readonlyIamArn
     content {
