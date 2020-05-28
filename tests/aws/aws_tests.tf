@@ -56,17 +56,17 @@ module "vpc_test" {
   availZones = var.avail_zones
 }
 
-module "db_test" {
-  source        = "../../aws_db_encr"
-  name          = "db-test"
-  dbName        = "delmedb"
-  dbAdminUser   = "adm"
-  dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
-  kmsKeyArn     = module.aws_kms_test2.arn
-  subnetGrpIds  = module.vpc_test.private_subnet_ids
-  storageScaler = 10
-  vpcId         = module.vpc_test.vpc_id
-}
+# module "db_test" {
+#   source        = "../../aws_db_encr"
+#   name          = "db-test"
+#   dbName        = "delmedb"
+#   dbAdminUser   = "adm"
+#   dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
+#   kmsKeyArn     = module.aws_kms_test2.arn
+#   subnetGrpIds  = module.vpc_test.private_subnet_ids
+#   storageScaler = 10
+#   vpcId         = module.vpc_test.vpc_id
+# }
 
 # module "aws_s3_test" {
 #   source              = "../../aws_s3_bucket"
