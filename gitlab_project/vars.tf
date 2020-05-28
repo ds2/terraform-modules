@@ -91,3 +91,8 @@ variable "releaseTagPattern" {
   type    = string
   default = "v*"
 }
+
+variable "sharedRunnersEnabled" {
+  type    = bool
+  default = true
+}
