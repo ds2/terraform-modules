@@ -44,6 +44,6 @@ resource "aws_kms_key" "key" {
 
 resource "aws_kms_alias" "alias" {
   name          = var.usePrefix ? null : "alias/${var.name}"
-  name_prefix   = ! var.usePrefix ? null : "alias/${var.name}"
+  name_prefix   = var.usePrefix ? "alias/${var.name}" : null
   target_key_id = aws_kms_key.key.key_id
 }
