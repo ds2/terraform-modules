@@ -45,7 +45,6 @@ module "aws_kms_test2" {
   source      = "../../aws_kms_key"
   name        = "dirk rds key"
   descr       = "Key für RDS"
-  aliasPrefix = "dirk-rds-key"
   keySpec     = "SYMMETRIC_DEFAULT"
 }
 
