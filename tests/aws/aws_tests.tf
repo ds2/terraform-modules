@@ -41,40 +41,38 @@ module "user1" {
 #   aliasPrefix = "my-test-key"
 # }
 
-# module "aws_kms_test2" {
-#   source      = "../../aws_kms_key"
-#   name        = "dirk rds key"
-#   descr       = "Key für RDS"
-#   aliasPrefix = "dirk-rds-key"
-#   keySpec     = "SYMMETRIC_DEFAULT"
-# }
-
-# module "vpc_test" {
-#   source = "../../aws_vpc_network"
-#   cidr   = "10.76.0.0/16"
-#   # privateSubnetCidr = "10.76.1.0/24"
-#   # publicSubnetCidr  = "10.76.2.0/24"
-#   name       = "test vpc"
-#   availZones = var.avail_zones
-# }
-
-# module "db_test" {
-#   source        = "../../aws_db_encr"
-#   name          = "dbtest"
-#   dbName        = "delme-db"
-#   dbAdminUser   = "adm"
-#   dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
-#   kmsKeyArn     = module.aws_kms_test2.arn
-#   subnetGrpIds  = module.vpc_test.private_subnet_ids
-#   storageScaler = 10
-#   vpcId         = module.vpc_test.vpc_id
-# }
-
-module "aws_s3_test" {
-  source              = "../../aws_s3_bucket"
-  name                = "infra001-test-bucket-20200212"
-  readonlyIamArn      = [aws_cloudfront_origin_access_identity.oai.iam_arn]
-  adminIamArn         = [module.user1.arn]
-  versioned           = true
-  delCurrObjAfterDays = 360
+module "aws_kms_test2" {
+  source      = "../../aws_kms_key"
+  name        = "dirk rds key"
+  descr       = "Key für RDS"
+  aliasPrefix = "dirk-rds-key"
+  keySpec     = "SYMMETRIC_DEFAULT"
 }
+
+module "vpc_test" {
+  source = "../../aws_vpc_network"
+  cidr   = "10.76.0.0/16"
+  name       = "test vpc"
+  availZones = var.avail_zones
+}
+
+module "db_test" {
+  source        = "../../aws_db_encr"
+  name          = "db-test"
+  dbName        = "delmedb"
+  dbAdminUser   = "adm"
+  dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
+  kmsKeyArn     = module.aws_kms_test2.arn
+  subnetGrpIds  = module.vpc_test.private_subnet_ids
+  storageScaler = 10
+  vpcId         = module.vpc_test.vpc_id
+}
+
+# module "aws_s3_test" {
+#   source              = "../../aws_s3_bucket"
+#   name                = "infra001-test-bucket-20200212"
+#   readonlyIamArn      = [aws_cloudfront_origin_access_identity.oai.iam_arn]
+#   adminIamArn         = [module.user1.arn]
+#   versioned           = true
+#   delCurrObjAfterDays = 360
+# }
