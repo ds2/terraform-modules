@@ -29,6 +29,10 @@ resource "aws_security_group" "es_sg" {
     cidr_blocks      = local.mySubnetCidrs
     ipv6_cidr_blocks = local.mySubnetCidrs6
   }
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
 }
 
 resource "aws_iam_service_linked_role" "es" {
@@ -118,9 +122,13 @@ CONFIG
     Name        = var.name
     Terraformed = true
   }
-  log_publishing_options {
-    cloudwatch_log_group_arn = aws_cloudwatch_log_group.loggroup.arn
-    log_type                 = "INDEX_SLOW_LOGS"
+  dynamic "log_publishing_options" {
+    for_each = var.logTypes
+    iterator = it
+    content {
+      cloudwatch_log_group_arn = aws_cloudwatch_log_group.loggroup.arn
+      log_type                 = it.key
+    }
   }
   ebs_options {
     ebs_enabled = true
