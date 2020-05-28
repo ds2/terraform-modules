@@ -62,6 +62,30 @@ resource "aws_security_group_rule" "egress1" {
   ipv6_cidr_blocks  = local.mySubnetCidrs6
 }
 
+resource "aws_db_parameter_group" "dbparams" {
+  name_prefix = "${var.name}-params-"
+  family      = var.paramFamily
+  description = "DB Params for ${var.name}"
+
+  dynamic "parameter" {
+    for_each = var.dbParams
+    content {
+      name         = each.key
+      value        = each.value
+      apply_method = "pending-reboot"
+    }
+  }
+
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+}
+
 resource "aws_db_instance" "db" {
   identifier_prefix               = "${var.name}-"
   instance_class                  = var.instanceClass
@@ -95,6 +119,7 @@ resource "aws_db_instance" "db" {
   vpc_security_group_ids              = [aws_security_group.db-sg1.id]
   deletion_protection                 = false
   iam_database_authentication_enabled = false
+  parameter_group_name                = aws_db_parameter_group.dbparams.id
   depends_on = [
     aws_security_group.db-sg1
   ]

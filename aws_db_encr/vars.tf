@@ -62,3 +62,18 @@ variable "backupRetentionDays" {
   type    = number
   default = 30
 }
+
+variable "paramsApplied" {
+  type    = string
+  default = null
+}
+
+variable "paramFamily" {
+  type    = string
+  default = "postgres12"
+}
+
+variable "dbParams" {
+  type    = map
+  default = {}
+}
