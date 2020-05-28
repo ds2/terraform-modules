@@ -42,17 +42,25 @@ module "user1" {
 # }
 
 module "aws_kms_test2" {
-  source      = "../../aws_kms_key"
-  name        = "dirk rds key"
-  descr       = "Key für RDS"
-  keySpec     = "SYMMETRIC_DEFAULT"
+  source  = "../../aws_kms_key"
+  name    = "dirk-rds-key"
+  descr   = "Key für RDS"
+  keySpec = "SYMMETRIC_DEFAULT"
 }
 
 module "vpc_test" {
-  source = "../../aws_vpc_network"
-  cidr   = "10.76.0.0/16"
+  source     = "../../aws_vpc_network"
+  cidr       = "10.76.0.0/16"
   name       = "test vpc"
   availZones = var.avail_zones
+}
+
+module "es_test" {
+  source       = "../../aws_vpc_elasticsearch"
+  name         = "intra-test-es-20200101"
+  vpcId        = module.vpc_test.id
+  subnetGrpIds = [module.vpc_test.private_subnet_ids[0]]
+  # kmsKeyArn    = module.aws_kms_test2.arn
 }
 
 # module "db_test" {
