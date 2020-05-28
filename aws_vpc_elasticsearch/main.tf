@@ -40,7 +40,13 @@ resource "aws_iam_service_linked_role" "es" {
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {
-  name = var.name
+  name_prefix       = var.name
+  retention_in_days = 365
+  kms_key_id        = var.kmsKeyArn
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
 }
 
 resource "aws_cloudwatch_log_resource_policy" "policy" {
@@ -103,19 +109,6 @@ resource "aws_elasticsearch_domain" "domain" {
     enforce_https       = true
     tls_security_policy = "Policy-Min-TLS-1-2-2019-07"
   }
-  access_policies = <<CONFIG
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Action": "es:*",
-            "Principal": "*",
-            "Effect": "Allow",
-            "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:domain/${var.name}/*"
-        }
-    ]
-}
-CONFIG
 
   tags = {
     Domain      = var.name
@@ -139,4 +132,23 @@ CONFIG
   depends_on = [
     aws_iam_service_linked_role.es,
   ]
+}
+
+resource "aws_elasticsearch_domain_policy" "main" {
+  domain_name = aws_elasticsearch_domain.domain.domain_name
+
+  access_policies = <<POLICIES
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid":"allowAll",
+            "Action": "es:*",
+            "Principal": "*",
+            "Effect": "Allow",
+            "Resource": "${aws_elasticsearch_domain.domain.arn}/*"
+        }
+    ]
+}
+POLICIES
 }
