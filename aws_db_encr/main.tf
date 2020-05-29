@@ -124,3 +124,67 @@ resource "aws_db_instance" "db" {
     aws_security_group.db-sg1
   ]
 }
+
+resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
+  alarm_name                = "${var.name}-db-cpu-utilization-high"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "CPUUtilization"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = 80
+  alarm_description         = "The cpu utilization for the db instance ${var.name} is very high. Please check!"
+  insufficient_data_actions = []
+  dimensions {
+    DBInstanceIdentifier = aws_db_instance.db.arn
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "connectionhigh" {
+  alarm_name                = "${var.name}-db-connectioncount-high"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "DatabaseConnections"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = 30
+  alarm_description         = "The connection count for the db instance ${var.name} is very high. Please check!"
+  insufficient_data_actions = []
+  dimensions {
+    DBInstanceIdentifier = aws_db_instance.db.arn
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
+  alarm_name                = "${var.name}-db-freestoragesize-low"
+  comparison_operator       = "LessThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "FreeStorageSpace"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = 1000000
+  alarm_description         = "The storage size for the db instance ${var.name} is very low. Please check!"
+  insufficient_data_actions = []
+  dimensions {
+    DBInstanceIdentifier = aws_db_instance.db.arn
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
+  alarm_name                = "${var.name}-db-cpucreditbalance-low"
+  comparison_operator       = "LessThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "FreeStorageSpace"
+  namespace                 = "AWS/RDS"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = 30
+  alarm_description         = "The credit balance for the db instance ${var.name} is very low. Please check!"
+  insufficient_data_actions = []
+  dimensions {
+    DBInstanceIdentifier = aws_db_instance.db.arn
+  }
+}
