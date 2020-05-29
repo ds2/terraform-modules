@@ -9,7 +9,7 @@ data "aws_subnet" "subnets" {
 
 locals {
   mySubnetCidrs  = [for s in data.aws_subnet.subnets : s.cidr_block]
-  mySubnetCidrs6 = [for s in data.aws_subnet.subnets : s.ipv6_cidr_block]
+  mySubnetCidrs6 = [for s in data.aws_subnet.subnets : s.ipv6_cidr_block if s.ipv6_cidr_block != null]
 }
 
 # output "subnet_cidr_blocks" {
@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "ing1" {
   to_port           = var.dbPort
   protocol          = "tcp"
   cidr_blocks       = local.mySubnetCidrs
-  ipv6_cidr_blocks  = local.mySubnetCidrs6
+  ipv6_cidr_blocks  = length(local.mySubnetCidrs6) > 0 ? local.mySubnetCidrs6 : null
 }
 
 resource "aws_security_group_rule" "egress1" {
@@ -59,7 +59,7 @@ resource "aws_security_group_rule" "egress1" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = local.mySubnetCidrs
-  ipv6_cidr_blocks  = local.mySubnetCidrs6
+  ipv6_cidr_blocks  = length(local.mySubnetCidrs6) > 0 ? local.mySubnetCidrs6 : null
 }
 
 resource "aws_db_parameter_group" "dbparams" {
@@ -136,7 +136,7 @@ resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
   threshold                 = 80
   alarm_description         = "The cpu utilization for the db instance ${var.name} is very high. Please check!"
   insufficient_data_actions = []
-  dimensions {
+  dimensions = {
     DBInstanceIdentifier = aws_db_instance.db.arn
   }
 }
@@ -152,7 +152,7 @@ resource "aws_cloudwatch_metric_alarm" "connectionhigh" {
   threshold                 = 30
   alarm_description         = "The connection count for the db instance ${var.name} is very high. Please check!"
   insufficient_data_actions = []
-  dimensions {
+  dimensions = {
     DBInstanceIdentifier = aws_db_instance.db.arn
   }
 }
@@ -168,7 +168,7 @@ resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
   threshold                 = 1000000
   alarm_description         = "The storage size for the db instance ${var.name} is very low. Please check!"
   insufficient_data_actions = []
-  dimensions {
+  dimensions = {
     DBInstanceIdentifier = aws_db_instance.db.arn
   }
 }
@@ -184,7 +184,7 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
   threshold                 = 30
   alarm_description         = "The credit balance for the db instance ${var.name} is very low. Please check!"
   insufficient_data_actions = []
-  dimensions {
+  dimensions = {
     DBInstanceIdentifier = aws_db_instance.db.arn
   }
 }
