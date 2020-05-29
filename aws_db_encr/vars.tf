@@ -77,3 +77,28 @@ variable "dbParams" {
   type    = map
   default = {}
 }
+
+variable "snsTopicArns" {
+  type    = set(string)
+  default = null
+}
+
+variable "missingData" {
+  type    = string
+  default = "ignore"
+}
+
+variable "highConnectionThreshold" {
+  type    = number
+  default = 40
+}
+
+variable "storageBytesThreshold" {
+  type    = number
+  default = 234000000
+}
+
+variable "cpuUtilThreshold" {
+  type    = number
+  default = 90
+}
