@@ -195,6 +195,7 @@ resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
+  count                     = var.monitorCreditBalance ? 1 : 0
   alarm_name                = "${var.name} Low CPUCreditBalance"
   comparison_operator       = "LessThanOrEqualToThreshold"
   evaluation_periods        = "2"

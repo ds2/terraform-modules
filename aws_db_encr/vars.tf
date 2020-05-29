@@ -102,3 +102,8 @@ variable "cpuUtilThreshold" {
   type    = number
   default = 90
 }
+
+variable "monitorCreditBalance" {
+  type    = bool
+  default = true
+}
