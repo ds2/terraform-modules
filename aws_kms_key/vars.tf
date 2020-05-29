@@ -17,13 +17,9 @@ variable "deletionDays" {
   default = 7
 }
 
-variable "aliasName" {
-  type    = string
-  default = "my-test-key"
-}
-variable "aliasPrefix" {
-  type    = string
-  default = null
+variable "usePrefix" {
+  type    = bool
+  default = true
 }
 
 variable "enabled" {

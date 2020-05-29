@@ -3,7 +3,11 @@ output "vpc_arn" {
 }
 
 output "vpc_id" {
-  value=aws_vpc.vpc.id
+  value = aws_vpc.vpc.id
+}
+
+output "id" {
+  value = aws_vpc.vpc.id
 }
 
 output "ipv6_cidr" {
@@ -15,7 +19,7 @@ output "ipv6_cidr" {
 # }
 
 output "private_subnet_ids" {
-  value=concat(aws_subnet.private.*.id)
+  value = concat(aws_subnet.private.*.id)
 }
 
 # output "private_subnet_arns" {
@@ -23,5 +27,5 @@ output "private_subnet_ids" {
 # }
 
 output "private_subnet_arns" {
-  value=concat(aws_subnet.private.*.arn)
+  value = concat(aws_subnet.private.*.arn)
 }
