@@ -55,6 +55,11 @@ module "vpc_test" {
   availZones = var.avail_zones
 }
 
+module "sns_test" {
+  source     = "../../aws_sns_topic"
+  name       = "test-topic-1"
+}
+
 # module "es_test" {
 #   source       = "../../aws_vpc_elasticsearch"
 #   name         = "intra-test-es-20200102"
