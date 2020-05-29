@@ -17,8 +17,8 @@ resource "aws_subnet" "private" {
   cidr_block                      = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index + 1)
   availability_zone               = var.availZones[count.index]
   map_public_ip_on_launch         = false
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, count.index + 1)
-  assign_ipv6_address_on_creation = true
+  ipv6_cidr_block                 = var.enableIpv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, count.index + 1) : null
+  assign_ipv6_address_on_creation = var.enableIpv6
   tags = {
     Terraformed = true
     Name        = "${var.name}-private-${count.index}"
@@ -33,8 +33,8 @@ resource "aws_subnet" "public" {
   cidr_block                      = cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index + 10)
   availability_zone               = var.availZones[count.index]
   map_public_ip_on_launch         = true
-  ipv6_cidr_block                 = cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, count.index + 10)
-  assign_ipv6_address_on_creation = true
+  ipv6_cidr_block                 = var.enableIpv6 ? cidrsubnet(aws_vpc.vpc.ipv6_cidr_block, 8, count.index + 10) : null
+  assign_ipv6_address_on_creation = var.enableIpv6
   tags = {
     Terraformed = true
     Name        = "${var.name}-public-${count.index}"

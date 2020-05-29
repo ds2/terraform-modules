@@ -53,6 +53,12 @@ module "vpc_test" {
   cidr       = "10.76.0.0/16"
   name       = "test vpc"
   availZones = var.avail_zones
+  enableIpv6 = false
+}
+
+module "sns_test" {
+  source = "../../aws_sns_topic"
+  name   = "test-topic-1"
 }
 
 # module "es_test" {
@@ -63,17 +69,18 @@ module "vpc_test" {
 #   # kmsKeyArn    = module.aws_kms_test2.arn
 # }
 
-# module "db_test" {
-#   source        = "../../aws_db_encr"
-#   name          = "db-test"
-#   dbName        = "delmedb"
-#   dbAdminUser   = "adm"
-#   dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
-#   kmsKeyArn     = module.aws_kms_test2.arn
-#   subnetGrpIds  = module.vpc_test.private_subnet_ids
-#   storageScaler = 10
-#   vpcId         = module.vpc_test.vpc_id
-# }
+module "db_test" {
+  source        = "../../aws_db_encr"
+  name          = "db-test"
+  dbName        = "delmedb"
+  dbAdminUser   = "adm"
+  dbAdminPw     = "delmkmasdoiasdohidsaohasjladsnaldf"
+  kmsKeyArn     = module.aws_kms_test2.arn
+  subnetGrpIds  = module.vpc_test.private_subnet_ids
+  storageScaler = 10
+  vpcId         = module.vpc_test.vpc_id
+  snsTopicArns  = [module.sns_test.arn]
+}
 
 # module "aws_s3_test" {
 #   source              = "../../aws_s3_bucket"
