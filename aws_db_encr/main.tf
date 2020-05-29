@@ -140,7 +140,7 @@ resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
   ok_actions                = var.snsTopicArns
   treat_missing_data        = var.missingData
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.arn
+    DBInstanceIdentifier = aws_db_instance.db.id
   }
   tags = {
     Name        = "${var.name} CPU Utilization"
@@ -163,7 +163,7 @@ resource "aws_cloudwatch_metric_alarm" "connectionhigh" {
   ok_actions                = var.snsTopicArns
   treat_missing_data        = var.missingData
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.arn
+    DBInstanceIdentifier = aws_db_instance.db.id
   }
   tags = {
     Name        = "${var.name} Connection High"
@@ -186,7 +186,7 @@ resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
   ok_actions                = var.snsTopicArns
   treat_missing_data        = var.missingData
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.arn
+    DBInstanceIdentifier = aws_db_instance.db.id
   }
   tags = {
     Name        = "${var.name} Free Storage"
@@ -209,7 +209,7 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
   ok_actions                = var.snsTopicArns
   treat_missing_data        = var.missingData
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.arn
+    DBInstanceIdentifier = aws_db_instance.db.id
   }
   tags = {
     Name        = "${var.name} CPU Credit Balance"
