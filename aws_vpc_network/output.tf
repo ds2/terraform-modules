@@ -21,6 +21,9 @@ output "ipv6_cidr" {
 output "private_subnet_ids" {
   value = concat(aws_subnet.private.*.id)
 }
+output "public_subnet_ids" {
+  value = concat(aws_subnet.public.*.id)
+}
 
 # output "private_subnet_arns" {
 #   value=join(",", aws_subnet.private.*.arn)
@@ -28,4 +31,8 @@ output "private_subnet_ids" {
 
 output "private_subnet_arns" {
   value = concat(aws_subnet.private.*.arn)
+}
+
+output "public_subnet_arns" {
+  value = concat(aws_subnet.public.*.arn)
 }

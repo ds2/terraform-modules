@@ -7,9 +7,16 @@ data "aws_subnet" "subnets" {
   id       = each.value
 }
 
+data "aws_subnet" "accesssubnets" {
+  for_each = var.accessSubnetGrpIds
+  id       = each.value
+}
+
 locals {
   mySubnetCidrs  = [for s in data.aws_subnet.subnets : s.cidr_block]
   mySubnetCidrs6 = [for s in data.aws_subnet.subnets : s.ipv6_cidr_block if s.ipv6_cidr_block != null]
+  access_cidrs   = [for s in data.aws_subnet.accesssubnets : s.cidr_block if s.cidr_block != null]
+  access_cidrs6  = [for s in data.aws_subnet.accesssubnets : s.ipv6_cidr_block if s.ipv6_cidr_block != null]
 }
 
 # output "subnet_cidr_blocks" {
@@ -47,8 +54,8 @@ resource "aws_security_group_rule" "ing1" {
   from_port         = var.dbPort
   to_port           = var.dbPort
   protocol          = "tcp"
-  cidr_blocks       = local.mySubnetCidrs
-  ipv6_cidr_blocks  = length(local.mySubnetCidrs6) > 0 ? local.mySubnetCidrs6 : null
+  cidr_blocks       = local.access_cidrs
+  ipv6_cidr_blocks  = length(local.access_cidrs6) > 0 ? local.access_cidrs6 : null
 }
 
 resource "aws_security_group_rule" "egress1" {
@@ -58,8 +65,8 @@ resource "aws_security_group_rule" "egress1" {
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
-  cidr_blocks       = local.mySubnetCidrs
-  ipv6_cidr_blocks  = length(local.mySubnetCidrs6) > 0 ? local.mySubnetCidrs6 : null
+  cidr_blocks       = local.access_cidrs
+  ipv6_cidr_blocks  = length(local.access_cidrs6) > 0 ? local.access_cidrs6 : null
 }
 
 resource "aws_db_parameter_group" "dbparams" {
@@ -110,7 +117,6 @@ resource "aws_db_instance" "db" {
   db_subnet_group_name            = aws_db_subnet_group.sngrp.name
   publicly_accessible             = false
   storage_encrypted               = var.kmsKeyArn != null ? true : false
-  # timezone                        = "Europe/Berlin"
   tags = {
     Terraformed = true
     Name        = var.name

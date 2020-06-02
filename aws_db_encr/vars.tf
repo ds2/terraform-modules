@@ -29,6 +29,10 @@ variable "subnetGrpIds" {
   type = set(string)
 }
 
+variable "accessSubnetGrpIds" {
+  type    = set(string)
+}
+
 variable "kmsKeyArn" {
   type        = string
   description = "the arn of the symmetric key"
@@ -95,7 +99,7 @@ variable "highConnectionThreshold" {
 
 variable "storageBytesThreshold" {
   type    = number
-  default = 234000000
+  default = 435000000
 }
 
 variable "cpuUtilThreshold" {
