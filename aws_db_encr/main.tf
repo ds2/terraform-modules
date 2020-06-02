@@ -131,6 +131,11 @@ resource "aws_db_instance" "db" {
   ]
 }
 
+resource "aws_cloudwatch_log_group" "cw" {
+  name              = "/aws/rds/instance/${aws_db_instance.db.name}/postgresql"
+  retention_in_days = 31
+}
+
 resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
   alarm_name                = "${var.name} High CPU Usage"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
