@@ -30,7 +30,8 @@ resource "aws_route_table" "pubroute" {
 
   route {
     ipv6_cidr_block        = "::/0"
-    egress_only_gateway_id = aws_egress_only_internet_gateway.egress_only.id
+    # egress_only_gateway_id = aws_egress_only_internet_gateway.egress_only.id
+    gateway_id = aws_internet_gateway.gw.id
   }
 
   tags = {
@@ -45,15 +46,14 @@ resource "aws_route_table_association" "public" {
   route_table_id = aws_route_table.pubroute.id
 }
 
-# resource "aws_nat_gateway" "nat" {
-#   allocation_id = element(aws_eip.nat.*.id, 0)
-#   subnet_id     = aws_subnet.public[0].id
+resource "aws_nat_gateway" "nat" {
+  allocation_id = element(aws_eip.nat.*.id, 0)
+  subnet_id     = aws_subnet.public[0].id
 
-#   #count = "${length(split(",", var.azs))}" # Comment out count to only have 1 NAT
-
-#   lifecycle { create_before_destroy = true }
-#   tags = {
-#     Name        = var.name
-#     Terraformed = true
-#   }
-# }
+  lifecycle { create_before_destroy = true }
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
+  depends_on = [aws_internet_gateway.gw]
+}
