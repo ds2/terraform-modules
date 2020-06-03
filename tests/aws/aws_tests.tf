@@ -100,7 +100,7 @@ module "sns_test" {
 
 # module "aws_eks_test" {
 #   source       = "../../aws_eks_cluster"
-#   clusterName  = "infra-test-20200101"
+#   clusterName  = "infra-test-20200102"
 #   subnetIds    = module.vpc_test.private_subnet_ids
 #   sshKeyName   = module.kp_test.name
 #   snsTopicArns = [module.sns_test.arn]
