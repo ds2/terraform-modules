@@ -8,7 +8,7 @@ variable "subnetIds" {
 
 variable "clusterSize" {
   type    = number
-  default = 1
+  default = 0
 }
 variable "clusterMaxSize" {
   type    = number

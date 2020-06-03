@@ -9,3 +9,7 @@ output "id" {
 output "endpoint" {
   value = aws_eks_cluster.cluster.endpoint
 }
+
+output "cacert" {
+  value = aws_eks_cluster.cluster.certificate_authority
+}
