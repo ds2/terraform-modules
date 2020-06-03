@@ -57,3 +57,8 @@ variable "instanceType" {
 variable "vpcId" {
   type = string
 }
+
+variable "creditBalanceThreshold" {
+  type    = number
+  default = 10
+}

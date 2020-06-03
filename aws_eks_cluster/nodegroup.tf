@@ -120,7 +120,7 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
   namespace                 = "AWS/EC2"
   period                    = "120"
   statistic                 = "Average"
-  threshold                 = 30
+  threshold                 = var.creditBalanceThreshold
   alarm_description         = "The credit balance for the eks instance from ${var.clusterName} is very low. Please check!"
   insufficient_data_actions = []
   alarm_actions             = var.snsTopicArns
