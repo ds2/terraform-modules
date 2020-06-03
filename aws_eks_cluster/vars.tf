@@ -51,7 +51,7 @@ variable "kmsKeyArn" {
 
 variable "instanceType" {
   type    = set(string)
-  default = ["t3.medium"]
+  default = ["t3a.medium", "t3.medium"]
 }
 
 variable "vpcId" {
