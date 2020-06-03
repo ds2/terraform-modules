@@ -90,6 +90,11 @@ resource "aws_instance" "bastion" {
     kms_key_id            = var.kmsKeyArn
     delete_on_termination = true
   }
+  lifecycle {
+    ignore_changes = [
+      tags, ami
+    ]
+  }
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
