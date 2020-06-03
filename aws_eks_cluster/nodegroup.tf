@@ -44,13 +44,18 @@ resource "aws_security_group" "ngsg" {
   }
 }
 
+data "aws_vpc" "vpc" {
+  id = var.vpcId
+}
+
 resource "aws_security_group_rule" "ngsg_sshinc" {
   security_group_id = aws_security_group.ngsg.id
   type              = "ingress"
   from_port         = 22
   to_port           = 22
   description       = "SSH remote access incoming"
-  cidr_blocks       = ["0.0.0.0/0"]
+  cidr_blocks       = [data.aws_vpc.vpc.cidr_block]
+  ipv6_cidr_blocks  = data.aws_vpc.vpc.ipv6_cidr_block != null ? [data.aws_vpc.vpc.ipv6_cidr_block] : null
   protocol          = "TCP"
 }
 
@@ -59,7 +64,7 @@ resource "aws_security_group_rule" "ngsg_sshout" {
   type              = "egress"
   from_port         = 0
   to_port           = 0
-  description       = "SSH remote access outgoing"
+  description       = "all directions"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
   protocol          = "TCP"
