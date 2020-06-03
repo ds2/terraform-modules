@@ -4,8 +4,8 @@ variable "owners" {
 }
 
 variable "imgNames" {
-  type=set(string)
-  default=["amzn2-ami-hvm*"]
+  type    = set(string)
+  default = ["amzn2-ami-hvm*"]
 }
 
 variable "instanceType" {
@@ -28,4 +28,14 @@ variable "kmsKeyArn" {
 
 variable "subnetId" {
   type = string
+}
+
+variable "snsTopicArns" {
+  type    = set(string)
+  default = null
+}
+
+variable "monitorCreditBalance" {
+  type    = bool
+  default = true
 }

@@ -91,3 +91,50 @@ resource "aws_instance" "bastion" {
     delete_on_termination = true
   }
 }
+
+resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
+  count                     = var.monitorCreditBalance ? 1 : 0
+  alarm_name                = "${var.name} Low CPUCreditBalance"
+  comparison_operator       = "LessThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "CPUCreditBalance"
+  namespace                 = "AWS/EC2"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = 30
+  alarm_description         = "The credit balance for the ec2 instance ${var.name} is very low. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  # treat_missing_data        = "ignored"
+  dimensions = {
+    InstanceId = aws_instance.bastion.id
+  }
+  tags = {
+    Name        = "${var.name} CPU Credit Balance"
+    Terraformed = true
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "cpuutil" {
+  alarm_name                = "${var.name} High CPU load"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "CPUUtilization"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = 80
+  alarm_description         = "The cpu utilization for the ec2 instance ${var.name} is very high. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  # treat_missing_data        = "ignored"
+  dimensions = {
+    InstanceId = aws_instance.bastion.id
+  }
+  tags = {
+    Name        = "${var.name} CPU Utilization"
+    Terraformed = true
+  }
+}
