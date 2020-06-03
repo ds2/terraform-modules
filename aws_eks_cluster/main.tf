@@ -53,6 +53,7 @@ data "aws_subnet" "subnets" {
 resource "aws_eks_cluster" "cluster" {
   name     = var.clusterName
   role_arn = aws_iam_role.k8srole.arn
+  version  = var.k8sVersion
 
   vpc_config {
     subnet_ids = var.subnetIds
@@ -189,9 +190,9 @@ resource "aws_eks_node_group" "eksng" {
     aws_eks_cluster.cluster,
     aws_security_group.ngsg
   ]
-  lifecycle {
-    create_before_destroy = true
-  }
+  # lifecycle {
+  #   create_before_destroy = true
+  # }
 }
 
 // AutoScalingGroupName
