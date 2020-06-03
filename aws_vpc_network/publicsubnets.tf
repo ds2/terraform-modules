@@ -12,6 +12,11 @@ resource "aws_subnet" "public" {
   }
   # lifecycle { create_before_destroy = true }
   depends_on = [aws_vpc.vpc]
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_route_table" "pubroute" {
@@ -29,7 +34,7 @@ resource "aws_route_table" "pubroute" {
   }
 
   tags = {
-    Name        = var.name
+    Name        = "${var.name} public routes"
     Terraformed = true
   }
 }
@@ -39,3 +44,16 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.pubroute.id
 }
+
+# resource "aws_nat_gateway" "nat" {
+#   allocation_id = element(aws_eip.nat.*.id, 0)
+#   subnet_id     = aws_subnet.public[0].id
+
+#   #count = "${length(split(",", var.azs))}" # Comment out count to only have 1 NAT
+
+#   lifecycle { create_before_destroy = true }
+#   tags = {
+#     Name        = var.name
+#     Terraformed = true
+#   }
+# }

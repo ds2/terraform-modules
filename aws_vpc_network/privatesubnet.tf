@@ -18,3 +18,39 @@ resource "aws_subnet" "private" {
     ]
   }
 }
+
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.vpc.id
+  # count  = length(split(",", var.cidrs))
+
+
+  # route {
+  #   cidr_block     = "0.0.0.0/0"
+  #   nat_gateway_id = element(split(",", var.nat_gateway_ids), count.index)
+  # }
+  # route {
+  #   cidr_block  = var.vpn_subnet
+  #   instance_id = var.vpn_instance_id
+  # }
+  route {
+    cidr_block = "0.0.0.0/0"
+    # ipv6_cidr_block="::/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+  route {
+    ipv6_cidr_block        = "::/0"
+    egress_only_gateway_id = aws_egress_only_internet_gateway.egress_only.id
+  }
+  tags = {
+    Name        = "${var.name} private routes"
+    Terraformed = true
+  }
+  lifecycle { create_before_destroy = true }
+}
+
+resource "aws_route_table_association" "private" {
+  count          = length(aws_subnet.private)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private.id
+}
