@@ -57,3 +57,49 @@ resource "aws_nat_gateway" "nat" {
   }
   depends_on = [aws_internet_gateway.gw]
 }
+
+resource "aws_network_acl" "pubacl" {
+  vpc_id     = aws_vpc.vpc.id
+  subnet_ids = concat(aws_subnet.public.*.id)
+
+  ingress {
+    protocol   = "-1"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    # ipv6_cidr_block="::/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  ingress {
+    protocol   = "-1"
+    rule_no    = 110
+    action     = "allow"
+    ipv6_cidr_block="::/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  egress {
+    protocol   = "-1"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    # ipv6_cidr_block="::/0"
+    from_port  = 0
+    to_port    = 0
+  }
+  egress {
+    protocol   = "-1"
+    rule_no    = 110
+    action     = "allow"
+    ipv6_cidr_block="::/0"
+    from_port  = 0
+    to_port    = 0
+  }
+
+  tags = {
+    Name        = "${var.name}-public-acl"
+    Terraformed = true
+  }
+}
