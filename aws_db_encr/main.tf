@@ -77,8 +77,8 @@ resource "aws_db_parameter_group" "dbparams" {
   dynamic "parameter" {
     for_each = var.dbParams
     content {
-      name         = each.key
-      value        = each.value
+      name         = parameter.key
+      value        = parameter.value
       apply_method = "pending-reboot"
     }
   }
@@ -133,7 +133,7 @@ resource "aws_db_instance" "db" {
 
 resource "aws_cloudwatch_log_group" "cw" {
   name              = "/aws/rds/instance/${aws_db_instance.db.name}/postgresql"
-  retention_in_days = 31
+  retention_in_days = 180
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
