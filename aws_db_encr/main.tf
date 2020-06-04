@@ -93,8 +93,18 @@ resource "aws_db_parameter_group" "dbparams" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "cw" {
+  name              = "/aws/rds/instance/${var.name}/postgresql"
+  retention_in_days = var.logfileRetentionDays
+  kms_key_id        = var.kmsKeyArn
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
+}
+
 resource "aws_db_instance" "db" {
-  identifier_prefix               = "${var.name}-"
+  identifier                      = var.name
   instance_class                  = var.instanceClass
   allocated_storage               = var.storageSize
   max_allocated_storage           = var.storageScaler != null ? var.storageSize + var.storageScaler : null
@@ -129,11 +139,6 @@ resource "aws_db_instance" "db" {
   depends_on = [
     aws_security_group.db-sg1
   ]
-}
-
-resource "aws_cloudwatch_log_group" "cw" {
-  name              = "/aws/rds/instance/${aws_db_instance.db.name}/postgresql"
-  retention_in_days = 180
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
