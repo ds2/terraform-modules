@@ -71,7 +71,7 @@ module "sns_test" {
 
 # module "db_test" {
 #   source             = "../../aws_db_encr"
-#   name               = "db-test"
+#   name               = "db-test5"
 #   dbName             = "delmedb"
 #   dbAdminUser        = "adm"
 #   dbAdminPw          = "delmkmasdoiasdohidsaohasjladsnaldf"
