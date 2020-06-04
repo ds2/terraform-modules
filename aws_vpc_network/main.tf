@@ -25,6 +25,11 @@ resource "aws_subnet" "private" {
   }
   # lifecycle { create_before_destroy = true }
   depends_on = [aws_vpc.vpc]
+  lifecycle {
+    ignore_changes = [
+      tags
+    ]
+  }
 }
 
 resource "aws_subnet" "public" {
