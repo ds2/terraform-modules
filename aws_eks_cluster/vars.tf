@@ -62,3 +62,8 @@ variable "creditBalanceThreshold" {
   type    = number
   default = 10
 }
+
+variable "logRetentionDays" {
+  type    = number
+  default = 365
+}

@@ -34,7 +34,7 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
 
 resource "aws_cloudwatch_log_group" "loggroup" {
   name              = "/aws/eks/${var.clusterName}/cluster"
-  retention_in_days = 365
+  retention_in_days = var.logRetentionDays
   kms_key_id        = var.kmsKeyArn
   tags = {
     Name        = var.clusterName
