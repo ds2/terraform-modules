@@ -27,7 +27,15 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
   role       = aws_iam_role.k8srole.name
 }
 
-
+resource "aws_cloudwatch_log_group" "loggroup" {
+  name              = "/aws/eks/${var.clustername}/cluster"
+  retention_in_days = 365
+  kms_key_id        = var.kmsKeyArn
+  tags = {
+    Name        = var.name
+    Terraformed = true
+  }
+}
 
 resource "aws_eks_cluster" "cluster" {
   name     = var.clustername
@@ -83,7 +91,7 @@ resource "aws_eks_node_group" "eksng" {
   node_group_name = "${var.clusterName}-worker-ng"
   node_role_arn   = aws_iam_role.workerrole.arn
   subnet_ids      = var.subnetIds
-  disk_size="20"
+  disk_size       = "20"
 
   scaling_config {
     desired_size = var.clusterSize
@@ -92,7 +100,7 @@ resource "aws_eks_node_group" "eksng" {
   }
 
   remote_access {
-    ec2_ssh_key=var.sshKeyName
+    ec2_ssh_key = var.sshKeyName
   }
 
   # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.

@@ -6,6 +6,11 @@ variable "subnetIds" {
   type = list(string)
 }
 
+variable "kmsKeyArn" {
+  type    = string
+  default = null
+}
+
 variable "clusterSize" {
   type    = number
   default = 1
@@ -21,5 +26,5 @@ variable "k8sVersion" {
 }
 
 variable "sshKeyName" {
-  type=string
+  type = string
 }
