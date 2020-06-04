@@ -6,6 +6,11 @@ variable "subnetIds" {
   type = set(string)
 }
 
+variable "kmsKeyArn" {
+  type    = string
+  default = null
+}
+
 variable "clusterSize" {
   type    = number
   default = 0
@@ -42,11 +47,6 @@ variable "monitorCreditBalance" {
 variable "logTypes" {
   type    = set(string)
   default = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-}
-
-variable "kmsKeyArn" {
-  type    = string
-  default = null
 }
 
 variable "instanceType" {

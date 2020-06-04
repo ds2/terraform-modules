@@ -32,21 +32,20 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
   role       = aws_iam_role.k8srole.name
 }
 
-resource "aws_cloudwatch_log_group" "cw" {
+resource "aws_cloudwatch_log_group" "loggroup" {
   name              = "/aws/eks/${var.clusterName}/cluster"
-  retention_in_days = 7
-}
-
-data "aws_subnet" "subnets" {
-  for_each = var.subnetIds
-  id       = each.value
+  retention_in_days = 365
+  kms_key_id        = var.kmsKeyArn
+  tags = {
+    Name        = var.clusterName
+    Terraformed = true
+  }
 }
 
 # resource "aws_subnet" "changeSubnet" {
 #   for_each = data.aws_subnet.subnets
 #   vpc_id     = each.value.vpc_id
 #   cidr_block = each.value.cidr_block
-
 #   tags = merge(each.value.tags, { "kubernetes.io/cluster/${var.clusterName}" = "shared" })
 # }
 
@@ -56,8 +55,8 @@ resource "aws_eks_cluster" "cluster" {
   version  = var.k8sVersion
 
   vpc_config {
-    subnet_ids              = var.subnetIds
-    endpoint_public_access  = true
+    subnet_ids             = var.subnetIds
+    endpoint_public_access = true
     # endpoint_private_access = true
     //public_access_cidrs = ["0.0.0.0/0"]
   }
@@ -67,7 +66,7 @@ resource "aws_eks_cluster" "cluster" {
   depends_on = [
     aws_iam_role_policy_attachment.eks-cluster-policy2k8srole,
     aws_iam_role_policy_attachment.eks-service-policy2k8srole,
-    aws_cloudwatch_log_group.cw
+    aws_cloudwatch_log_group.loggroup
   ]
 
   tags = {

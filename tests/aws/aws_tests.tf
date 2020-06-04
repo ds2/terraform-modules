@@ -77,7 +77,7 @@ module "sns_test" {
 
 # module "db_test" {
 #   source             = "../../aws_db_encr"
-#   name               = "db-test"
+#   name               = "db-test5"
 #   dbName             = "delmedb"
 #   dbAdminUser        = "adm"
 #   dbAdminPw          = "delmkmasdoiasdohidsaohasjladsnaldf"
@@ -119,13 +119,13 @@ module "sns_test" {
 #   snsTopicArns = [module.sns_test.arn]
 # }
 
-# module "aws_eks_test" {
-#   source       = "../../aws_eks_cluster"
-#   clusterName  = "infra-test-20200103"
-#   subnetIds    = module.vpc_test.private_subnet_ids
-#   sshKeyName   = module.kp_test.name
-#   snsTopicArns = [module.sns_test.arn]
-#   vpcId        = module.vpc_test.id
-#   kmsKeyArn    = module.aws_kms_test2.arn
-#   clusterSize  = 1
-# }
+module "aws_eks_test" {
+  source       = "../../aws_eks_cluster"
+  clusterName  = "infra-test-2"
+  subnetIds    = module.vpc_test.private_subnet_ids
+  sshKeyName   = module.kp_test.name
+  snsTopicArns = [module.sns_test.arn]
+  vpcId        = module.vpc_test.id
+  kmsKeyArn    = module.aws_kms_test2.arn
+  clusterSize  = 1
+}
