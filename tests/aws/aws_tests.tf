@@ -87,6 +87,9 @@ module "sns_test" {
 #   storageScaler      = 10
 #   vpcId              = module.vpc_test.vpc_id
 #   snsTopicArns       = [module.sns_test.arn]
+#   dbParams = {
+#     "rds.logical_replication" = "1"
+#   }
 # }
 
 # module "aws_s3_test" {
