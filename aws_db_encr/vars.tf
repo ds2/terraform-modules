@@ -30,7 +30,7 @@ variable "subnetGrpIds" {
 }
 
 variable "accessSubnetGrpIds" {
-  type    = set(string)
+  type = set(string)
 }
 
 variable "kmsKeyArn" {
@@ -110,4 +110,9 @@ variable "cpuUtilThreshold" {
 variable "monitorCreditBalance" {
   type    = bool
   default = true
+}
+
+variable "logfileRetentionDays" {
+  type    = number
+  default = 365
 }

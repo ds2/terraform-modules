@@ -1,5 +1,6 @@
 resource "aws_iam_role" "k8srole" {
-  name = "${var.clusterName}-eks-role"
+  name_prefix = "${var.clusterName}-eks-role-"
+  description = "the IAM role for the eks cluster master"
 
   assume_role_policy = <<POLICY
 {
@@ -15,6 +16,10 @@ resource "aws_iam_role" "k8srole" {
   ]
 }
 POLICY
+  tags = {
+    Name        = var.clusterName
+    Terraformed = true
+  }
 }
 
 resource "aws_iam_role_policy_attachment" "eks-cluster-policy2k8srole" {
@@ -27,79 +32,86 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
   role       = aws_iam_role.k8srole.name
 }
 
+resource "aws_cloudwatch_log_group" "loggroup" {
+  name              = "/aws/eks/${var.clusterName}/cluster"
+  retention_in_days = var.logRetentionDays
+  kms_key_id        = var.kmsKeyArn
+  tags = {
+    Name        = var.clusterName
+    Terraformed = true
+  }
+}
 
+# resource "aws_subnet" "changeSubnet" {
+#   for_each = data.aws_subnet.subnets
+#   vpc_id     = each.value.vpc_id
+#   cidr_block = each.value.cidr_block
+#   tags = merge(each.value.tags, { "kubernetes.io/cluster/${var.clusterName}" = "shared" })
+# }
 
 resource "aws_eks_cluster" "cluster" {
-  name     = var.clustername
+  name     = var.clusterName
   role_arn = aws_iam_role.k8srole.arn
+  version  = var.k8sVersion
 
   vpc_config {
-    subnet_ids = var.subnetIds
+    subnet_ids             = var.subnetIds
+    endpoint_public_access = true
+    # endpoint_private_access = true
+    //public_access_cidrs = ["0.0.0.0/0"]
   }
+
+  enabled_cluster_log_types = var.logTypes
 
   depends_on = [
     aws_iam_role_policy_attachment.eks-cluster-policy2k8srole,
     aws_iam_role_policy_attachment.eks-service-policy2k8srole,
+    aws_cloudwatch_log_group.loggroup
   ]
-}
 
+  tags = {
+    Name        = var.clusterName
+    Terraformed = true
+  }
 
-# worker nodes
-resource "aws_iam_role" "workerrole" {
-  name = "${var.clusterName}-worker-role"
-
-  assume_role_policy = jsonencode({
-    Statement = [{
-      Action = "sts:AssumeRole"
-      Effect = "Allow"
-      Principal = {
-        Service = "ec2.amazonaws.com"
+  dynamic "encryption_config" {
+    for_each = var.kmsKeyArn != null ? [1] : []
+    content {
+      provider {
+        key_arn = var.kmsKeyArn
       }
-    }]
-    Version = "2012-10-17"
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "worker-np" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-  role       = aws_iam_role.workerrole.name
-}
-
-resource "aws_iam_role_policy_attachment" "worker-cni" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  role       = aws_iam_role.workerrole.name
-}
-
-resource "aws_iam_role_policy_attachment" "worker-reg" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-  role       = aws_iam_role.workerrole.name
-}
-
-
-
-
-resource "aws_eks_node_group" "eksng" {
-  cluster_name    = aws_eks_cluster.cluster.name
-  node_group_name = "${var.clusterName}-worker-ng"
-  node_role_arn   = aws_iam_role.workerrole.arn
-  subnet_ids      = var.subnetIds
-  disk_size="20"
-
-  scaling_config {
-    desired_size = var.clusterSize
-    max_size     = var.clusterMaxSize
-    min_size     = 1
+      resources = ["secrets"]
+    }
   }
+}
 
-  remote_access {
-    ec2_ssh_key=var.sshKeyName
+resource "aws_iam_openid_connect_provider" "oid" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = []
+  url             = aws_eks_cluster.cluster.identity.0.oidc.0.issuer
+}
+
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "oidpolicy" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+    effect  = "Allow"
+
+    condition {
+      test     = "StringEquals"
+      variable = "${replace(aws_iam_openid_connect_provider.oid.url, "https://", "")}:sub"
+      values   = ["system:serviceaccount:kube-system:aws-node"]
+    }
+
+    principals {
+      identifiers = [aws_iam_openid_connect_provider.oid.arn]
+      type        = "Federated"
+    }
   }
+}
 
-  # Ensure that IAM Role permissions are created before and deleted after EKS Node Group handling.
-  # Otherwise, EKS will not be able to properly delete EC2 Instances and Elastic Network Interfaces.
-  depends_on = [
-    aws_iam_role_policy_attachment.worker-cni,
-    aws_iam_role_policy_attachment.worker-np,
-    aws_iam_role_policy_attachment.worker-reg,
-  ]
+resource "aws_iam_role" "oidrole" {
+  assume_role_policy = data.aws_iam_policy_document.oidpolicy.json
+  name_prefix        = "${var.clusterName}-oid-role-"
 }
