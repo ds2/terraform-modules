@@ -101,14 +101,14 @@ module "sns_test" {
 #   delCurrObjAfterDays = 360
 # }
 
-module "bastion" {
-  source       = "../../aws_bastion"
-  sshKeyName   = module.kp_test.name
-  subnetId     = module.vpc_test.public_subnet_ids[0]
-  kmsKeyArn    = module.aws_kms_test2.arn
-  name         = "infra-bastion"
-  snsTopicArns = [module.sns_test.arn]
-}
+# module "bastion" {
+#   source       = "../../aws_bastion"
+#   sshKeyName   = module.kp_test.name
+#   subnetId     = module.vpc_test.public_subnet_ids[0]
+#   kmsKeyArn    = module.aws_kms_test2.arn
+#   name         = "infra-bastion"
+#   snsTopicArns = [module.sns_test.arn]
+# }
 
 # module "bastion2" {
 #   source       = "../../aws_bastion"
@@ -119,13 +119,13 @@ module "bastion" {
 #   snsTopicArns = [module.sns_test.arn]
 # }
 
-module "aws_eks_test" {
-  source       = "../../aws_eks_cluster"
-  clusterName  = "infra-test-20200103"
-  subnetIds    = module.vpc_test.private_subnet_ids
-  sshKeyName   = module.kp_test.name
-  snsTopicArns = [module.sns_test.arn]
-  vpcId        = module.vpc_test.id
-  kmsKeyArn    = module.aws_kms_test2.arn
-  clusterSize  = 1
-}
+# module "aws_eks_test" {
+#   source       = "../../aws_eks_cluster"
+#   clusterName  = "infra-test-20200103"
+#   subnetIds    = module.vpc_test.private_subnet_ids
+#   sshKeyName   = module.kp_test.name
+#   snsTopicArns = [module.sns_test.arn]
+#   vpcId        = module.vpc_test.id
+#   kmsKeyArn    = module.aws_kms_test2.arn
+#   clusterSize  = 1
+# }
