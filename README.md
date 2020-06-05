@@ -14,3 +14,9 @@ In your tf file, create a new module and reference this repository:
     }
 
 The ref parameter defines the tag name to checkout. You should update it to the latest stable version. If omitted, you usually get the master branch content which may change over time (which is not good for YOUR recipes!!).
+
+## Release
+
+Done via
+
+    ./gradlew clean release -PdevelopmentVersion=0.2-SNAPSHOT
