@@ -22,11 +22,8 @@ before_script:
 
 stages:
   - validate
-  - validate_bb
-  - validate_gh
-  - validate_gl
 
-validate:
+validate-aws:
   stage: validate
   script:
     - echo "pwd is $(pwd)"
@@ -34,24 +31,24 @@ validate:
     - terraform init -input=false
     - terraform validate
 
-validate_bb:
-  stage: validate_bb
+validate-bb:
+  stage: validate
   script:
     - echo "pwd is $(pwd)"
     - cd tests/bitbucket
     - terraform init -input=false
     - terraform validate
 
-validate_gl:
-  stage: validate_gl
+validate-gl:
+  stage: validate
   script:
     - echo "pwd is $(pwd)"
     - cd tests/gitlab
     - terraform init -input=false
     - terraform validate
 
-validate_gh:
-  stage: validate_gh
+validate-gh:
+  stage: validate
   script:
     - echo "pwd is $(pwd)"
     - cd tests/github
