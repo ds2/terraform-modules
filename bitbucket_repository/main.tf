@@ -1,7 +1,7 @@
 resource "bitbucket_repository" "repo" {
-  owner             = var.owner
-  name              = var.repoName
-  slug              = var.repoId
+  owner             = var.ownerName
+  name              = var.name
+  slug              = var.id
   description       = var.descr
   is_private        = var.isPrivate
   language          = var.language
@@ -19,7 +19,7 @@ resource "bitbucket_repository" "repo" {
 
 resource "bitbucket_branch_restriction" "repo_master" {
   count      = var.reviewers != null ? 1 : 0
-  owner      = var.owner
+  owner      = bitbucket_repository.repo.owner
   repository = bitbucket_repository.repo.slug
 
   kind    = "push"
@@ -29,7 +29,7 @@ resource "bitbucket_branch_restriction" "repo_master" {
 
 resource "bitbucket_branch_restriction" "repo_develop" {
   count      = var.reviewers != null ? 1 : 0
-  owner      = var.owner
+  owner      = bitbucket_repository.repo.owner
   repository = bitbucket_repository.repo.slug
 
   kind    = "push"
@@ -37,10 +37,12 @@ resource "bitbucket_branch_restriction" "repo_develop" {
   users   = var.reviewers
 }
 
-resource "bitbucket_default_reviewers" "coreReviewers" {
+resource "bitbucket_default_reviewers" "reviewers" {
   count      = var.reviewers != null ? 1 : 0
-  owner      = var.owner
+  owner      = bitbucket_repository.repo.owner
   repository = bitbucket_repository.repo.slug
-
-  reviewers = var.reviewers
+  reviewers  = var.reviewers
+  lifecycle {
+    ignore_changes = [reviewers]
+  }
 }
