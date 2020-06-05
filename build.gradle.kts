@@ -16,6 +16,6 @@ tasks.register("clean") {
 release {
     tagTemplate = "v\${version}"
     with(propertyMissing("git") as net.researchgate.release.GitAdapter.GitConfig) {
-        requireBranch = "releases/0_2"
+        requireBranch = "release/0_2"
     }
 }
