@@ -16,8 +16,10 @@ data "bitbucket_user" "lexxy23" {
 }
 
 module "testproject" {
-  source="../../bitbucket_repository"
-  repoId="infra-test-202001"
-  repoName="My Infra Test Project"
-  owner=data.bitbucket_user.lexxy23.uuid
+  source    = "../../bitbucket_repository"
+  id        = "infra-test-202003"
+  name      = "My Infra Test Project"
+  ownerName = var.username
+  reviewers = [var.username]
+  # reviewers = [data.bitbucket_user.lexxy23.uuid]
 }

@@ -1,12 +1,13 @@
-variable "owner" {
+variable "ownerName" {
+  type        = string
+  description = "the username who will own this repository"
+}
+
+variable "name" {
   type = string
 }
 
-variable "repoName" {
-  type = string
-}
-
-variable "repoId" {
+variable "id" {
   type = string
 }
 
@@ -46,6 +47,12 @@ variable "forkPolicy" {
 }
 
 variable "reviewers" {
-  type    = set(string)
+  type        = set(string)
+  default     = null
+  description = "The usernames to add as reviewers (NOT UUID!!)"
+}
+
+variable "projectId" {
+  type    = string
   default = null
 }

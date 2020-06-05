@@ -19,4 +19,4 @@ The ref parameter defines the tag name to checkout. You should update it to the 
 
 Done via
 
-    ./gradlew clean release -PdevelopmentVersion=0.2-SNAPSHOT
+    ./gradlew clean release -Prelease.newVersion=0.2-SNAPSHOT
