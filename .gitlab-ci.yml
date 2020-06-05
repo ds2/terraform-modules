@@ -22,6 +22,9 @@ before_script:
 
 stages:
   - validate
+  - validate_bb
+  - validate_gh
+  - validate_gl
 
 validate:
   stage: validate
