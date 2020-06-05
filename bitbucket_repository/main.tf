@@ -9,7 +9,11 @@ resource "bitbucket_repository" "repo" {
   has_wiki          = var.hasWiki
   pipelines_enabled = var.hasPipelines
   fork_policy       = var.forkPolicy
+  project_key       = var.projectId
   scm               = "git"
+  lifecycle {
+    ignore_changes = [project_key]
+  }
 }
 
 

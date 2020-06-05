@@ -49,3 +49,8 @@ variable "reviewers" {
   type    = set(string)
   default = null
 }
+
+variable "projectId" {
+  type    = string
+  default = null
+}
