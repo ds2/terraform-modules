@@ -41,7 +41,7 @@ variable "kmsKeyArn" {
 
 variable "multiAZ" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "storageScaler" {
