@@ -44,7 +44,7 @@ variable "multiAZ" {
   default = true
 }
 
-variable "storageScaler" {
+variable "maxStorage" {
   type    = number
   default = null
 }
