@@ -84,7 +84,6 @@ data "aws_iam_policy_document" "cdnPolicy" {
   dynamic "statement" {
     for_each = var.readonlyIamArn
     content {
-      sid     = "readPerms"
       actions = var.readPermissions
       resources = [
         "${aws_s3_bucket.bucket.arn}/*",
@@ -100,7 +99,6 @@ data "aws_iam_policy_document" "cdnPolicy" {
   dynamic "statement" {
     for_each = var.adminIamArn
     content {
-      sid     = "adminPerms"
       actions = var.adminPermissions
       resources = [
         "${aws_s3_bucket.bucket.arn}/*",
