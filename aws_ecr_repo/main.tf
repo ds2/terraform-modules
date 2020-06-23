@@ -45,35 +45,29 @@ resource "aws_ecr_lifecycle_policy" "lifetimepolicy" {
 EOF
 }
 
+data "aws_caller_identity" "current" {}
+
+data "aws_iam_policy_document" "accesspolicydocument" {
+  statement {
+    sid = "push1"
+    effect  = "Allow"
+    actions = var.pushPermissions
+    # resources = [aws_ecr_repository.repo.arn]
+    principals {
+      type = "AWS"
+      identifiers = compact(coalesce(
+          var.pushArns,
+          [
+        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+        data.aws_caller_identity.current.arn
+      ]
+        ))
+    }
+  }
+}
+
 resource "aws_ecr_repository_policy" "accesspolicy" {
   repository = aws_ecr_repository.repo.name
 
-  policy = <<EOF
-{
-    "Version": "2008-10-17",
-    "Statement": [
-        {
-            "Sid": "new policy",
-            "Effect": "Allow",
-            "Principal": "*",
-            "Action": [
-                "ecr:GetDownloadUrlForLayer",
-                "ecr:BatchGetImage",
-                "ecr:BatchCheckLayerAvailability",
-                "ecr:PutImage",
-                "ecr:InitiateLayerUpload",
-                "ecr:UploadLayerPart",
-                "ecr:CompleteLayerUpload",
-                "ecr:DescribeRepositories",
-                "ecr:GetRepositoryPolicy",
-                "ecr:ListImages",
-                "ecr:DeleteRepository",
-                "ecr:BatchDeleteImage",
-                "ecr:SetRepositoryPolicy",
-                "ecr:DeleteRepositoryPolicy"
-            ]
-        }
-    ]
-}
-EOF
+  policy = data.aws_iam_policy_document.accesspolicydocument.json
 }
