@@ -76,3 +76,8 @@ variable "pullPermissions" {
                 "ecr:DescribeImageScanFindings"
     ]
 }
+
+variable "scanOnPush" {
+    type=bool
+    default=true
+}

@@ -3,7 +3,7 @@ name                 = var.name
   image_tag_mutability = var.tagMutable?"MUTABLE":"IMMUTABLE"
 
   image_scanning_configuration {
-    scan_on_push = true
+    scan_on_push = var.scanOnPush
   }
 
   tags={
