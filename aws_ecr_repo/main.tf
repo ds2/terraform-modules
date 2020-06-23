@@ -69,18 +69,21 @@ data "aws_iam_policy_document" "accesspolicydocument" {
     sid = "pull1"
     effect  = "Allow"
     actions = var.pullPermissions
-    principals {
-        type = "AWS"
-        identifiers = var.publicPull?["*"]:compact(coalesce(
+    dynamic "principals" {
+      for_each=var.publicPull?[]:[1]
+      content {
+          type = "AWS"
+        identifiers = compact(coalesce(
             var.pullArns,
             [
             "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
             data.aws_caller_identity.current.arn
           ]
             ))
-        }
+      }
     }
   }
+}
 
 
 resource "aws_ecr_repository_policy" "accesspolicy" {
