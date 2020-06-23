@@ -89,7 +89,9 @@ variable "adminPermissions" {
     "s3:GetBucket*",
     "s3:ListBucket*",
     "s3:ListMultipartUploadParts",
-    "s3:AbortMultipartUpload"
+    "s3:AbortMultipartUpload",
+    "s3:GetLifecycleConfiguration",
+    "s3:PutLifecycleConfiguration"
   ]
 }
 
