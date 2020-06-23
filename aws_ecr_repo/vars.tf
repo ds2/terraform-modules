@@ -16,3 +16,8 @@ variable "keepTagsCount" {
     type=number
     default=30
 }
+
+variable "tagPrefixes" {
+    type=set(string)
+    default=["v"]
+}

@@ -22,6 +22,7 @@ data "template_file" "tagged" {
   template = file("${path.module}/keeplast.json.tpl")
   vars = {
     NUM_COUNT = var.keepTagsCount
+    PREFIXES=jsonencode(var.tagPrefixes)
   }
 }
 

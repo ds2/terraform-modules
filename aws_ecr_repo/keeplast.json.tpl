@@ -3,7 +3,7 @@
     "description": "Keep last tagged images",
     "selection": {
         "tagStatus": "tagged",
-        "tagPrefixList": ["v","test","really"],
+        "tagPrefixList": ${PREFIXES},
         "countType": "imageCountMoreThan",
         "countNumber": ${NUM_COUNT}
     },
