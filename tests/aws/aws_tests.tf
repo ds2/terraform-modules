@@ -130,8 +130,8 @@ module "sns_test" {
 #   clusterSize  = 1
 # }
 
-module "ecr_test" {
-  source       = "../../aws_ecr_repo"
-  name="infra-test-20200101"
-  publicPull=true
-}
+# module "ecr_test" {
+#   source       = "../../aws_ecr_repo"
+#   name="infra-test-20200101"
+#   # publicPull=true
+# }
