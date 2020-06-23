@@ -107,7 +107,7 @@ resource "aws_db_instance" "db" {
   identifier                      = var.name
   instance_class                  = var.instanceClass
   allocated_storage               = var.storageSize
-  max_allocated_storage           = var.storageScaler != null ? var.storageSize + var.storageScaler : null
+  max_allocated_storage           = var.maxStorage != null ? var.maxStorage: 3*var.storageSize
   storage_type                    = "gp2"
   engine                          = "postgres"
   engine_version                  = var.dbVersion
