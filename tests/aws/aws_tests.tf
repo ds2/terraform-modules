@@ -129,3 +129,8 @@ module "sns_test" {
 #   kmsKeyArn    = module.aws_kms_test2.arn
 #   clusterSize  = 1
 # }
+
+module "ecr_test" {
+  source       = "../../aws_ecr_repo"
+  name="infra-test-20200101"
+}
