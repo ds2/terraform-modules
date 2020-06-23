@@ -64,7 +64,24 @@ data "aws_iam_policy_document" "accesspolicydocument" {
         ))
     }
   }
-}
+
+  statement {
+    sid = "pull1"
+    effect  = "Allow"
+    actions = var.pullPermissions
+    principals {
+        type = "AWS"
+        identifiers = var.publicPull?["*"]:compact(coalesce(
+            var.pullArns,
+            [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+            data.aws_caller_identity.current.arn
+          ]
+            ))
+        }
+    }
+  }
+
 
 resource "aws_ecr_repository_policy" "accesspolicy" {
   repository = aws_ecr_repository.repo.name

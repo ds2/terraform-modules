@@ -56,3 +56,12 @@ variable "pushPermissions" {
         # "ecr:DeleteRepository"
     ]
 }
+
+variable "pullPermissions" {
+    type=set(string)
+    default=[
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchGetImage",
+        "ecr:BatchCheckLayerAvailability",
+    ]
+}

@@ -133,4 +133,5 @@ module "sns_test" {
 module "ecr_test" {
   source       = "../../aws_ecr_repo"
   name="infra-test-20200101"
+  publicPull=true
 }
