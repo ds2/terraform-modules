@@ -60,6 +60,7 @@ module "vpc_test" {
   name       = "test vpc"
   availZones = var.avail_zones
   enableIpv6 = false
+  enableNatGateway=false
 }
 
 module "sns_test" {

@@ -11,6 +11,11 @@ variable "enableIpv6" {
   default = true
 }
 
+variable "enableNatGateway" {
+  type    = bool
+  default = true
+}
+
 # variable "privateSubnetCidr" {
 #   type = string
 # }
