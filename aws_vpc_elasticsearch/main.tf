@@ -7,9 +7,16 @@ data "aws_subnet" "subnets" {
   id       = each.value
 }
 
+data "aws_subnet" "accesssubnets" {
+  for_each = var.accessSubnetGrpIds
+  id       = each.value
+}
+
 locals {
   mySubnetCidrs  = [for s in data.aws_subnet.subnets : s.cidr_block]
-  mySubnetCidrs6 = [for s in data.aws_subnet.subnets : s.ipv6_cidr_block]
+  mySubnetCidrs6 = [for s in data.aws_subnet.subnets : s.ipv6_cidr_block if s.ipv6_cidr_block != null]
+  access_cidrs   = [for s in data.aws_subnet.accesssubnets : s.cidr_block if s.cidr_block != null]
+  access_cidrs6  = [for s in data.aws_subnet.accesssubnets : s.ipv6_cidr_block if s.ipv6_cidr_block != null]
 }
 
 data "aws_region" "current" {}
@@ -26,8 +33,8 @@ resource "aws_security_group" "es_sg" {
     to_port          = 443
     protocol         = "tcp"
     description      = "allow https port 443 from known subnets"
-    cidr_blocks      = local.mySubnetCidrs
-    ipv6_cidr_blocks = local.mySubnetCidrs6
+    cidr_blocks      = local.access_cidrs
+    ipv6_cidr_blocks = length(local.access_cidrs6) > 0 ? local.access_cidrs6 : null
   }
   tags = {
     Name        = var.name
@@ -37,6 +44,8 @@ resource "aws_security_group" "es_sg" {
 
 resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
+  description      = "Linked role for ES ${var.name}"
+  custom_suffix    = "${var.name}-"
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {

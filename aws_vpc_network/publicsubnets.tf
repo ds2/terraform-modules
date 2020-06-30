@@ -47,6 +47,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_nat_gateway" "nat" {
+  count=var.enableNatGateway?1:0
   allocation_id = element(aws_eip.nat.*.id, 0)
   subnet_id     = aws_subnet.public[0].id
 
