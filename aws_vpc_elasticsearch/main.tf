@@ -45,7 +45,7 @@ resource "aws_security_group" "es_sg" {
 resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
   description      = "Linked role for ES ${var.name}"
-  custom_suffix    = "${var.name}-"
+  # custom_suffix    = "${var.name}-" # not allowed by AWS
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {
