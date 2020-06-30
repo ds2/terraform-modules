@@ -44,6 +44,10 @@ variable "subnetGrpIds" {
   type = set(string)
 }
 
+variable "accessSubnetGrpIds" {
+  type = set(string)
+}
+
 variable "logTypes" {
   type    = set(string)
   default = ["INDEX_SLOW_LOGS", "SEARCH_SLOW_LOGS", "ES_APPLICATION_LOGS"]
