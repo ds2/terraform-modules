@@ -55,12 +55,12 @@ module "aws_kms_test2" {
 }
 
 module "vpc_test" {
-  source     = "../../aws_vpc_network"
-  cidr       = "10.76.0.0/16"
-  name       = "test vpc"
-  availZones = var.avail_zones
-  enableIpv6 = false
-  enableNatGateway=false
+  source           = "../../aws_vpc_network"
+  cidr             = "10.76.0.0/16"
+  name             = "test vpc"
+  availZones       = var.avail_zones
+  enableIpv6       = false
+  enableNatGateway = false
 }
 
 module "sns_test" {
@@ -68,13 +68,14 @@ module "sns_test" {
   name   = "test-topic-1"
 }
 
-# module "es_test" {
-#   source       = "../../aws_vpc_elasticsearch"
-#   name         = "intra-test-es-20200102"
-#   vpcId        = module.vpc_test.id
-#   subnetGrpIds = [module.vpc_test.private_subnet_ids[0]]
-#   # kmsKeyArn    = module.aws_kms_test2.arn
-# }
+module "es_test" {
+  source             = "../../aws_vpc_elasticsearch"
+  name               = "intra-test-es-20200102"
+  vpcId              = module.vpc_test.id
+  subnetGrpIds       = [module.vpc_test.private_subnet_ids[0]]
+  accessSubnetGrpIds = module.vpc_test.private_subnet_ids
+  # kmsKeyArn    = module.aws_kms_test2.arn
+}
 
 # module "db_test" {
 #   source             = "../../aws_db_encr"
