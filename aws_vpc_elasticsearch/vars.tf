@@ -41,7 +41,13 @@ variable "masterCount" {
 }
 
 variable "subnetGrpIds" {
-  type = set(string)
+  type        = set(string)
+  description = "The subnet group id to use. If zoneAware is set to true, then two subnets must be given from different zones!"
+}
+
+variable "zoneAware" {
+  type    = bool
+  default = false
 }
 
 variable "accessSubnetGrpIds" {

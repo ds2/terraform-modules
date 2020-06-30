@@ -92,7 +92,7 @@ resource "aws_elasticsearch_domain" "domain" {
     dedicated_master_enabled = var.masterCount > 0
     dedicated_master_type    = var.masterInstanceType
     dedicated_master_count   = var.masterCount
-    zone_awareness_enabled   = false
+    zone_awareness_enabled   = var.zoneAware
   }
   node_to_node_encryption {
     enabled = true
