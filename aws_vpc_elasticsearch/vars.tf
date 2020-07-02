@@ -63,3 +63,23 @@ variable "snapshotStartHourUtc" {
   type    = number
   default = 23
 }
+
+variable "adminArns" {
+  type    = set(string)
+  default = []
+}
+
+variable "writeArns" {
+  type    = set(string)
+  default = []
+}
+
+variable "readArns" {
+  type    = set(string)
+  default = []
+}
+
+variable "roleSuffix" {
+  type    = string
+  default = null
+}

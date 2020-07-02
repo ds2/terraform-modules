@@ -68,14 +68,15 @@ module "sns_test" {
   name   = "test-topic-1"
 }
 
-module "es_test" {
-  source             = "../../aws_vpc_elasticsearch"
-  name               = "intra-test-es-20200102"
-  vpcId              = module.vpc_test.id
-  subnetGrpIds       = [module.vpc_test.private_subnet_ids[0]]
-  accessSubnetGrpIds = module.vpc_test.private_subnet_ids
-  # kmsKeyArn    = module.aws_kms_test2.arn
-}
+# module "es_test" {
+#   source             = "../../aws_vpc_elasticsearch"
+#   name               = "intra-test-es-20200102"
+#   vpcId              = module.vpc_test.id
+#   subnetGrpIds       = [module.vpc_test.private_subnet_ids[0]]
+#   accessSubnetGrpIds = module.vpc_test.private_subnet_ids
+#   # kmsKeyArn    = module.aws_kms_test2.arn
+#   writeArns = [module.role_test.arn]
+# }
 
 # module "db_test" {
 #   source             = "../../aws_db_encr"

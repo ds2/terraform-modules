@@ -45,7 +45,7 @@ resource "aws_security_group" "es_sg" {
 resource "aws_iam_service_linked_role" "es" {
   aws_service_name = "es.amazonaws.com"
   description      = "Linked role for ES ${var.name}"
-  # custom_suffix    = "${var.name}-" # not allowed by AWS
+  custom_suffix    = var.roleSuffix
 }
 
 resource "aws_cloudwatch_log_group" "loggroup" {
@@ -143,21 +143,79 @@ resource "aws_elasticsearch_domain" "domain" {
   ]
 }
 
-resource "aws_elasticsearch_domain_policy" "main" {
-  domain_name = aws_elasticsearch_domain.domain.domain_name
-
-  access_policies = <<POLICIES
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid":"allowAll",
-            "Action": "es:*",
-            "Principal": "*",
-            "Effect": "Allow",
-            "Resource": "${aws_elasticsearch_domain.domain.arn}/*"
-        }
+data "aws_iam_policy_document" "policy" {
+  statement {
+    sid     = "allowAll"
+    actions = ["es:*"]
+    effect  = "Allow"
+    dynamic "principals" {
+      for_each = length(var.adminArns) > 0 ? [1] : []
+      content {
+        type = "AWS"
+        identifiers = compact(coalesce(
+          var.adminArns,
+          [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+            data.aws_caller_identity.current.arn
+          ]
+        ))
+      }
+    }
+    resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
+  }
+  statement {
+    sid = "writeUsers"
+    actions = [
+      "es:ESHttpGet",
+      "es:ESHttpPut",
+      "es:ESHttpHead",
+      "es:ESHttpDelete",
+      "es:ESHttpPatch",
+      "es:ESHttpPost"
     ]
+    effect = "Allow"
+    dynamic "principals" {
+      for_each = length(var.writeArns) > 0 ? [1] : []
+      content {
+        type = "AWS"
+        identifiers = compact(coalesce(
+          var.writeArns,
+          [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+            data.aws_caller_identity.current.arn
+          ]
+        ))
+      }
+    }
+    resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
+  }
+  statement {
+    sid = "readAll"
+    actions = [
+      "es:Describe*",
+      "es:List*",
+      "es:ESHttpHead",
+      "es:ESHttpGet"
+    ]
+    effect = "Allow"
+    dynamic "principals" {
+      for_each = length(var.readArns) > 0 ? [1] : []
+      content {
+        type = "AWS"
+        identifiers = compact(coalesce(
+          var.readArns,
+          [
+            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+            data.aws_caller_identity.current.arn
+          ]
+        ))
+      }
+    }
+    resources = ["${aws_elasticsearch_domain.domain.arn}/logstash-*"]
+  }
 }
-POLICIES
+
+resource "aws_elasticsearch_domain_policy" "main" {
+  domain_name     = aws_elasticsearch_domain.domain.domain_name
+  access_policies = data.aws_iam_policy_document.policy.json
 }
