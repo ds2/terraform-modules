@@ -69,15 +69,16 @@ resource "aws_security_group_rule" "egress1" {
 }
 
 module "ec2" {
-  source = "../aws_ec2_instance"
-  name   = var.name
-  # allowedExternalTcpPorts = [22]
-  # allowedExternalUdpPorts = [60000, 60001, 60002, 60003]
-  amiId            = data.aws_ami.img.id
-  instanceType     = var.instanceType
-  sshKeyName       = var.sshKeyName
-  isPublic         = true
-  subnetId      = var.subnetId
-  volumeSize       = 10
-  securityGroupIds = [aws_security_group.sg.id]
+  source               = "../aws_ec2_instance"
+  name                 = var.name
+  amiId                = data.aws_ami.img.id
+  instanceType         = var.instanceType
+  sshKeyName           = var.sshKeyName
+  isPublic             = true
+  subnetId             = var.subnetId
+  volumeSize           = 10
+  securityGroupIds     = [aws_security_group.sg.id]
+  kmsKeyArn            = var.kmsKeyArn
+  monitorCreditBalance = var.monitorCreditBalance
+  snsTopicArns         = var.snsTopicArns
 }
