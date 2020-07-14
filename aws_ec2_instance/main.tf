@@ -131,25 +131,35 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
   }
 }
 
-# resource "aws_cloudwatch_metric_alarm" "diskfree" {
-#   alarm_name                = "${var.name} Root Disk full"
-#   comparison_operator       = "LessThanOrEqualToThreshold"
-#   evaluation_periods        = "2"
-#   metric_name               = "CPUUtilization"
-#   namespace                 = "AWS/EC2"
-#   period                    = "60"
-#   statistic                 = "Average"
-#   threshold                 = 80
-#   alarm_description         = "The cpu utilization for the ec2 instance ${var.name} is very high. Please check!"
-#   insufficient_data_actions = []
-#   alarm_actions             = var.snsTopicArns
-#   ok_actions                = var.snsTopicArns
-#   # treat_missing_data        = "ignored"
-#   dimensions = {
-#     InstanceId = aws_instance.bastion.id
-#   }
-#   tags = {
-#     Name        = "${var.name} CPU Utilization"
-#     Terraformed = true
-#   }
-# }
+data "aws_route53_zone" "dnszone" {
+  count = var.dnsDomain!=null?1:0
+  name = var.dnsDomain
+}
+
+locals {
+  pubDnsName = coalesce(var.dnsName, var.name)
+  privDnsName = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
+  hasDnsDomain = var.dnsDomain!=null
+  hasPublicIp = aws_instance.instance.public_ip!=null && length(aws_instance.instance.public_ip)>0
+  hasPrivateIp = aws_instance.instance.private_ip!=null && length(aws_instance.instance.private_ip)>0
+  canPubDnsRecord = local.hasDnsDomain && local.hasPublicIp
+  canPrivDnsRecord = local.hasDnsDomain && local.hasPrivateIp
+}
+
+resource "aws_route53_record" "pubdnsrecord" {
+  count = local.canPubDnsRecord ?1:0
+  zone_id = data.aws_route53_zone.dnszone[0].zone_id
+  name    = local.pubDnsName
+  type    = "A"
+  ttl     = "300"
+  records = [aws_instance.instance.public_ip]
+}
+
+resource "aws_route53_record" "privdnsrecord" {
+  count = local.canPrivDnsRecord!=null?1:0
+  zone_id = data.aws_route53_zone.dnszone[0].zone_id
+  name    = local.privDnsName
+  type    = "A"
+  ttl     = "300"
+  records = [aws_instance.instance.private_ip]
+}

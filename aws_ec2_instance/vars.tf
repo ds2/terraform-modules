@@ -58,3 +58,18 @@ variable "securityGroupIds" {
   type    = set(string)
   default = []
 }
+
+variable "dnsDomain" {
+  type    = string
+  default = null
+}
+
+variable "dnsName" {
+  type    = string
+  default = null
+}
+
+variable "dnsInternalNamePostfix" {
+  type    = string
+  default = "-internal"
+}
