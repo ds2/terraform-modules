@@ -14,6 +14,7 @@ resource "aws_security_group" "extsg" {
 
 locals {
   extTcpPortList = tolist(var.allowedExternalTcpPorts)
+  extUdpPortList = tolist(var.allowedExternalUdpPorts)
 }
 
 resource "aws_security_group_rule" "extingress" {
@@ -23,6 +24,18 @@ resource "aws_security_group_rule" "extingress" {
   description       = "to access the node via port ${local.extTcpPortList[count.index]}"
   from_port         = local.extTcpPortList[count.index]
   to_port           = local.extTcpPortList[count.index]
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
+resource "aws_security_group_rule" "extingressudp" {
+  count             = length(local.extUdpPortList)
+  security_group_id = aws_security_group.extsg.id
+  type              = "ingress"
+  description       = "to access the node via port udp ${local.extTcpPortList[count.index]}"
+  from_port         = local.extUdpPortList[count.index]
+  to_port           = local.extUdpPortList[count.index]
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
@@ -63,6 +76,11 @@ resource "aws_instance" "instance" {
     Name        = var.name
     Terraformed = false
     AwsCreated  = true
+  }
+  lifecycle {
+    ignore_changes = [
+      tags, ami
+    ]
   }
 }
 

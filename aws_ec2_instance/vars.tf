@@ -17,7 +17,12 @@ variable "sshKeyName" {
 
 variable "allowedExternalTcpPorts" {
   type    = set(number)
-  default = [80, 443]
+  default = []
+}
+
+variable "allowedExternalUdpPorts" {
+  type    = set(number)
+  default = []
 }
 
 variable "volumeSize" {
