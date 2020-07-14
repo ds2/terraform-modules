@@ -35,7 +35,7 @@ variable "kmsKeyArn" {
   default = null
 }
 
-variable "subnetGrpId" {
+variable "subnetId" {
   type = string
 }
 
@@ -52,4 +52,9 @@ variable "monitorCreditBalance" {
 variable "snsTopicArns" {
   type    = set(string)
   default = null
+}
+
+variable "securityGroupIds" {
+  type    = set(string)
+  default = []
 }

@@ -1,5 +1,5 @@
 data "aws_subnet" "subnet" {
-  id = var.subnetGrpId
+  id = var.subnetId
 }
 
 resource "aws_security_group" "extsg" {
@@ -56,8 +56,8 @@ resource "aws_instance" "instance" {
   ami                         = var.amiId
   instance_type               = var.instanceType
   key_name                    = var.sshKeyName
-  vpc_security_group_ids      = [aws_security_group.extsg.id]
-  subnet_id                   = var.subnetGrpId
+  vpc_security_group_ids      = compact(concat(tolist(var.securityGroupIds), [aws_security_group.extsg.id]))
+  subnet_id                   = var.subnetId
   associate_public_ip_address = var.isPublic
 
   root_block_device {
