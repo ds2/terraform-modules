@@ -138,3 +138,11 @@ module "sns_test" {
 #   name="infra-test-20200101"
 #   # publicPull=true
 # }
+
+module "ec2_test" {
+  source      = "../../aws_ec2_instance"
+  name        = "infra-test-20200102"
+  amiId       = "ami-0b90a8636b6f955c1"
+  sshKeyName  = module.kp_test.name
+  subnetGrpId = module.vpc_test.private_subnet_ids[0]
+}
