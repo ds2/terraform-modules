@@ -48,14 +48,11 @@ resource "aws_iam_service_linked_role" "es" {
   custom_suffix    = var.roleSuffix
 }
 
-resource "aws_cloudwatch_log_group" "loggroup" {
-  name_prefix       = var.name
-  retention_in_days = 365
-  kms_key_id        = var.kmsKeyArn
-  tags = {
-    Name        = var.name
-    Terraformed = true
-  }
+module "loggroup" {
+  source        = "../aws_cloudwatch_loggroup"
+  prefix        = var.name
+  retentionDays = 365
+  kmsKeyArn     = var.kmsKeyArn
 }
 
 resource "aws_cloudwatch_log_resource_policy" "policy" {
@@ -128,7 +125,7 @@ resource "aws_elasticsearch_domain" "domain" {
     for_each = var.logTypes
     iterator = it
     content {
-      cloudwatch_log_group_arn = aws_cloudwatch_log_group.loggroup.arn
+      cloudwatch_log_group_arn = module.loggroup.arn
       log_type                 = it.key
     }
   }
