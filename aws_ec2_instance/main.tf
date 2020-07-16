@@ -156,7 +156,7 @@ resource "aws_route53_record" "pubdnsrecord" {
 }
 
 resource "aws_route53_record" "privdnsrecord" {
-  count = local.canPrivDnsRecord!=null?1:0
+  count = local.canPrivDnsRecord?1:0
   zone_id = data.aws_route53_zone.dnszone[0].zone_id
   name    = local.privDnsName
   type    = "A"
