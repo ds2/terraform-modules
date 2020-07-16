@@ -87,7 +87,7 @@ module "sns_test" {
 #   kmsKeyArn          = module.aws_kms_test2.arn
 #   subnetGrpIds       = module.vpc_test.private_subnet_ids
 #   accessSubnetGrpIds = concat(module.vpc_test.private_subnet_ids, module.vpc_test.public_subnet_ids)
-#   storageScaler      = 10
+#   #storageScaler      = 10
 #   vpcId              = module.vpc_test.vpc_id
 #   snsTopicArns       = [module.sns_test.arn]
 #   dbParams = {
@@ -113,14 +113,14 @@ module "sns_test" {
 #   snsTopicArns = [module.sns_test.arn]
 # }
 
-module "bastion2" {
-  source       = "../../aws_bastion"
-  sshKeyName   = module.kp_test.name
-  subnetId     = module.vpc_test.private_subnet_ids[0]
-  kmsKeyArn    = module.aws_kms_test2.arn
-  name         = "infra-bastion-2"
-  snsTopicArns = [module.sns_test.arn]
-}
+# module "bastion2" {
+#   source       = "../../aws_bastion"
+#   sshKeyName   = module.kp_test.name
+#   subnetId     = module.vpc_test.private_subnet_ids[0]
+#   kmsKeyArn    = module.aws_kms_test2.arn
+#   name         = "infra-bastion-2"
+#   snsTopicArns = [module.sns_test.arn]
+# }
 
 # module "aws_eks_test" {
 #   source       = "../../aws_eks_cluster"
@@ -145,4 +145,6 @@ module "ec2_test" {
   amiId      = "ami-0b90a8636b6f955c1"
   sshKeyName = module.kp_test.name
   subnetId   = module.vpc_test.private_subnet_ids[0]
+  # dnsDomain = "n8w8.app."
+  dnsName="tenebron"
 }
