@@ -73,3 +73,8 @@ variable "dnsInternalNamePostfix" {
   type    = string
   default = "-internal"
 }
+
+variable "unlimitedCpuCredits" {
+  type    = bool
+  default = null
+}

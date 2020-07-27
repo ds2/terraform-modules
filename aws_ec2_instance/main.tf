@@ -29,6 +29,11 @@ resource "aws_security_group_rule" "extingress" {
   ipv6_cidr_blocks  = ["::/0"]
 }
 
+locals {
+  d1 = var.unlimitedCpuCredits == true ? "unlimited" : "standard"
+  d2 = var.unlimitedCpuCredits == null ? null : local.d1
+}
+
 resource "aws_security_group_rule" "extingressudp" {
   count             = length(local.extUdpPortList)
   security_group_id = aws_security_group.extsg.id
@@ -44,7 +49,7 @@ resource "aws_security_group_rule" "extingressudp" {
 resource "aws_security_group_rule" "extegress" {
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
-  description       = "for all outgoing traffic from the bastion node"
+  description       = "for all outgoing traffic from this node ${var.name}"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
@@ -77,9 +82,14 @@ resource "aws_instance" "instance" {
     Terraformed = false
     AwsCreated  = true
   }
+
+  credit_specification {
+    cpu_credits = local.d2
+  }
+
   lifecycle {
     ignore_changes = [
-      tags, ami
+      tags
     ]
   }
 }
