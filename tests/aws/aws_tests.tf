@@ -68,14 +68,15 @@ module "sns_test" {
   name   = "test-topic-1"
 }
 
-module "es_test" {
-  source             = "../../aws_vpc_elasticsearch"
-  name               = "intra-test-es-20200102"
-  vpcId              = module.vpc_test.id
-  subnetGrpIds       = [module.vpc_test.private_subnet_ids[0]]
-  accessSubnetGrpIds = module.vpc_test.private_subnet_ids
-  # kmsKeyArn    = module.aws_kms_test2.arn
-}
+# module "es_test" {
+#   source             = "../../aws_vpc_elasticsearch"
+#   name               = "intra-test-es-20200102"
+#   vpcId              = module.vpc_test.id
+#   subnetGrpIds       = [module.vpc_test.private_subnet_ids[0]]
+#   accessSubnetGrpIds = module.vpc_test.private_subnet_ids
+#   # kmsKeyArn    = module.aws_kms_test2.arn
+#   writeArns = [module.role_test.arn]
+# }
 
 # module "db_test" {
 #   source             = "../../aws_db_encr"
@@ -86,7 +87,7 @@ module "es_test" {
 #   kmsKeyArn          = module.aws_kms_test2.arn
 #   subnetGrpIds       = module.vpc_test.private_subnet_ids
 #   accessSubnetGrpIds = concat(module.vpc_test.private_subnet_ids, module.vpc_test.public_subnet_ids)
-#   storageScaler      = 10
+#   #storageScaler      = 10
 #   vpcId              = module.vpc_test.vpc_id
 #   snsTopicArns       = [module.sns_test.arn]
 #   dbParams = {
@@ -137,3 +138,13 @@ module "es_test" {
 #   name="infra-test-20200101"
 #   # publicPull=true
 # }
+
+module "ec2_test" {
+  source     = "../../aws_ec2_instance"
+  name       = "infra-test-20200102"
+  amiId      = "ami-0b90a8636b6f955c1"
+  sshKeyName = module.kp_test.name
+  subnetId   = module.vpc_test.private_subnet_ids[0]
+  # dnsDomain = "n8w8.app."
+  dnsName="tenebron"
+}

@@ -14,5 +14,5 @@ output "kibana_endpoint" {
   value = aws_elasticsearch_domain.domain.kibana_endpoint
 }
 output "cw_loggroup_arn" {
-  value = aws_cloudwatch_log_group.loggroup.arn
+  value = module.loggroup.arn
 }

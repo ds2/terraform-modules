@@ -32,14 +32,11 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
   role       = aws_iam_role.k8srole.name
 }
 
-resource "aws_cloudwatch_log_group" "loggroup" {
+module "loggroup" {
+  source            = "../aws_cloudwatch_loggroup"
   name              = "/aws/eks/${var.clusterName}/cluster"
-  retention_in_days = var.logRetentionDays
-  kms_key_id        = var.kmsKeyArn
-  tags = {
-    Name        = var.clusterName
-    Terraformed = true
-  }
+  retentionDays = var.logRetentionDays
+  kmsKeyArn        = var.kmsKeyArn
 }
 
 # resource "aws_subnet" "changeSubnet" {
@@ -66,7 +63,7 @@ resource "aws_eks_cluster" "cluster" {
   depends_on = [
     aws_iam_role_policy_attachment.eks-cluster-policy2k8srole,
     aws_iam_role_policy_attachment.eks-service-policy2k8srole,
-    aws_cloudwatch_log_group.loggroup
+    module.loggroup
   ]
 
   tags = {
