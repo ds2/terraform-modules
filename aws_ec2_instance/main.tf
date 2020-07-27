@@ -132,34 +132,34 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
 }
 
 data "aws_route53_zone" "dnszone" {
-  count = var.dnsDomain!=null?1:0
-  name = var.dnsDomain
+  count = var.dnsDomain != null ? 1 : 0
+  name  = var.dnsDomain
 }
 
 locals {
-  pubDnsName = coalesce(var.dnsName, var.name)
-  privDnsName = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
-  hasDnsDomain = var.dnsDomain!=null
-  hasPublicIp = aws_instance.instance.public_ip!=null && length(aws_instance.instance.public_ip)>0
-  hasPrivateIp = aws_instance.instance.private_ip!=null && length(aws_instance.instance.private_ip)>0
-  canPubDnsRecord = local.hasDnsDomain && local.hasPublicIp
-  canPrivDnsRecord = local.hasDnsDomain && local.hasPrivateIp
+  pubDnsName       = coalesce(var.dnsName, var.name)
+  privDnsName      = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
+  hasDnsDomain     = var.dnsDomain != null
+  canPubDnsRecord  = local.hasDnsDomain && var.isPublic
+  canPrivDnsRecord = local.hasDnsDomain
 }
 
 resource "aws_route53_record" "pubdnsrecord" {
-  count = local.canPubDnsRecord ?1:0
-  zone_id = data.aws_route53_zone.dnszone[0].zone_id
-  name    = local.pubDnsName
-  type    = "A"
-  ttl     = "300"
-  records = [aws_instance.instance.public_ip]
+  count      = local.canPubDnsRecord ? 1 : 0
+  zone_id    = data.aws_route53_zone.dnszone[0].zone_id
+  name       = local.pubDnsName
+  type       = "A"
+  ttl        = "300"
+  records    = [aws_instance.instance.public_ip]
+  depends_on = [aws_instance.instance, data.aws_route53_zone.dnszone]
 }
 
 resource "aws_route53_record" "privdnsrecord" {
-  count = local.canPrivDnsRecord?1:0
-  zone_id = data.aws_route53_zone.dnszone[0].zone_id
-  name    = local.privDnsName
-  type    = "A"
-  ttl     = "300"
-  records = [aws_instance.instance.private_ip]
+  count      = local.canPrivDnsRecord ? 1 : 0
+  zone_id    = data.aws_route53_zone.dnszone[0].zone_id
+  name       = local.privDnsName
+  type       = "A"
+  ttl        = "300"
+  records    = [aws_instance.instance.private_ip]
+  depends_on = [aws_instance.instance, data.aws_route53_zone.dnszone]
 }
