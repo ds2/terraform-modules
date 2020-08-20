@@ -34,6 +34,7 @@ variable "handler" {
 variable "kmsKeyArn" {
   type        = string
   description = "(optional) the KMS Key ARN"
+  default     = null
 }
 
 variable "retentionDays" {
