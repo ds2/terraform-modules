@@ -71,7 +71,7 @@ resource "aws_lambda_function" "lambda_func" {
   publish          = var.publish
   timeout          = var.t0
   role             = aws_iam_role.iam_for_lambda.arn
-  handler          = var.handler
+  handler          = var.methodPath
   source_code_hash = filebase64sha256(var.zipFile)
   runtime          = var.runtime
   dynamic "environment" {
