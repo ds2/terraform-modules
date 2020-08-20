@@ -149,3 +149,15 @@ module "sns_test" {
 #   dnsName             = "tenebron"
 #   # unlimitedCpuCredits = false
 # }
+
+module "lambda_test" {
+  source    = "../../aws_lambda_func"
+  name      = "hello-world-1"
+  kmsKeyArn = module.aws_kms_test2.arn
+  zipFile   = "hw1.zip"
+  publish   = true
+  environment = {
+    FncName = "Test-1"
+    MYPW    = "mypw123"
+  }
+}
