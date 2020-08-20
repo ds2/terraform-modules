@@ -140,11 +140,24 @@ module "sns_test" {
 # }
 
 # module "ec2_test" {
-#   source     = "../../aws_ec2_instance"
-#   name       = "infra-test-20200103"
-#   amiId      = "ami-0b90a8636b6f955c1"
-#   sshKeyName = module.kp_test.name
-#   subnetId   = module.vpc_test.private_subnet_ids[0]
-#   dnsDomain  = "n8w8.app."
-#   dnsName    = "tenebron"
+#   source              = "../../aws_ec2_instance"
+#   name                = "infra-test-20200103"
+#   amiId               = "ami-0b90a8636b6f955c1"
+#   sshKeyName          = module.kp_test.name
+#   subnetId            = module.vpc_test.private_subnet_ids[0]
+#   dnsDomain           = "n8w8.app."
+#   dnsName             = "tenebron"
+#   # unlimitedCpuCredits = false
 # }
+
+module "lambda_test" {
+  source    = "../../aws_lambda_func"
+  name      = "hello-world-1"
+  kmsKeyArn = module.aws_kms_test2.arn
+  zipFile   = "hw1.zip"
+  publish   = true
+  environment = {
+    FncName = "Test-1"
+    MYPW    = "mypw123"
+  }
+}

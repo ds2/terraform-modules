@@ -47,7 +47,7 @@ resource "github_branch" "branch_develop" {
 
 resource "github_branch_protection" "protect_master" {
   repository             = github_repository.project.name
-  branch                 = "master"
+  branch                 = var.defaultBranch
   enforce_admins         = var.masterProtection.enforceAdmins
   require_signed_commits = var.masterProtection.signed
 
