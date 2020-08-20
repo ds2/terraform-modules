@@ -156,8 +156,8 @@ module "lambda_test" {
   kmsKeyArn = module.aws_kms_test2.arn
   zipFile   = "hw1.zip"
   publish   = true
-  environment = {
-    FncName = "Test-1"
-    MYPW    = "mypw123"
-  }
+  # environment = {
+  #   FncName = "Test-1"
+  #   MYPW    = "mypw123"
+  # }
 }
