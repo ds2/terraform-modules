@@ -26,9 +26,10 @@ variable "runtime" {
   default = "nodejs12.x"
 }
 
-variable "handler" {
-  type    = string
-  default = "exports.test"
+variable "methodPath" {
+  type        = string
+  description = "the path to the module. Usually FILENAME<DOT>METHODNAME, basically index.js with exports.handler() -> index.handler"
+  default     = "index.handler"
 }
 
 variable "kmsKeyArn" {
