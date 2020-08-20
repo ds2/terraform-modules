@@ -26,7 +26,7 @@ EOF
 # This is to optionally manage the CloudWatch Log Group for the Lambda Function.
 # If skipping this resource configuration, also add "logs:CreateLogGroup" to the IAM policy below.
 resource "aws_cloudwatch_log_group" "example" {
-  name              = "/aws/lambda/${aws_lambda_function.lambda_func.function_name}"
+  name              = "/aws/lambda/${var.name}"
   retention_in_days = var.retentionDays
   kms_key_id        = var.kmsKeyArn
   tags = {
@@ -66,16 +66,17 @@ resource "aws_iam_role_policy_attachment" "lambda_logs" {
 }
 
 resource "aws_lambda_function" "lambda_func" {
-  filename         = var.file
+  filename         = var.zipFile
   function_name    = var.name
+  description      = var.description
+  publish          = var.publish
+  timeout          = var.t0
   role             = aws_iam_role.iam_for_lambda.arn
   handler          = var.handler
-  source_code_hash = filebase64sha256(var.file)
+  source_code_hash = filebase64sha256(var.zipFile)
   runtime          = var.runtime
   environment {
-    variables = {
-      foo = "bar"
-    }
+    variables = var.environment
   }
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,

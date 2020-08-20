@@ -14,10 +14,10 @@ variable "t0" {
 
 variable "publish" {
   type    = bool
-  default = false
+  default = true
 }
 
-variable "file" {
+variable "zipFile" {
   type = string
 }
 
@@ -39,4 +39,11 @@ variable "kmsKeyArn" {
 variable "retentionDays" {
   type    = number
   default = 14
+}
+
+variable "environment" {
+  type = map
+  default = {
+    foo = "bar"
+  }
 }
