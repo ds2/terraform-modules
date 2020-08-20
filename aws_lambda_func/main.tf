@@ -75,8 +75,11 @@ resource "aws_lambda_function" "lambda_func" {
   handler          = var.handler
   source_code_hash = filebase64sha256(var.zipFile)
   runtime          = var.runtime
-  environment {
-    variables = var.environment
+  dynamic "environment" {
+    for_each = length(var.environment) > 0 ? [1] : []
+    content {
+      variables = var.environment
+    }
   }
   depends_on = [
     aws_iam_role_policy_attachment.lambda_logs,
