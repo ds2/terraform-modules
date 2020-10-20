@@ -18,8 +18,6 @@ resource "aws_s3_bucket" "bucket" {
     prefix  = var.versionObjPrefix
     enabled = var.versioned
 
-    abort_incomplete_multipart_upload_days = var.maxUploadDays
-
     noncurrent_version_transition {
       days          = var.ncvDays
       storage_class = "STANDARD_IA"
@@ -44,6 +42,11 @@ resource "aws_s3_bucket" "bucket" {
       days                         = var.delCurrObjAfterDays
       expired_object_delete_marker = true
     }
+  }
+
+  lifecycle_rule {
+    id                                     = "removeIncompleteUploads"
+    enabled                                = var.maxUploadDays > 0
     abort_incomplete_multipart_upload_days = var.maxUploadDays
   }
 
