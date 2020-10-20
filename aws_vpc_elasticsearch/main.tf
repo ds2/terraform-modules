@@ -216,3 +216,26 @@ resource "aws_elasticsearch_domain_policy" "main" {
   domain_name     = aws_elasticsearch_domain.domain.domain_name
   access_policies = data.aws_iam_policy_document.policy.json
 }
+
+resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
+  alarm_name                = "${var.name} Storage Low"
+  comparison_operator       = "LessThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "FreeStorageSpace"
+  namespace                 = "AWS/ES"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = var.storageBytesThreshold
+  alarm_description         = "The storage size for the elasticsearch instance ${var.name} is very low. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  treat_missing_data        = var.missingData
+  dimensions = {
+    DomainName = var.name
+  }
+  tags = {
+    Name        = "${var.name} Free Storage"
+    Terraformed = true
+  }
+}

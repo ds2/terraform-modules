@@ -83,3 +83,18 @@ variable "roleSuffix" {
   type    = string
   default = null
 }
+
+variable "storageBytesThreshold" {
+  type    = number
+  default = 435000000
+}
+
+variable "snsTopicArns" {
+  type    = set(string)
+  default = null
+}
+
+variable "missingData" {
+  type    = string
+  default = "missing"
+}
