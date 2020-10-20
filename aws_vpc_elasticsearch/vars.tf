@@ -66,7 +66,7 @@ variable "snapshotStartHourUtc" {
 
 variable "adminArns" {
   type    = set(string)
-  default = []
+  default = ["*"]
 }
 
 variable "writeArns" {
@@ -86,7 +86,7 @@ variable "roleSuffix" {
 
 variable "storageBytesThreshold" {
   type    = number
-  default = 435000000
+  default = 2048
 }
 
 variable "snsTopicArns" {

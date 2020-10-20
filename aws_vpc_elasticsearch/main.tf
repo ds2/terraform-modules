@@ -145,9 +145,7 @@ data "aws_iam_policy_document" "policy" {
     sid     = "allowAll"
     actions = ["es:*"]
     effect  = "Allow"
-    dynamic "principals" {
-      for_each = length(var.adminArns) > 0 ? [1] : []
-      content {
+    principals {
         type = "AWS"
         identifiers = compact(coalesce(
           var.adminArns,
@@ -157,58 +155,7 @@ data "aws_iam_policy_document" "policy" {
           ]
         ))
       }
-    }
     resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
-  }
-  statement {
-    sid = "writeUsers"
-    actions = [
-      "es:ESHttpGet",
-      "es:ESHttpPut",
-      "es:ESHttpHead",
-      "es:ESHttpDelete",
-      "es:ESHttpPatch",
-      "es:ESHttpPost"
-    ]
-    effect = "Allow"
-    dynamic "principals" {
-      for_each = length(var.writeArns) > 0 ? [1] : []
-      content {
-        type = "AWS"
-        identifiers = compact(coalesce(
-          var.writeArns,
-          [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-            data.aws_caller_identity.current.arn
-          ]
-        ))
-      }
-    }
-    resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
-  }
-  statement {
-    sid = "readAll"
-    actions = [
-      "es:Describe*",
-      "es:List*",
-      "es:ESHttpHead",
-      "es:ESHttpGet"
-    ]
-    effect = "Allow"
-    dynamic "principals" {
-      for_each = length(var.readArns) > 0 ? [1] : []
-      content {
-        type = "AWS"
-        identifiers = compact(coalesce(
-          var.readArns,
-          [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-            data.aws_caller_identity.current.arn
-          ]
-        ))
-      }
-    }
-    resources = ["${aws_elasticsearch_domain.domain.arn}/logstash-*"]
   }
 }
 
@@ -233,6 +180,7 @@ resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
   treat_missing_data        = var.missingData
   dimensions = {
     DomainName = var.name
+    ClientId = data.aws_caller_identity.current.account_id
   }
   tags = {
     Name        = "${var.name} Free Storage"
