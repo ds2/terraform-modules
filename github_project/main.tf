@@ -35,8 +35,9 @@ resource "github_team_repository" "teams" {
 }
 
 resource "github_branch" "branch_develop" {
-  repository = github_repository.project.name
-  branch     = "develop"
+  repository    = github_repository.project.name
+  source_branch = var.defaultBranch
+  branch        = "develop"
 }
 
 # resource "github_branch" "branch_master" {
