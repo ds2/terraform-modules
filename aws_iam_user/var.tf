@@ -2,7 +2,7 @@ variable "username" {
     type=string
 }
 
-variable "roleArns" {
+variable "policyArns" {
     type=set(string)
     default=[]
 }
