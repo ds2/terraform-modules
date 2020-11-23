@@ -13,7 +13,7 @@ resource "aws_iam_access_key" "acckey" {
 }
 
 resource "aws_iam_user_policy_attachment" "attach-roles" {
-  for_each   = var.roleArns
+  for_each   = var.policyArns
   user       = aws_iam_user.user.name
   policy_arn = each.value
 }
