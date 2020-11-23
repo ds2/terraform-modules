@@ -55,7 +55,7 @@ variable "vpcId" {
 
 variable "dbVersion" {
   type    = string
-  default = "12.2"
+  default = "12.3"
 }
 
 variable "dbName" {
