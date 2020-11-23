@@ -41,7 +41,7 @@ resource "aws_security_group_rule" "extingressudp" {
   description       = "to access the node via port udp ${local.extTcpPortList[count.index]}"
   from_port         = local.extUdpPortList[count.index]
   to_port           = local.extUdpPortList[count.index]
-  protocol          = "tcp"
+  protocol          = "udp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
 }
