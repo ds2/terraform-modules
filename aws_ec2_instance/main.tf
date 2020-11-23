@@ -4,7 +4,7 @@ data "aws_subnet" "subnet" {
 
 resource "aws_security_group" "extsg" {
   name_prefix = "${var.name}-"
-  description = "specifies external traffic for the node ${var.name}"
+  description = "specifies firewall rules for the node ${var.name}"
   vpc_id      = data.aws_subnet.subnet.vpc_id
   tags = {
     Name        = var.name
@@ -21,7 +21,7 @@ resource "aws_security_group_rule" "extingress" {
   count             = length(local.extTcpPortList)
   security_group_id = aws_security_group.extsg.id
   type              = "ingress"
-  description       = "to access the node via port ${local.extTcpPortList[count.index]}"
+  description       = "to access the node ${var.name} via port ${local.extTcpPortList[count.index]}"
   from_port         = local.extTcpPortList[count.index]
   to_port           = local.extTcpPortList[count.index]
   protocol          = "tcp"
