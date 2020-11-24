@@ -20,7 +20,7 @@ locals {
   extTcpPortList = tolist(var.allowedExternalTcpPorts)
   extUdpPortList = tolist(var.allowedExternalUdpPorts)
   vpcTcpPortList = tolist(var.allowedVpcTcpPorts)
-  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist(data.aws_vpc.thisvpc.ipv6_cidr_block): []
+  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist([data.aws_vpc.thisvpc.ipv6_cidr_block]): []
   egressTcpPorts=tolist(var.allowedEgressTcpPorts)
 }
 
