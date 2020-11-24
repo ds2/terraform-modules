@@ -2,6 +2,10 @@ data "aws_subnet" "subnet" {
   id = var.subnetId
 }
 
+data "aws_vpc" "thisvpc" {
+  id=data.aws_subnet.subnet.vpc_id
+}
+
 resource "aws_security_group" "extsg" {
   name_prefix = "${var.name}-"
   description = "specifies firewall rules for the node ${var.name}"
@@ -15,6 +19,8 @@ resource "aws_security_group" "extsg" {
 locals {
   extTcpPortList = tolist(var.allowedExternalTcpPorts)
   extUdpPortList = tolist(var.allowedExternalUdpPorts)
+  vpcTcpPortList = tolist(var.allowedVpcTcpPorts)
+  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist(data.aws_vpc.thisvpc.ipv6_cidr_block): []
 }
 
 resource "aws_security_group_rule" "extingress" {
@@ -27,6 +33,18 @@ resource "aws_security_group_rule" "extingress" {
   protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
+}
+
+resource "aws_security_group_rule" "vpcingress" {
+  count             = length(local.vpcTcpPortList)
+  security_group_id = aws_security_group.extsg.id
+  type              = "ingress"
+  description       = "to access the node ${var.name} from vpc via port ${local.vpcTcpPortList[count.index]}"
+  from_port         = local.vpcTcpPortList[count.index]
+  to_port           = local.vpcTcpPortList[count.index]
+  protocol          = "tcp"
+  cidr_blocks       = [data.aws_vpc.thisvpc.cidr_block]
+  ipv6_cidr_blocks  = length(local.access_cidrs6) > 0 ? local.access_cidrs6 : null
 }
 
 locals {

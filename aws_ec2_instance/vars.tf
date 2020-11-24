@@ -17,6 +17,11 @@ variable "sshKeyName" {
 
 variable "allowedExternalTcpPorts" {
   type    = set(number)
+  default = []
+}
+
+variable "allowedVpcTcpPorts" {
+  type    = set(number)
   default = [22]
 }
 
