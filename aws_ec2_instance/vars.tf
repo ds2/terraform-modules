@@ -83,3 +83,13 @@ variable "unlimitedCpuCredits" {
   type    = bool
   default = null
 }
+
+variable "allowUnsecureEgress" {
+  type=bool
+  default=false
+}
+
+variable "allowedEgressTcpPorts" {
+  type=set(number)
+  default=[80,443]
+}

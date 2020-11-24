@@ -21,6 +21,7 @@ locals {
   extUdpPortList = tolist(var.allowedExternalUdpPorts)
   vpcTcpPortList = tolist(var.allowedVpcTcpPorts)
   access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist(data.aws_vpc.thisvpc.ipv6_cidr_block): []
+  egressTcpPorts=tolist(var.allowedEgressTcpPorts)
 }
 
 resource "aws_security_group_rule" "extingress" {
@@ -65,12 +66,25 @@ resource "aws_security_group_rule" "extingressudp" {
 }
 
 resource "aws_security_group_rule" "extegress" {
+  count = var.allowUnsecureEgress? 1: 0
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
   description       = "for all outgoing traffic from this node ${var.name}"
   from_port         = 0
   to_port           = 0
   protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
+resource "aws_security_group_rule" "extegressport" {
+  count = length(local.egressTcpPorts)
+  security_group_id = aws_security_group.extsg.id
+  type              = "egress"
+  description       = "for all outgoing traffic from this node ${var.name} to port ${local.egressTcpPorts[count.index]}"
+  from_port         = local.egressTcpPorts[count.index]
+  to_port           = local.egressTcpPorts[count.index]
+  protocol          = "tcp"
   cidr_blocks       = ["0.0.0.0/0"]
   ipv6_cidr_blocks  = ["::/0"]
 }
