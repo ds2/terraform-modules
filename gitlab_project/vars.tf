@@ -64,7 +64,7 @@ variable "visibility" {
 
 variable "defaultBranch" {
   type    = string
-  default = "master"
+  default = "main"
 }
 
 variable "jiraUrl" {
