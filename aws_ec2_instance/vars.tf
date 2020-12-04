@@ -20,6 +20,11 @@ variable "allowedExternalTcpPorts" {
   default = []
 }
 
+variable "allowedVpcTcpPorts" {
+  type    = set(number)
+  default = [22]
+}
+
 variable "allowedExternalUdpPorts" {
   type    = set(number)
   default = []
@@ -77,4 +82,19 @@ variable "dnsInternalNamePostfix" {
 variable "unlimitedCpuCredits" {
   type    = bool
   default = null
+}
+
+variable "allowUnsecureEgress" {
+  type    = bool
+  default = false
+}
+
+variable "allowedEgressTcpPorts" {
+  type    = set(number)
+  default = [80, 443]
+}
+
+variable "allowedEgressUdpPorts" {
+  type    = set(number)
+  default = [123]
 }

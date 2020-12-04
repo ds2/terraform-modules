@@ -2,6 +2,10 @@ output "full_name" {
   value = github_repository.project.full_name
 }
 
+output "name" {
+  value = github_repository.project.name
+}
+
 output "ssh_clone_url" {
   value = github_repository.project.ssh_clone_url
 }

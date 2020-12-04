@@ -1,6 +1,6 @@
 provider "aws" {
   region  = var.region
-  version = ">=2.60"
+  version = "~> 3.16"
   profile = var.awsProfile
 }
 
@@ -35,9 +35,9 @@ module "kp_test" {
 }
 
 module "user1" {
-  source   = "../../aws_iam_user"
-  username = "tim_test20200410"
-  roleArns = [module.role_test.arn]
+  source     = "../../aws_iam_user"
+  username   = "tim_test20200410"
+  policyArns = [module.role_test.policyArn]
 }
 
 # module "aws_kms_test" {
@@ -95,14 +95,14 @@ module "sns_test" {
 #   }
 # }
 
-# module "aws_s3_test" {
-#   source              = "../../aws_s3_bucket"
-#   name                = "infra001-test-bucket-20200212"
-#   readonlyIamArn      = [aws_cloudfront_origin_access_identity.oai.iam_arn]
-#   adminIamArn         = [module.user1.arn]
-#   versioned           = true
-#   delCurrObjAfterDays = 360
-# }
+module "aws_s3_test" {
+  source              = "../../aws_s3_bucket"
+  name                = "infra001-test-bucket-20200212"
+  readonlyIamArn      = [aws_cloudfront_origin_access_identity.oai.iam_arn]
+  adminIamArn         = [module.user1.arn]
+  versioned           = true
+  delCurrObjAfterDays = 360
+}
 
 # module "bastion" {
 #   source       = "../../aws_bastion"
@@ -139,23 +139,24 @@ module "sns_test" {
 #   # publicPull=true
 # }
 
-# module "ec2_test" {
-#   source              = "../../aws_ec2_instance"
-#   name                = "infra-test-20200103"
-#   amiId               = "ami-0b90a8636b6f955c1"
-#   sshKeyName          = module.kp_test.name
-#   subnetId            = module.vpc_test.private_subnet_ids[0]
-#   dnsDomain           = "n8w8.app."
-#   dnsName             = "tenebron"
-#   # unlimitedCpuCredits = false
-# }
+module "ec2_test" {
+  source              = "../../aws_ec2_instance"
+  name                = "infra-test-20200103"
+  amiId               = "ami-0b90a8636b6f955c1"
+  sshKeyName          = module.kp_test.name
+  subnetId            = module.vpc_test.private_subnet_ids[0]
+  dnsDomain           = "n8w8.app."
+  dnsName             = "tenebron"
+  # unlimitedCpuCredits = false
+}
 
 module "lambda_test" {
-  source    = "../../aws_lambda_func"
-  name      = "hello-world-1"
-  kmsKeyArn = module.aws_kms_test2.arn
-  zipFile   = "hw1.zip"
-  publish   = true
+  source     = "../../aws_lambda_func"
+  name       = "hello-world-1"
+  kmsKeyArn  = module.aws_kms_test2.arn
+  zipFile    = "hw1.zip"
+  methodPath = "exports.test"
+  publish    = true
   # environment = {
   #   FncName = "Test-1"
   #   MYPW    = "mypw123"

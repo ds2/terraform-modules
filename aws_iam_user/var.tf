@@ -1,13 +1,13 @@
 variable "username" {
-    type=string
+  type = string
 }
 
-variable "roleArns" {
-    type=set(string)
-    default=[]
+variable "policyArns" {
+  type    = set(string)
+  default = []
 }
 
 variable "awsPath" {
-    type=string
-    default="/"
+  type    = string
+  default = "/"
 }

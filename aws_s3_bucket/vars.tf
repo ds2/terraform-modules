@@ -2,11 +2,6 @@ variable "name" {
   type = string
 }
 
-variable "region" {
-  type    = string
-  default = "eu-central-1"
-}
-
 variable "acl" {
   type    = string
   default = "private"

@@ -13,3 +13,7 @@ output "unique_id" {
 output "id" {
   value = aws_iam_role.role != null ? aws_iam_role.role.id : null
 }
+
+output "policyArn" {
+  value = aws_iam_policy.policy.arn
+}

@@ -145,9 +145,7 @@ data "aws_iam_policy_document" "policy" {
     sid     = "allowAll"
     actions = ["es:*"]
     effect  = "Allow"
-    dynamic "principals" {
-      for_each = length(var.adminArns) > 0 ? [1] : []
-      content {
+    principals {
         type = "AWS"
         identifiers = compact(coalesce(
           var.adminArns,
@@ -157,62 +155,35 @@ data "aws_iam_policy_document" "policy" {
           ]
         ))
       }
-    }
     resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
-  }
-  statement {
-    sid = "writeUsers"
-    actions = [
-      "es:ESHttpGet",
-      "es:ESHttpPut",
-      "es:ESHttpHead",
-      "es:ESHttpDelete",
-      "es:ESHttpPatch",
-      "es:ESHttpPost"
-    ]
-    effect = "Allow"
-    dynamic "principals" {
-      for_each = length(var.writeArns) > 0 ? [1] : []
-      content {
-        type = "AWS"
-        identifiers = compact(coalesce(
-          var.writeArns,
-          [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-            data.aws_caller_identity.current.arn
-          ]
-        ))
-      }
-    }
-    resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
-  }
-  statement {
-    sid = "readAll"
-    actions = [
-      "es:Describe*",
-      "es:List*",
-      "es:ESHttpHead",
-      "es:ESHttpGet"
-    ]
-    effect = "Allow"
-    dynamic "principals" {
-      for_each = length(var.readArns) > 0 ? [1] : []
-      content {
-        type = "AWS"
-        identifiers = compact(coalesce(
-          var.readArns,
-          [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-            data.aws_caller_identity.current.arn
-          ]
-        ))
-      }
-    }
-    resources = ["${aws_elasticsearch_domain.domain.arn}/logstash-*"]
   }
 }
 
 resource "aws_elasticsearch_domain_policy" "main" {
   domain_name     = aws_elasticsearch_domain.domain.domain_name
   access_policies = data.aws_iam_policy_document.policy.json
+}
+
+resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
+  alarm_name                = "${var.name} Storage Low"
+  comparison_operator       = "LessThanOrEqualToThreshold"
+  evaluation_periods        = "2"
+  metric_name               = "FreeStorageSpace"
+  namespace                 = "AWS/ES"
+  period                    = "120"
+  statistic                 = "Average"
+  threshold                 = var.storageBytesThreshold
+  alarm_description         = "The storage size for the elasticsearch instance ${var.name} is very low. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  treat_missing_data        = var.missingData
+  dimensions = {
+    DomainName = var.name
+    ClientId = data.aws_caller_identity.current.account_id
+  }
+  tags = {
+    Name        = "${var.name} Free Storage"
+    Terraformed = true
+  }
 }

@@ -7,7 +7,7 @@ resource "github_repository" "project" {
   has_issues             = var.hasIssues
   has_wiki               = var.hasWiki
   has_downloads          = var.hasDownloads
-  default_branch         = var.defaultBranch
+  default_branch         = var.initialize ? null : var.defaultBranch
   delete_branch_on_merge = true
   topics                 = var.topics
   auto_init              = var.initialize
@@ -25,6 +25,7 @@ resource "github_repository_collaborator" "admins" {
   repository = github_repository.project.name
   username   = each.key
   permission = "admin"
+  depends_on = [github_repository.project]
 }
 
 resource "github_team_repository" "teams" {
@@ -35,15 +36,10 @@ resource "github_team_repository" "teams" {
 }
 
 resource "github_branch" "branch_develop" {
-  repository = github_repository.project.name
-  branch     = "develop"
+  repository    = github_repository.project.name
+  source_branch = var.defaultBranch
+  branch        = "develop"
 }
-
-# resource "github_branch" "branch_master" {
-#   repository = github_repository.project.name
-#   branch     = "master"
-# }
-
 
 resource "github_branch_protection" "protect_master" {
   repository             = github_repository.project.name
@@ -69,7 +65,6 @@ resource "github_branch_protection" "protect_master" {
     teams = var.masterProtection.restrictToTeamSlugs
     apps  = var.masterProtection.restrictToApps
   }
-  # depends_on = [github_branch.branch_master]
 
 }
 
