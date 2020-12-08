@@ -12,6 +12,7 @@ node_modules
 test-output
 #famous file extensions
 .*
+!.git-crypt
 *.iml
 *.iws
 *.ipr
