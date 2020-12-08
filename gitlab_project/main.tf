@@ -51,3 +51,39 @@ resource "gitlab_tag_protection" "protect_tags" {
   tag                 = var.releaseTagPattern
   create_access_level = "maintainer"
 }
+
+data "gitlab_user" "guests" {
+  for_each = var.guests
+  email    = each.key
+}
+
+data "gitlab_user" "reporters" {
+  for_each = var.reporters
+  email    = each.key
+}
+
+data "gitlab_user" "developers" {
+  for_each = var.developers
+  email    = each.key
+}
+
+resource "gitlab_project_membership" "devMembers" {
+  for_each     = data.gitlab_user.developers
+  project_id   = gitlab_project.project.id
+  user_id      = each.value.user_id
+  access_level = "developer"
+}
+
+resource "gitlab_project_membership" "guestMembers" {
+  for_each     = data.gitlab_user.guests
+  project_id   = gitlab_project.project.id
+  user_id      = each.value.user_id
+  access_level = "guest"
+}
+
+resource "gitlab_project_membership" "reportMembers" {
+  for_each     = data.gitlab_user.reporters
+  project_id   = gitlab_project.project.id
+  user_id      = each.value.user_id
+  access_level = "reporter"
+}
