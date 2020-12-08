@@ -52,6 +52,24 @@ variable "mergeRequestsEnabled" {
   default = true
 }
 
+variable "developers" {
+  type        = set(string)
+  default     = []
+  description = "the email addresses of the developers for this project"
+}
+
+variable "reporters" {
+  type        = set(string)
+  default     = []
+  description = "the email addresses of the reporters for this project"
+}
+
+variable "guests" {
+  type        = set(string)
+  default     = []
+  description = "the email addresses of the guests for this project"
+}
+
 variable "issuesEnabled" {
   type    = bool
   default = false

@@ -1,13 +1,18 @@
-provider "gitlab" {
-    token = var.gitlab_token
-    version = ">=2.6"
+terraform {
+  required_providers {
+    gitlab = {
+      source  = "gitlabhq/gitlab"
+      version = "~> 3.3.0"
+    }
+  }
+  required_version = ">= 0.13"
 }
 
-terraform {
-  required_version = ">= 0.12"
+provider "gitlab" {
+  token = var.gitlab_token
 }
 
 module "gitlab_test" {
   source = "../../gitlab_project"
-  name   = "infra001-test-bucket-20200519"
+  name   = "infra001-test-bucket-20201201"
 }
