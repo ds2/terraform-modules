@@ -59,6 +59,11 @@ variable "snsTopicArns" {
   default = null
 }
 
+variable "availActionArns" {
+  type    = set(string)
+  default = null
+}
+
 variable "securityGroupIds" {
   type    = set(string)
   default = []

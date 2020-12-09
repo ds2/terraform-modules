@@ -1,14 +1,23 @@
+terraform {
+  required_providers {
+    bitbucket = {
+      source  = "terraform-providers/bitbucket"
+      version = ">= 1.2"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = ">= 2.1"
+    }
+  }
+  required_version = ">= 0.13"
+}
+
 provider "bitbucket" {
   username = var.username
   password = var.userpw
-  version  = ">= 1.2"
+
 }
 provider "template" {
-  version = ">= 2.1"
-}
-
-terraform {
-  required_version = ">= 0.12"
 }
 
 data "bitbucket_user" "lexxy23" {
