@@ -3,7 +3,7 @@ data "aws_subnet" "subnet" {
 }
 
 data "aws_vpc" "thisvpc" {
-  id=data.aws_subnet.subnet.vpc_id
+  id = data.aws_subnet.subnet.vpc_id
 }
 
 resource "aws_security_group" "extsg" {
@@ -20,8 +20,8 @@ locals {
   extTcpPortList = tolist(var.allowedExternalTcpPorts)
   extUdpPortList = tolist(var.allowedExternalUdpPorts)
   vpcTcpPortList = tolist(var.allowedVpcTcpPorts)
-  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist([data.aws_vpc.thisvpc.ipv6_cidr_block]): []
-  egressTcpPorts=tolist(var.allowedEgressTcpPorts)
+  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block != null ? tolist([data.aws_vpc.thisvpc.ipv6_cidr_block]) : []
+  egressTcpPorts = tolist(var.allowedEgressTcpPorts)
 }
 
 resource "aws_security_group_rule" "extingress" {
@@ -66,7 +66,7 @@ resource "aws_security_group_rule" "extingressudp" {
 }
 
 resource "aws_security_group_rule" "extegress" {
-  count = var.allowUnsecureEgress? 1: 0
+  count             = var.allowUnsecureEgress ? 1 : 0
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
   description       = "for all outgoing traffic from this node ${var.name}"
@@ -78,7 +78,7 @@ resource "aws_security_group_rule" "extegress" {
 }
 
 resource "aws_security_group_rule" "extegressport" {
-  count = length(local.egressTcpPorts)
+  count             = length(local.egressTcpPorts)
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
   description       = "for all outgoing traffic from this node ${var.name} to port ${local.egressTcpPorts[count.index]}"
@@ -169,6 +169,29 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
   }
   tags = {
     Name        = "${var.name} CPU Utilization"
+    Terraformed = true
+  }
+}
+
+resource "aws_cloudwatch_metric_alarm" "instance_avail" {
+  alarm_name                = "${var.name} available"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "1"
+  metric_name               = "StatusCheckFailed_Instance"
+  namespace                 = "AWS/EC2"
+  period                    = "300"
+  statistic                 = "Average"
+  threshold                 = 0.99
+  alarm_description         = "We cannot reach instance ${var.name}. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  # treat_missing_data        = "ignored"
+  dimensions = {
+    InstanceId = aws_instance.instance.id
+  }
+  tags = {
+    Name        = "${var.name} Instance available"
     Terraformed = true
   }
 }
