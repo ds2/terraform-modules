@@ -2,6 +2,8 @@ data "aws_subnet" "subnet" {
   id = var.subnetId
 }
 
+data "aws_region" "current" {}
+
 data "aws_vpc" "thisvpc" {
   id = data.aws_subnet.subnet.vpc_id
 }
@@ -184,7 +186,7 @@ resource "aws_cloudwatch_metric_alarm" "instance_avail" {
   threshold                 = 0.99
   alarm_description         = "We cannot reach instance ${var.name}. Please check!"
   insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
+  alarm_actions             = var.availActionArns
   ok_actions                = var.snsTopicArns
   # treat_missing_data        = "ignored"
   dimensions = {

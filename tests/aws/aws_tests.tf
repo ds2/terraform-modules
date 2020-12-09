@@ -143,13 +143,14 @@ module "vpc_test" {
 # }
 
 module "ec2_test" {
-  source     = "../../aws_ec2_instance"
-  name       = "infra-test-20200103"
-  amiId      = "ami-0b90a8636b6f955c1"
-  sshKeyName = module.kp_test.name
-  subnetId   = module.vpc_test.private_subnet_ids[0]
-  dnsDomain  = "n8w8.app."
-  dnsName    = "tenebron"
+  source          = "../../aws_ec2_instance"
+  name            = "infra-test-20200103"
+  amiId           = "ami-0b90a8636b6f955c1"
+  sshKeyName      = module.kp_test.name
+  subnetId        = module.vpc_test.private_subnet_ids[0]
+  dnsDomain       = "n8w8.app."
+  dnsName         = "tenebron"
+  availActionArns = ["arn:aws:automate:${var.region}:ec2:reboot"]
   # unlimitedCpuCredits = false
 }
 
