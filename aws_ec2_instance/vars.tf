@@ -113,3 +113,13 @@ variable "swapDevName" {
   type    = string
   default = "/dev/xvdf"
 }
+
+variable "availCheckPeriod" {
+  type    = number
+  default = 60
+}
+
+variable "availCheckCount" {
+  type    = number
+  default = 3
+}
