@@ -50,12 +50,12 @@ module "user1" {
 #   aliasPrefix = "my-test-key"
 # }
 
-# module "aws_kms_test2" {
-#   source  = "../../aws_kms_key"
-#   name    = "dirk-rds-key"
-#   descr   = "Key für RDS"
-#   keySpec = "SYMMETRIC_DEFAULT"
-# }
+module "aws_kms_test2" {
+  source  = "../../aws_kms_key"
+  name    = "dirk-rds-key-2"
+  descr   = "Key für RDS"
+  keySpec = "SYMMETRIC_DEFAULT"
+}
 
 module "vpc_test" {
   source           = "../../aws_vpc_network"
@@ -117,12 +117,12 @@ module "vpc_test" {
 # }
 
 # module "bastion2" {
-#   source       = "../../aws_bastion"
-#   sshKeyName   = module.kp_test.name
-#   subnetId     = module.vpc_test.private_subnet_ids[0]
-#   kmsKeyArn    = module.aws_kms_test2.arn
-#   name         = "infra-bastion-2"
-#   snsTopicArns = [module.sns_test.arn]
+#   source     = "../../aws_bastion"
+#   sshKeyName = module.kp_test.name
+#   subnetId   = module.vpc_test.private_subnet_ids[0]
+#   kmsKeyArn  = module.aws_kms_test2.arn
+#   name       = "infra-bastion-2"
+#   # snsTopicArns = [module.sns_test.arn]
 # }
 
 # module "aws_eks_test" {
@@ -143,14 +143,15 @@ module "vpc_test" {
 # }
 
 # module "ec2_test" {
-#   source          = "../../aws_ec2_instance"
-#   name            = "infra-test-20200103"
-#   amiId           = "ami-0b90a8636b6f955c1"
-#   sshKeyName      = module.kp_test.name
-#   subnetId        = module.vpc_test.private_subnet_ids[0]
-#   dnsDomain       = "n8w8.app."
-#   dnsName         = "tenebron"
-#   availActionArns = ["arn:aws:automate:${var.region}:ec2:reboot"]
+#   source     = "../../aws_ec2_instance"
+#   name       = "infra-test-20200103"
+#   amiId      = "ami-0b90a8636b6f955c1"
+#   sshKeyName = module.kp_test.name
+#   subnetId   = module.vpc_test.private_subnet_ids[0]
+#   dnsDomain  = "n8w8.app."
+#   dnsName    = "tenebron"
+#   swapSize   = 2
+#   # availActionArns = ["arn:aws:automate:${var.region}:ec2:reboot"]
 #   # unlimitedCpuCredits = false
 # }
 
