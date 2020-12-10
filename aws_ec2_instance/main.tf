@@ -178,15 +178,15 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
 resource "aws_cloudwatch_metric_alarm" "instance_avail" {
   alarm_name                = "${var.name} available"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "1"
+  evaluation_periods        = "3"
   metric_name               = "StatusCheckFailed_Instance"
   namespace                 = "AWS/EC2"
-  period                    = "300"
+  period                    = "60"
   statistic                 = "Average"
   threshold                 = 0.99
   alarm_description         = "We cannot reach instance ${var.name}. Please check!"
   insufficient_data_actions = []
-  alarm_actions             = var.availActionArns
+  alarm_actions             = local.myInstanceActions
   ok_actions                = var.snsTopicArns
   # treat_missing_data        = "ignored"
   dimensions = {
@@ -204,11 +204,12 @@ data "aws_route53_zone" "dnszone" {
 }
 
 locals {
-  pubDnsName       = coalesce(var.dnsName, var.name)
-  privDnsName      = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
-  hasDnsDomain     = var.dnsDomain != null
-  canPubDnsRecord  = local.hasDnsDomain && var.isPublic
-  canPrivDnsRecord = local.hasDnsDomain
+  pubDnsName        = coalesce(var.dnsName, var.name)
+  privDnsName       = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
+  hasDnsDomain      = var.dnsDomain != null
+  canPubDnsRecord   = local.hasDnsDomain && var.isPublic
+  canPrivDnsRecord  = local.hasDnsDomain
+  myInstanceActions = var.availActionArns != null ? var.availActionArns : ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"]
 }
 
 resource "aws_route53_record" "pubdnsrecord" {
@@ -229,4 +230,22 @@ resource "aws_route53_record" "privdnsrecord" {
   ttl        = "300"
   records    = [aws_instance.instance.private_ip]
   depends_on = [aws_instance.instance, data.aws_route53_zone.dnszone]
+}
+
+resource "aws_ebs_volume" "swap" {
+  availability_zone = aws_instance.instance.availability_zone
+  encrypted         = var.kmsKeyArn != null
+  size              = var.swapSize
+  kms_key_id        = var.kmsKeyArn
+
+  tags = {
+    Name        = "${var.name}-swap"
+    Terraformed = true
+  }
+}
+
+resource "aws_volume_attachment" "swap_attach" {
+  device_name = var.swapDevName
+  volume_id   = aws_ebs_volume.swap.id
+  instance_id = aws_instance.instance.id
 }

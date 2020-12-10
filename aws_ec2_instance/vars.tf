@@ -103,3 +103,13 @@ variable "allowedEgressUdpPorts" {
   type    = set(number)
   default = [123]
 }
+
+variable "swapSize" {
+  type    = number
+  default = 2
+}
+
+variable "swapDevName" {
+  type    = string
+  default = "/dev/xvdf"
+}
