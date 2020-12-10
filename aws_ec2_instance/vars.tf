@@ -106,7 +106,7 @@ variable "allowedEgressUdpPorts" {
 
 variable "swapSize" {
   type    = number
-  default = 2
+  default = 0
 }
 
 variable "swapDevName" {

@@ -233,6 +233,7 @@ resource "aws_route53_record" "privdnsrecord" {
 }
 
 resource "aws_ebs_volume" "swap" {
+  count             = var.swapSize > 0 ? 1 : 0
   availability_zone = aws_instance.instance.availability_zone
   encrypted         = var.kmsKeyArn != null
   size              = var.swapSize
@@ -245,7 +246,8 @@ resource "aws_ebs_volume" "swap" {
 }
 
 resource "aws_volume_attachment" "swap_attach" {
+  count       = var.swapSize > 0 ? 1 : 0
   device_name = var.swapDevName
-  volume_id   = aws_ebs_volume.swap.id
+  volume_id   = aws_ebs_volume.swap[0].id
   instance_id = aws_instance.instance.id
 }
