@@ -2,8 +2,10 @@ data "aws_subnet" "subnet" {
   id = var.subnetId
 }
 
+data "aws_region" "current" {}
+
 data "aws_vpc" "thisvpc" {
-  id=data.aws_subnet.subnet.vpc_id
+  id = data.aws_subnet.subnet.vpc_id
 }
 
 resource "aws_security_group" "extsg" {
@@ -20,8 +22,8 @@ locals {
   extTcpPortList = tolist(var.allowedExternalTcpPorts)
   extUdpPortList = tolist(var.allowedExternalUdpPorts)
   vpcTcpPortList = tolist(var.allowedVpcTcpPorts)
-  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block!=null? tolist([data.aws_vpc.thisvpc.ipv6_cidr_block]): []
-  egressTcpPorts=tolist(var.allowedEgressTcpPorts)
+  access_cidrs6  = data.aws_vpc.thisvpc.ipv6_cidr_block != null ? tolist([data.aws_vpc.thisvpc.ipv6_cidr_block]) : []
+  egressTcpPorts = tolist(var.allowedEgressTcpPorts)
 }
 
 resource "aws_security_group_rule" "extingress" {
@@ -66,7 +68,7 @@ resource "aws_security_group_rule" "extingressudp" {
 }
 
 resource "aws_security_group_rule" "extegress" {
-  count = var.allowUnsecureEgress? 1: 0
+  count             = var.allowUnsecureEgress ? 1 : 0
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
   description       = "for all outgoing traffic from this node ${var.name}"
@@ -78,7 +80,7 @@ resource "aws_security_group_rule" "extegress" {
 }
 
 resource "aws_security_group_rule" "extegressport" {
-  count = length(local.egressTcpPorts)
+  count             = length(local.egressTcpPorts)
   security_group_id = aws_security_group.extsg.id
   type              = "egress"
   description       = "for all outgoing traffic from this node ${var.name} to port ${local.egressTcpPorts[count.index]}"
@@ -173,17 +175,41 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
   }
 }
 
+resource "aws_cloudwatch_metric_alarm" "instance_avail" {
+  alarm_name                = "${var.name} available"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = var.availCheckCount
+  metric_name               = "StatusCheckFailed_Instance"
+  namespace                 = "AWS/EC2"
+  period                    = var.availCheckPeriod
+  statistic                 = "Average"
+  threshold                 = 0.99
+  alarm_description         = "We cannot reach instance ${var.name}. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = local.myInstanceActions
+  ok_actions                = var.snsTopicArns
+  # treat_missing_data        = "ignored"
+  dimensions = {
+    InstanceId = aws_instance.instance.id
+  }
+  tags = {
+    Name        = "${var.name} Instance available"
+    Terraformed = true
+  }
+}
+
 data "aws_route53_zone" "dnszone" {
   count = var.dnsDomain != null ? 1 : 0
   name  = var.dnsDomain
 }
 
 locals {
-  pubDnsName       = coalesce(var.dnsName, var.name)
-  privDnsName      = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
-  hasDnsDomain     = var.dnsDomain != null
-  canPubDnsRecord  = local.hasDnsDomain && var.isPublic
-  canPrivDnsRecord = local.hasDnsDomain
+  pubDnsName        = coalesce(var.dnsName, var.name)
+  privDnsName       = format("%s%s", local.pubDnsName, var.dnsInternalNamePostfix)
+  hasDnsDomain      = var.dnsDomain != null
+  canPubDnsRecord   = local.hasDnsDomain && var.isPublic
+  canPrivDnsRecord  = local.hasDnsDomain
+  myInstanceActions = var.availActionArns != null ? var.availActionArns : ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"]
 }
 
 resource "aws_route53_record" "pubdnsrecord" {
@@ -204,4 +230,24 @@ resource "aws_route53_record" "privdnsrecord" {
   ttl        = "300"
   records    = [aws_instance.instance.private_ip]
   depends_on = [aws_instance.instance, data.aws_route53_zone.dnszone]
+}
+
+resource "aws_ebs_volume" "swap" {
+  count             = var.swapSize > 0 ? 1 : 0
+  availability_zone = aws_instance.instance.availability_zone
+  encrypted         = var.kmsKeyArn != null
+  size              = var.swapSize
+  kms_key_id        = var.kmsKeyArn
+
+  tags = {
+    Name        = "${var.name}-swap"
+    Terraformed = true
+  }
+}
+
+resource "aws_volume_attachment" "swap_attach" {
+  count       = var.swapSize > 0 ? 1 : 0
+  device_name = var.swapDevName
+  volume_id   = aws_ebs_volume.swap[0].id
+  instance_id = aws_instance.instance.id
 }

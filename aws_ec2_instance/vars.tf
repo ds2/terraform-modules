@@ -59,6 +59,11 @@ variable "snsTopicArns" {
   default = null
 }
 
+variable "availActionArns" {
+  type    = set(string)
+  default = null
+}
+
 variable "securityGroupIds" {
   type    = set(string)
   default = []
@@ -97,4 +102,24 @@ variable "allowedEgressTcpPorts" {
 variable "allowedEgressUdpPorts" {
   type    = set(number)
   default = [123]
+}
+
+variable "swapSize" {
+  type    = number
+  default = 0
+}
+
+variable "swapDevName" {
+  type    = string
+  default = "/dev/xvdf"
+}
+
+variable "availCheckPeriod" {
+  type    = number
+  default = 60
+}
+
+variable "availCheckCount" {
+  type    = number
+  default = 3
 }
