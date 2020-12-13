@@ -178,10 +178,10 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
 resource "aws_cloudwatch_metric_alarm" "instance_avail" {
   alarm_name                = "${var.name} available"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "3"
+  evaluation_periods        = var.availCheckCount
   metric_name               = "StatusCheckFailed_Instance"
   namespace                 = "AWS/EC2"
-  period                    = "60"
+  period                    = var.availCheckPeriod
   statistic                 = "Average"
   threshold                 = 0.99
   alarm_description         = "We cannot reach instance ${var.name}. Please check!"
