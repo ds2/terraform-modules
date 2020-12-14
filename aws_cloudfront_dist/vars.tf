@@ -1,17 +1,17 @@
 variable "name" {
-    type=string
+  type = string
 }
 
 variable "comment" {
-    type=string
+  type = string
 }
 
 variable "ipv6Enabled" {
-    type=bool
-    default=true
+  type    = bool
+  default = true
 }
 
 variable "priceClass" {
-    type=string
-    default="PriceClass_All"
+  type    = string
+  default = "PriceClass_All"
 }

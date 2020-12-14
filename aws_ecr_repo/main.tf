@@ -1,14 +1,14 @@
-resource "aws_ecr_repository" "repo"{
-name                 = var.name
-  image_tag_mutability = var.tagMutable?"MUTABLE":"IMMUTABLE"
+resource "aws_ecr_repository" "repo" {
+  name                 = var.name
+  image_tag_mutability = var.tagMutable ? "MUTABLE" : "IMMUTABLE"
 
   image_scanning_configuration {
     scan_on_push = var.scanOnPush
   }
 
-  tags={
-      Name=var.name
-      Terraformed=true
+  tags = {
+    Name        = var.name
+    Terraformed = true
   }
 }
 
@@ -22,14 +22,14 @@ data "template_file" "tagged" {
   template = file("${path.module}/keeplast.json.tpl")
   vars = {
     NUM_COUNT = var.keepTagsCount
-    PREFIXES=jsonencode(var.tagPrefixes)
+    PREFIXES  = jsonencode(var.tagPrefixes)
   }
 }
 
 locals {
-  taggedStr=var.deleteUntaggedAfterDays>0?data.template_file.untagged.rendered:""
-  taggedStr2=var.keepTagsCount>0?data.template_file.tagged.rendered:""
-  c1=compact([local.taggedStr, local.taggedStr2])
+  taggedStr  = var.deleteUntaggedAfterDays > 0 ? data.template_file.untagged.rendered : ""
+  taggedStr2 = var.keepTagsCount > 0 ? data.template_file.tagged.rendered : ""
+  c1         = compact([local.taggedStr, local.taggedStr2])
 
 }
 
@@ -39,7 +39,7 @@ resource "aws_ecr_lifecycle_policy" "lifetimepolicy" {
   policy = <<EOF
 {
     "rules": [
-        ${join(",",local.c1)}
+        ${join(",", local.c1)}
     ]
 }
 EOF
@@ -49,37 +49,37 @@ data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "accesspolicydocument" {
   statement {
-    sid = "push1"
+    sid     = "push1"
     effect  = "Allow"
     actions = var.pushPermissions
     # resources = [aws_ecr_repository.repo.arn]
     principals {
       type = "AWS"
       identifiers = compact(coalesce(
-          var.pushArns,
-          [
-        "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-        data.aws_caller_identity.current.arn
-      ]
-        ))
+        var.pushArns,
+        [
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+          data.aws_caller_identity.current.arn
+        ]
+      ))
     }
   }
 
   statement {
-    sid = "pull1"
+    sid     = "pull1"
     effect  = "Allow"
     actions = var.pullPermissions
     dynamic "principals" {
-      for_each=var.publicPull?[]:[1]
+      for_each = var.publicPull ? [] : [1]
       content {
-          type = "AWS"
+        type = "AWS"
         identifiers = compact(coalesce(
-            var.pullArns,
-            [
+          var.pullArns,
+          [
             "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
             data.aws_caller_identity.current.arn
           ]
-            ))
+        ))
       }
     }
   }

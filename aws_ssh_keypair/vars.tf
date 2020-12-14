@@ -1,7 +1,7 @@
 variable "name" {
-    type=string
+  type = string
 }
 
 variable "publicKey" {
-    type=string
+  type = string
 }
