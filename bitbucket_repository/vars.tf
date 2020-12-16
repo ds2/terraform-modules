@@ -43,7 +43,8 @@ variable "hasWiki" {
 
 variable "hasPipelines" {
   type    = bool
-  default = true
+  default = false
+  # see https://github.com/hashicorp/terraform-provider-bitbucket/issues/58
 }
 
 variable "forkPolicy" {
