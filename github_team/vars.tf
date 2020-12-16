@@ -18,11 +18,11 @@ variable "parentTeamId" {
 }
 
 variable "members" {
-    type=set(string)
-    default=[]
+  type    = set(string)
+  default = []
 }
 
 variable "maintainers" {
-    type=set(string)
-    default=[]
+  type    = set(string)
+  default = []
 }

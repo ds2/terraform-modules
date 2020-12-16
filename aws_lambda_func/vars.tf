@@ -44,6 +44,6 @@ variable "retentionDays" {
 }
 
 variable "environment" {
-  type    = map
+  type    = map(any)
   default = {}
 }

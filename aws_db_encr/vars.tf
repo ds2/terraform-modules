@@ -78,7 +78,7 @@ variable "paramFamily" {
 }
 
 variable "dbParams" {
-  type    = map
+  type    = map(any)
   default = {}
 }
 

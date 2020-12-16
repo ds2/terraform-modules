@@ -24,7 +24,7 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.vpc.id
 
   dynamic "route" {
-    for_each=var.enableNatGateway?[1]:[]
+    for_each = var.enableNatGateway ? [1] : []
     content {
       cidr_block     = "0.0.0.0/0"
       nat_gateway_id = aws_nat_gateway.nat[0].id
@@ -59,16 +59,16 @@ resource "aws_network_acl" "privacl" {
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     # ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    from_port = 0
+    to_port   = 0
   }
   ingress {
-    protocol   = "-1"
-    rule_no    = 110
-    action     = "allow"
-    ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    protocol        = "-1"
+    rule_no         = 110
+    action          = "allow"
+    ipv6_cidr_block = "::/0"
+    from_port       = 0
+    to_port         = 0
   }
 
   egress {
@@ -77,16 +77,16 @@ resource "aws_network_acl" "privacl" {
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     # ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    from_port = 0
+    to_port   = 0
   }
   egress {
-    protocol   = "-1"
-    rule_no    = 110
-    action     = "allow"
-    ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    protocol        = "-1"
+    rule_no         = 110
+    action          = "allow"
+    ipv6_cidr_block = "::/0"
+    from_port       = 0
+    to_port         = 0
   }
 
   tags = {

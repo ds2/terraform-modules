@@ -23,7 +23,7 @@ resource "bitbucket_branch_restriction" "repo_master" {
   repository = bitbucket_repository.repo.slug
 
   kind    = "push"
-  pattern = "master"
+  pattern = var.mainBranchName
   users   = var.reviewers
 }
 

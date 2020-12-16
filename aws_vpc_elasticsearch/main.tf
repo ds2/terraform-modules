@@ -146,15 +146,15 @@ data "aws_iam_policy_document" "policy" {
     actions = ["es:*"]
     effect  = "Allow"
     principals {
-        type = "AWS"
-        identifiers = compact(coalesce(
-          var.adminArns,
-          [
-            "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
-            data.aws_caller_identity.current.arn
-          ]
-        ))
-      }
+      type = "AWS"
+      identifiers = compact(coalesce(
+        var.adminArns,
+        [
+          "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
+          data.aws_caller_identity.current.arn
+        ]
+      ))
+    }
     resources = ["${aws_elasticsearch_domain.domain.arn}/*"]
   }
 }
@@ -180,7 +180,7 @@ resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
   treat_missing_data        = var.missingData
   dimensions = {
     DomainName = var.name
-    ClientId = data.aws_caller_identity.current.account_id
+    ClientId   = data.aws_caller_identity.current.account_id
   }
   tags = {
     Name        = "${var.name} Free Storage"

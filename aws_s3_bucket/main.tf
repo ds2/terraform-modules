@@ -34,7 +34,7 @@ resource "aws_s3_bucket" "bucket" {
 
   lifecycle_rule {
     id      = "deleteAfterDays"
-    enabled = var.delCurrObjAfterDays > 0 && ! var.versioned
+    enabled = var.delCurrObjAfterDays > 0 && !var.versioned
     prefix  = var.delObjPrefix
 
     expiration {

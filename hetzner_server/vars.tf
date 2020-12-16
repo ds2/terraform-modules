@@ -1,32 +1,32 @@
 variable "name" {
-    type=string
+  type = string
 }
 
 variable "image" {
-    type=string
-    default="centos-8"
+  type    = string
+  default = "centos-8"
 }
 
 variable "serverType" {
-    type=string
-    default="cx21"
+  type    = string
+  default = "cx21"
 }
 
 variable "datacenterName" {
-    type=string
+  type = string
 }
 
 variable "sshKeyIds" {
-    type=set(string)
+  type = set(string)
 }
 
 variable "networkId" {
-    type=string
+  type = string
 }
 
 variable "ipAddress" {
-    type=string
+  type = string
 }
 variable "ipAddressAliases" {
-    type=set(string)
+  type = set(string)
 }
