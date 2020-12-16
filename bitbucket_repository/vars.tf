@@ -7,6 +7,11 @@ variable "name" {
   type = string
 }
 
+variable "mainBranchName" {
+  type    = string
+  default = "main"
+}
+
 variable "id" {
   type = string
 }
@@ -38,7 +43,8 @@ variable "hasWiki" {
 
 variable "hasPipelines" {
   type    = bool
-  default = true
+  default = false
+  # see https://github.com/hashicorp/terraform-provider-bitbucket/issues/58
 }
 
 variable "forkPolicy" {
@@ -53,6 +59,7 @@ variable "reviewers" {
 }
 
 variable "projectId" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "the project key. If set, the owner must be the project owner!!"
 }

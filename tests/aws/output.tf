@@ -1,5 +1,5 @@
 output "a" {
-    value=<<EOF
+  value = <<EOF
 role=${module.role_test.arn}
 EOF
 }

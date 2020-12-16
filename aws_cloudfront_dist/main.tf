@@ -2,7 +2,7 @@ resource "aws_cloudfront_origin_access_identity" "accessid" {
   comment = "Origin Access Identify for CF"
 }
 
-resource "aws_cloudfront_distribution" "distribution"{
+resource "aws_cloudfront_distribution" "distribution" {
   enabled             = true
   is_ipv6_enabled     = var.ipv6Enabled
   comment             = var.comment
@@ -13,37 +13,37 @@ resource "aws_cloudfront_distribution" "distribution"{
     Name        = var.Name
   }
 
-#   origin {
-#     domain_name = aws_s3_bucket.tcontent-staging.bucket_regional_domain_name
-#     origin_id   = "tc1"
+  #   origin {
+  #     domain_name = aws_s3_bucket.tcontent-staging.bucket_regional_domain_name
+  #     origin_id   = "tc1"
 
-#     s3_origin_config {
-#       origin_access_identity = aws_cloudfront_origin_access_identity.origaccid.cloudfront_access_identity_path
-#     }
-#   }
-#   origin {
-#     domain_name = aws_s3_bucket.tcontentStagingEu.bucket_regional_domain_name
-#     origin_id   = "tc2"
+  #     s3_origin_config {
+  #       origin_access_identity = aws_cloudfront_origin_access_identity.origaccid.cloudfront_access_identity_path
+  #     }
+  #   }
+  #   origin {
+  #     domain_name = aws_s3_bucket.tcontentStagingEu.bucket_regional_domain_name
+  #     origin_id   = "tc2"
 
-#     s3_origin_config {
-#       origin_access_identity = aws_cloudfront_origin_access_identity.origaccid.cloudfront_access_identity_path
-#     }
-#   }
-#   origin_group {
-#     origin_id = "stgGroup1"
+  #     s3_origin_config {
+  #       origin_access_identity = aws_cloudfront_origin_access_identity.origaccid.cloudfront_access_identity_path
+  #     }
+  #   }
+  #   origin_group {
+  #     origin_id = "stgGroup1"
 
-#     failover_criteria {
-#       status_codes = [403, 404, 500, 502]
-#     }
+  #     failover_criteria {
+  #       status_codes = [403, 404, 500, 502]
+  #     }
 
-#     member {
-#       origin_id = "tc2"
-#     }
+  #     member {
+  #       origin_id = "tc2"
+  #     }
 
-#     member {
-#       origin_id = "tc1"
-#     }
-#   }
+  #     member {
+  #       origin_id = "tc1"
+  #     }
+  #   }
 
   price_class = "PriceClass_100"
 

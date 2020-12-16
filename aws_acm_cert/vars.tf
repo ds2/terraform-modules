@@ -1,5 +1,5 @@
 variable "name" {
-    type=string
+  type = string
 }
 
 variable "privateKeyPem" {}
@@ -8,5 +8,5 @@ variable "certBodyPem" {}
 
 variable "certChain" {
   default = ""
-  type=string
+  type    = string
 }

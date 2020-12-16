@@ -29,7 +29,7 @@ resource "aws_route_table" "pubroute" {
   }
 
   route {
-    ipv6_cidr_block        = "::/0"
+    ipv6_cidr_block = "::/0"
     # egress_only_gateway_id = aws_egress_only_internet_gateway.egress_only.id
     gateway_id = aws_internet_gateway.gw.id
   }
@@ -47,7 +47,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_nat_gateway" "nat" {
-  count=var.enableNatGateway?1:0
+  count         = var.enableNatGateway ? 1 : 0
   allocation_id = element(aws_eip.nat.*.id, 0)
   subnet_id     = aws_subnet.public[0].id
 
@@ -69,16 +69,16 @@ resource "aws_network_acl" "pubacl" {
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     # ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    from_port = 0
+    to_port   = 0
   }
   ingress {
-    protocol   = "-1"
-    rule_no    = 110
-    action     = "allow"
-    ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    protocol        = "-1"
+    rule_no         = 110
+    action          = "allow"
+    ipv6_cidr_block = "::/0"
+    from_port       = 0
+    to_port         = 0
   }
 
   egress {
@@ -87,16 +87,16 @@ resource "aws_network_acl" "pubacl" {
     action     = "allow"
     cidr_block = "0.0.0.0/0"
     # ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    from_port = 0
+    to_port   = 0
   }
   egress {
-    protocol   = "-1"
-    rule_no    = 110
-    action     = "allow"
-    ipv6_cidr_block="::/0"
-    from_port  = 0
-    to_port    = 0
+    protocol        = "-1"
+    rule_no         = 110
+    action          = "allow"
+    ipv6_cidr_block = "::/0"
+    from_port       = 0
+    to_port         = 0
   }
 
   tags = {

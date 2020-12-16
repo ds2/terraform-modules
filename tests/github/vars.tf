@@ -3,5 +3,5 @@ variable "gh_token" {
 }
 
 variable "gh_org" {
-  type=string
+  type = string
 }

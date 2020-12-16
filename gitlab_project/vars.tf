@@ -112,5 +112,11 @@ variable "releaseTagPattern" {
 
 variable "sharedRunnersEnabled" {
   type    = bool
-  default = true
+  default = false
+  # we have a kube cluster for this ;)
+}
+
+variable "initialize" {
+  type    = bool
+  default = false
 }

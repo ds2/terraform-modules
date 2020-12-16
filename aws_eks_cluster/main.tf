@@ -33,10 +33,10 @@ resource "aws_iam_role_policy_attachment" "eks-service-policy2k8srole" {
 }
 
 module "loggroup" {
-  source            = "../aws_cloudwatch_loggroup"
-  name              = "/aws/eks/${var.clusterName}/cluster"
+  source        = "../aws_cloudwatch_loggroup"
+  name          = "/aws/eks/${var.clusterName}/cluster"
   retentionDays = var.logRetentionDays
-  kmsKeyArn        = var.kmsKeyArn
+  kmsKeyArn     = var.kmsKeyArn
 }
 
 # resource "aws_subnet" "changeSubnet" {
