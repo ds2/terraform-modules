@@ -7,6 +7,11 @@ variable "name" {
   type = string
 }
 
+variable "mainBranchName" {
+  type    = string
+  default = "main"
+}
+
 variable "id" {
   type = string
 }
@@ -53,6 +58,7 @@ variable "reviewers" {
 }
 
 variable "projectId" {
-  type    = string
-  default = null
+  type        = string
+  default     = null
+  description = "the project key. If set, the owner must be the project owner!!"
 }
