@@ -5,15 +5,21 @@ provider "github" {
 }
 
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.13"
+  required_providers {
+    github = {
+      source  = "hashicorp/github"
+      version = "~> 2.9.2"
+    }
+  }
 }
 
-# module "team1" {
-#   source      = "../../github_team"
-#   name        = "infra001-test-team1_20200520"
-#   description = "a test team"
-#   members     = ["ds2ci"]
-# }
+module "team1" {
+  source      = "../../github_team"
+  name        = "infra001-test-team1_20210111"
+  description = "a test team"
+  members     = ["ds2ci"]
+}
 
 # module "repo1" {
 #   source              = "../../github_project"
