@@ -1,10 +1,10 @@
 data "aws_caller_identity" "current" {}
 
 locals {
-  keyPeople = [
+  keyPeople = tolist([
     "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root",
     data.aws_caller_identity.current.arn
-  ]
+  ])
 }
 
 data "aws_iam_policy_document" "keypolicy" {
@@ -13,7 +13,7 @@ data "aws_iam_policy_document" "keypolicy" {
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = compact(locals.keyPeople, var.keyAdmins)
+      identifiers = sort(distinct(compact(concat(local.keyPeople, tolist(var.adminArns)))))
     }
     actions   = ["kms:*"]
     resources = ["*"]

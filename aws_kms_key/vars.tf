@@ -38,7 +38,7 @@ variable "keySpec" {
   default     = "RSA_4096"
 }
 
-variable "keyAdmins" {
+variable "adminArns" {
   type    = set(string)
   default = []
 }
