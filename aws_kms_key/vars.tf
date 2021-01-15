@@ -37,3 +37,8 @@ variable "keySpec" {
   description = "the usage type. If unsure, use SYMMETRIC_DEFAULT for using in RDS encryption"
   default     = "RSA_4096"
 }
+
+variable "adminArns" {
+  type    = set(string)
+  default = []
+}

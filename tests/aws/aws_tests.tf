@@ -51,10 +51,11 @@ module "user1" {
 # }
 
 module "aws_kms_test2" {
-  source  = "../../aws_kms_key"
-  name    = "dirk-rds-key-2"
-  descr   = "Key für RDS"
-  keySpec = "SYMMETRIC_DEFAULT"
+  source    = "../../aws_kms_key"
+  name      = "dirk-rds-key-2"
+  descr     = "Key für RDS"
+  keySpec   = "SYMMETRIC_DEFAULT"
+  adminArns = ["arn:aws:iam::348446722659:user/tim"]
 }
 
 module "vpc_test" {
