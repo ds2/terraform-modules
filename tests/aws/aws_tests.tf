@@ -168,3 +168,26 @@ module "vpc_test" {
 #   #   MYPW    = "mypw123"
 #   # }
 # }
+
+# module "dns_rec_test" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   subdomain = "delme-esb"
+#   records   = ["esb.tignum.com", "esb-k8s.tignum.com"]
+#   weights   = [90, 10]
+# }
+
+# module "dns2" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   subdomain = "delme-3"
+#   records   = ["esb.tignum.com"]
+# }
+
+# module "dns3" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   type      = "A"
+#   subdomain = "delme-4"
+#   records   = ["127.0.0.1", "192.168.1.1"]
+# }
