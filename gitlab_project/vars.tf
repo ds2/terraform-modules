@@ -121,3 +121,8 @@ variable "initialize" {
   type    = bool
   default = false
 }
+
+variable "packagesEnabled" {
+  type    = bool
+  default = false
+}
