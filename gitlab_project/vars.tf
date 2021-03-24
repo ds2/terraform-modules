@@ -44,7 +44,7 @@ variable "dockerRegistryEnabled" {
 
 variable "approvalsBeforeMerge" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "mergeRequestsEnabled" {
@@ -96,8 +96,9 @@ variable "jiraUser" {
 }
 
 variable "jiraPw" {
-  type    = string
-  default = null
+  type      = string
+  default   = null
+  sensitive = true
 }
 
 variable "jiraProjectKey" {
@@ -117,6 +118,11 @@ variable "sharedRunnersEnabled" {
 }
 
 variable "initialize" {
+  type    = bool
+  default = false
+}
+
+variable "packagesEnabled" {
   type    = bool
   default = false
 }

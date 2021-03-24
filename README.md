@@ -9,7 +9,7 @@ Some terraform modules.
 In your tf file, create a new module and reference this repository:
 
     module "aws1" {
-        source = "git::git@gitlab.com:ds_2/terraform-modules.git//aws_s3_bucket?ref=v0.1.2"
+        source = "git::https://gitlab.com/ds_2/terraform-modules.git//aws_s3_bucket?ref=v0.1.2"
         name   = "my-bucket"
     }
 

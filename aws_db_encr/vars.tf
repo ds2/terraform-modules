@@ -22,7 +22,8 @@ variable "dbAdminUser" {
 }
 
 variable "dbAdminPw" {
-  type = string
+  type      = string
+  sensitive = true
 }
 
 variable "subnetGrpIds" {

@@ -116,27 +116,13 @@ resource "aws_eks_node_group" "eksng" {
   }
 }
 
-// AutoScalingGroupName
-resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
-  count                     = var.monitorCreditBalance ? 1 : 0
-  alarm_name                = "EKS ${var.clusterName} Low CPUCreditBalance"
-  comparison_operator       = "LessThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUCreditBalance"
-  namespace                 = "AWS/EC2"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = var.creditBalanceThreshold
-  alarm_description         = "The credit balance for the eks instance from ${var.clusterName} is very low. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  # treat_missing_data        = var.missingData
+module "monitoring" {
+  source                 = "../aws_instance_alerts"
+  name                   = "EKS NG ${var.clusterName}"
+  monitorCreditBalance   = var.monitorCreditBalance
+  creditBalanceThreshold = var.creditBalanceThreshold
+  snsTopicArns           = var.snsTopicArns
   dimensions = {
     AutoScalingGroupName = aws_eks_node_group.eksng[0].resources[0].autoscaling_groups[0].name
-  }
-  tags = {
-    Name        = "${var.clusterName} EKS CPU Credit Balance"
-    Terraformed = true
   }
 }

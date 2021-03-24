@@ -2,14 +2,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.20.0"
+      version = "~> 3.30.0"
     }
     template = {
       source  = "hashicorp/template"
-      version = ">= 2.1"
+      version = "~> 2.0"
     }
   }
-  required_version = ">= 0.13"
+  required_version = "~> 0.14.0"
 }
 
 provider "aws" {
@@ -51,10 +51,11 @@ module "user1" {
 # }
 
 module "aws_kms_test2" {
-  source  = "../../aws_kms_key"
-  name    = "dirk-rds-key-2"
-  descr   = "Key für RDS"
-  keySpec = "SYMMETRIC_DEFAULT"
+  source    = "../../aws_kms_key"
+  name      = "dirk-rds-key-2"
+  descr     = "Key für RDS"
+  keySpec   = "SYMMETRIC_DEFAULT"
+  adminArns = ["arn:aws:iam::348446722659:user/tim"]
 }
 
 module "vpc_test" {
@@ -66,10 +67,10 @@ module "vpc_test" {
   enableNatGateway = false
 }
 
-# module "sns_test" {
-#   source = "../../aws_sns_topic"
-#   name   = "test-topic-1"
-# }
+module "sns_test" {
+  source = "../../aws_sns_topic"
+  name   = "test-topic-1"
+}
 
 # module "es_test" {
 #   source             = "../../aws_vpc_elasticsearch"
@@ -166,4 +167,27 @@ module "vpc_test" {
 #   #   FncName = "Test-1"
 #   #   MYPW    = "mypw123"
 #   # }
+# }
+
+# module "dns_rec_test" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   subdomain = "delme-esb"
+#   records   = ["esb.tignum.com", "esb-k8s.tignum.com"]
+#   weights   = [90, 10]
+# }
+
+# module "dns2" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   subdomain = "delme-3"
+#   records   = ["esb.tignum.com"]
+# }
+
+# module "dns3" {
+#   source    = "../../aws_route53_record"
+#   domain    = "n8w8.app"
+#   type      = "A"
+#   subdomain = "delme-4"
+#   records   = ["127.0.0.1", "192.168.1.1"]
 # }
