@@ -44,7 +44,7 @@ variable "dockerRegistryEnabled" {
 
 variable "approvalsBeforeMerge" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "mergeRequestsEnabled" {
