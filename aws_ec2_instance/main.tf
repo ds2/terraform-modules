@@ -128,74 +128,13 @@ resource "aws_instance" "instance" {
   }
 }
 
-resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
-  count                     = var.monitorCreditBalance ? 1 : 0
-  alarm_name                = "${var.name} Low CPUCreditBalance"
-  comparison_operator       = "LessThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUCreditBalance"
-  namespace                 = "AWS/EC2"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = 10
-  alarm_description         = "The credit balance for the ec2 instance ${var.name} is very low. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  # treat_missing_data        = "ignored"
+module "monitoring" {
+  source = "../aws_instance_alerts"
+  name   = var.name
   dimensions = {
     InstanceId = aws_instance.instance.id
   }
-  tags = {
-    Name        = "${var.name} CPU Credit Balance"
-    Terraformed = true
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "cpuutil" {
-  alarm_name                = "${var.name} High CPU load"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/EC2"
-  period                    = "60"
-  statistic                 = "Average"
-  threshold                 = 80
-  alarm_description         = "The cpu utilization for the ec2 instance ${var.name} is very high. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  # treat_missing_data        = "ignored"
-  dimensions = {
-    InstanceId = aws_instance.instance.id
-  }
-  tags = {
-    Name        = "${var.name} CPU Utilization"
-    Terraformed = true
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "instance_avail" {
-  alarm_name                = "${var.name} available"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = var.availCheckCount
-  metric_name               = "StatusCheckFailed_Instance"
-  namespace                 = "AWS/EC2"
-  period                    = var.availCheckPeriod
-  statistic                 = "Average"
-  threshold                 = 0.99
-  alarm_description         = "We cannot reach instance ${var.name}. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = local.myInstanceActions
-  ok_actions                = var.snsTopicArns
-  # treat_missing_data        = "ignored"
-  dimensions = {
-    InstanceId = aws_instance.instance.id
-  }
-  tags = {
-    Name        = "${var.name} Instance available"
-    Terraformed = true
-  }
+  snsTopicArns = var.snsTopicArns
 }
 
 data "aws_route53_zone" "dnszone" {

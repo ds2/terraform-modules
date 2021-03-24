@@ -2,14 +2,14 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.20.0"
+      version = "~> 3.30.0"
     }
     template = {
       source  = "hashicorp/template"
-      version = ">= 2.1"
+      version = "~> 2.0"
     }
   }
-  required_version = ">= 0.13"
+  required_version = "~> 0.14.0"
 }
 
 provider "aws" {
@@ -67,10 +67,10 @@ module "vpc_test" {
   enableNatGateway = false
 }
 
-# module "sns_test" {
-#   source = "../../aws_sns_topic"
-#   name   = "test-topic-1"
-# }
+module "sns_test" {
+  source = "../../aws_sns_topic"
+  name   = "test-topic-1"
+}
 
 # module "es_test" {
 #   source             = "../../aws_vpc_elasticsearch"
