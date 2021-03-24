@@ -45,7 +45,8 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
 }
 
 locals {
-  myInstanceActions = var.availActionArns != null ? var.availActionArns : ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"]
+  rebootAction      = var.rebootIfNotAvail ? ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"] : []
+  myInstanceActions = var.availActionArns != null ? var.availActionArns : local.rebootAction
 }
 
 resource "aws_cloudwatch_metric_alarm" "instance_avail" {

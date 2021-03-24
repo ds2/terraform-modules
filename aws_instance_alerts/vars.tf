@@ -40,3 +40,8 @@ variable "availCheckCount" {
   type    = number
   default = 2
 }
+
+variable "rebootIfNotAvail" {
+  type    = bool
+  default = true
+}
