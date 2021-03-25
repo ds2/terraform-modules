@@ -17,7 +17,7 @@ resource "aws_iam_role" "k8srole" {
 }
 POLICY
   tags = {
-    Name        = var.clusterName
+    Name        = "${var.clusterName}-eksrole"
     Terraformed = true
   }
 }
@@ -39,23 +39,16 @@ module "loggroup" {
   kmsKeyArn     = var.kmsKeyArn
 }
 
-# resource "aws_subnet" "changeSubnet" {
-#   for_each = data.aws_subnet.subnets
-#   vpc_id     = each.value.vpc_id
-#   cidr_block = each.value.cidr_block
-#   tags = merge(each.value.tags, { "kubernetes.io/cluster/${var.clusterName}" = "shared" })
-# }
-
 resource "aws_eks_cluster" "cluster" {
   name     = var.clusterName
   role_arn = aws_iam_role.k8srole.arn
   version  = var.k8sVersion
 
   vpc_config {
-    subnet_ids             = var.subnetIds
-    endpoint_public_access = true
-    # endpoint_private_access = true
-    //public_access_cidrs = ["0.0.0.0/0"]
+    subnet_ids              = var.subnetIds
+    endpoint_public_access  = true
+    endpoint_private_access = true
+    public_access_cidrs     = ["0.0.0.0/0"]
   }
 
   enabled_cluster_log_types = var.logTypes
@@ -79,6 +72,9 @@ resource "aws_eks_cluster" "cluster" {
       }
       resources = ["secrets"]
     }
+  }
+  kubernetes_network_config {
+    service_ipv4_cidr = var.k8sSvcCidr
   }
 }
 
@@ -111,4 +107,8 @@ data "aws_iam_policy_document" "oidpolicy" {
 resource "aws_iam_role" "oidrole" {
   assume_role_policy = data.aws_iam_policy_document.oidpolicy.json
   name_prefix        = "${var.clusterName}-oid-role-"
+  tags = {
+    Name        = "${var.clusterName}-oidrole"
+    Terraformed = true
+  }
 }
