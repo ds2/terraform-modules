@@ -111,12 +111,6 @@ resource "aws_instance" "instance" {
     Terraformed = true
   }
 
-  volume_tags = {
-    Name        = var.name
-    Terraformed = false
-    AwsCreated  = true
-  }
-
   credit_specification {
     cpu_credits = local.d2
   }
