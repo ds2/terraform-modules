@@ -127,14 +127,20 @@ module "sns_test" {
 # }
 
 # module "aws_eks_test" {
-#   source       = "../../aws_eks_cluster"
-#   clusterName  = "infra-test-2"
-#   subnetIds    = module.vpc_test.private_subnet_ids
-#   sshKeyName   = module.kp_test.name
-#   snsTopicArns = [module.sns_test.arn]
-#   vpcId        = module.vpc_test.id
-#   kmsKeyArn    = module.aws_kms_test2.arn
-#   clusterSize  = 1
+#   source      = "../../aws_eks_cluster"
+#   clusterName = "infra-test-3"
+#   subnetIds   = module.vpc_test.private_subnet_ids
+#   kmsKeyArn   = module.aws_kms_test2.arn
+# }
+
+# module "aws_eks_ng1" {
+#   source      = "../../aws_eks_nodegroup"
+#   vpcId       = module.vpc_test.vpc_id
+#   name        = "eks-ng-2"
+#   clusterName = module.aws_eks_test.name
+#   subnetIds   = module.vpc_test.private_subnet_ids
+#   sshKeyName  = module.kp_test.name
+#   k8sVersion  = "1.18"
 # }
 
 # module "ecr_test" {
