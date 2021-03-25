@@ -24,7 +24,7 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
 
 resource "aws_cloudwatch_metric_alarm" "cpucreditusage" {
   count                     = var.monitorCreditBalance ? 1 : 0
-  alarm_name                = "${var.name} Low CPUCreditUsage"
+  alarm_name                = "${var.name} High CPUCreditUsage"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "3"
   metric_name               = "CPUCreditBalance"
