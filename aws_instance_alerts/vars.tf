@@ -17,6 +17,11 @@ variable "creditBalanceThreshold" {
   default = 100
 }
 
+variable "creditUsageThreshold" {
+  type    = number
+  default = 2
+}
+
 variable "cpuUsageThreshold" {
   type    = number
   default = 80
