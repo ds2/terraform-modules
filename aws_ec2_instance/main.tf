@@ -134,7 +134,9 @@ module "monitoring" {
   dimensions = {
     InstanceId = aws_instance.instance.id
   }
-  snsTopicArns = var.snsTopicArns
+  snsTopicArns           = var.snsTopicArns
+  creditUsageThreshold   = var.creditUsageThreshold
+  creditBalanceThreshold = var.creditBalanceThreshold
 }
 
 data "aws_route53_zone" "dnszone" {

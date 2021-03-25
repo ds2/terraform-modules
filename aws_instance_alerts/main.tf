@@ -27,7 +27,7 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditusage" {
   alarm_name                = "${var.name} High CPUCreditUsage"
   comparison_operator       = "GreaterThanOrEqualToThreshold"
   evaluation_periods        = "3"
-  metric_name               = "CPUCreditBalance"
+  metric_name               = "CPUCreditUsage"
   namespace                 = "AWS/EC2"
   period                    = "60"
   statistic                 = "Average"

@@ -123,3 +123,13 @@ variable "availCheckCount" {
   type    = number
   default = 3
 }
+
+variable "creditBalanceThreshold" {
+  type    = number
+  default = 100
+}
+
+variable "creditUsageThreshold" {
+  type    = number
+  default = 2
+}
