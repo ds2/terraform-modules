@@ -86,7 +86,7 @@ variable "dnsInternalNamePostfix" {
 
 variable "unlimitedCpuCredits" {
   type    = bool
-  default = null
+  default = false
 }
 
 variable "allowUnsecureEgress" {
