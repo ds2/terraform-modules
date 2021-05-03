@@ -82,22 +82,22 @@ module "sns_test" {
 #   writeArns = [module.role_test.arn]
 # }
 
-# module "db_test" {
-#   source             = "../../aws_db_encr"
-#   name               = "db-test5"
-#   dbName             = "delmedb"
-#   dbAdminUser        = "adm"
-#   dbAdminPw          = "delmkmasdoiasdohidsaohasjladsnaldf"
-#   kmsKeyArn          = module.aws_kms_test2.arn
-#   subnetGrpIds       = module.vpc_test.private_subnet_ids
-#   accessSubnetGrpIds = concat(module.vpc_test.private_subnet_ids, module.vpc_test.public_subnet_ids)
-#   #storageScaler      = 10
-#   vpcId              = module.vpc_test.vpc_id
-#   snsTopicArns       = [module.sns_test.arn]
-#   dbParams = {
-#     "rds.logical_replication" = "1"
-#   }
-# }
+module "db_test" {
+  source             = "../../aws_db_encr"
+  name               = "db-test5"
+  dbName             = "delmedb"
+  dbAdminUser        = "adm"
+  dbAdminPw          = "delmkmasdoiasdohidsaohasjladsnaldf"
+  kmsKeyArn          = module.aws_kms_test2.arn
+  subnetGrpIds       = module.vpc_test.private_subnet_ids
+  accessSubnetGrpIds = concat(module.vpc_test.private_subnet_ids, module.vpc_test.public_subnet_ids)
+  #storageScaler      = 10
+  vpcId        = module.vpc_test.vpc_id
+  snsTopicArns = [module.sns_test.arn]
+  dbParams = {
+    "rds.logical_replication" = "1"
+  }
+}
 
 # module "aws_s3_test" {
 #   source              = "../../aws_s3_bucket"

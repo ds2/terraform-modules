@@ -88,11 +88,6 @@ variable "snsTopicArns" {
   default = null
 }
 
-variable "missingData" {
-  type    = string
-  default = "missing"
-}
-
 variable "highConnectionThreshold" {
   type    = number
   default = 40
