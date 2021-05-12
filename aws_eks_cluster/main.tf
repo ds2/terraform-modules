@@ -1,3 +1,7 @@
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "k8srole" {
   name_prefix = "${var.clusterName}-eks-role-"
   description = "the IAM role for the eks cluster master"
@@ -83,8 +87,6 @@ resource "aws_iam_openid_connect_provider" "oid" {
   thumbprint_list = []
   url             = aws_eks_cluster.cluster.identity.0.oidc.0.issuer
 }
-
-data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "oidpolicy" {
   statement {

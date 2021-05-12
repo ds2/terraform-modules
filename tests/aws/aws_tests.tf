@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/aws"
       version = "~> 3.30.0"
     }
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "~> 2.0.0"
+    }
     template = {
       source  = "hashicorp/template"
       version = "~> 2.0"
@@ -128,9 +132,15 @@ module "db_test" {
 
 # module "aws_eks_test" {
 #   source      = "../../aws_eks_cluster"
-#   clusterName = "infra-test-3"
+#   clusterName = "infra-test-5"
 #   subnetIds   = module.vpc_test.private_subnet_ids
 #   kmsKeyArn   = module.aws_kms_test2.arn
+# }
+
+# module "awsauth" {
+#   source      = "../../aws_eks_awsauth"
+#   clusterName = module.aws_eks_test.name
+#   cmName      = "aws-auth-test"
 # }
 
 # module "aws_eks_ng1" {
