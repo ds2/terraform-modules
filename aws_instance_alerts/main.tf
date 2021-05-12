@@ -22,6 +22,28 @@ resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
   }
 }
 
+resource "aws_cloudwatch_metric_alarm" "cpucreditusage" {
+  count                     = var.monitorCreditBalance ? 1 : 0
+  alarm_name                = "${var.name} High CPUCreditUsage"
+  comparison_operator       = "GreaterThanOrEqualToThreshold"
+  evaluation_periods        = "3"
+  metric_name               = "CPUCreditUsage"
+  namespace                 = "AWS/EC2"
+  period                    = "60"
+  statistic                 = "Average"
+  threshold                 = var.creditUsageThreshold
+  alarm_description         = "The credit usage for the ec2 instance ${var.name} is very high. Please check!"
+  insufficient_data_actions = []
+  alarm_actions             = var.snsTopicArns
+  ok_actions                = var.snsTopicArns
+  # treat_missing_data        = "ignored"
+  dimensions = var.dimensions
+  tags = {
+    Name        = "${var.name} CPU Credit Usage"
+    Terraformed = true
+  }
+}
+
 resource "aws_cloudwatch_metric_alarm" "cpuutil" {
   count                     = var.monitorCreditBalance ? 1 : 0
   alarm_name                = "${var.name} High CPU load"
@@ -45,7 +67,8 @@ resource "aws_cloudwatch_metric_alarm" "cpuutil" {
 }
 
 locals {
-  myInstanceActions = var.availActionArns != null ? var.availActionArns : ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"]
+  rebootAction      = var.rebootIfNotAvail ? ["arn:aws:automate:${data.aws_region.current.name}:ec2:reboot"] : []
+  myInstanceActions = var.availActionArns != null ? var.availActionArns : local.rebootAction
 }
 
 resource "aws_cloudwatch_metric_alarm" "instance_avail" {

@@ -1,3 +1,7 @@
+data "aws_region" "current" {}
+
+data "aws_caller_identity" "current" {}
+
 resource "aws_iam_role" "k8srole" {
   name_prefix = "${var.clusterName}-eks-role-"
   description = "the IAM role for the eks cluster master"
@@ -17,7 +21,7 @@ resource "aws_iam_role" "k8srole" {
 }
 POLICY
   tags = {
-    Name        = var.clusterName
+    Name        = "${var.clusterName}-eksrole"
     Terraformed = true
   }
 }
@@ -39,23 +43,16 @@ module "loggroup" {
   kmsKeyArn     = var.kmsKeyArn
 }
 
-# resource "aws_subnet" "changeSubnet" {
-#   for_each = data.aws_subnet.subnets
-#   vpc_id     = each.value.vpc_id
-#   cidr_block = each.value.cidr_block
-#   tags = merge(each.value.tags, { "kubernetes.io/cluster/${var.clusterName}" = "shared" })
-# }
-
 resource "aws_eks_cluster" "cluster" {
   name     = var.clusterName
   role_arn = aws_iam_role.k8srole.arn
   version  = var.k8sVersion
 
   vpc_config {
-    subnet_ids             = var.subnetIds
-    endpoint_public_access = true
-    # endpoint_private_access = true
-    //public_access_cidrs = ["0.0.0.0/0"]
+    subnet_ids              = var.subnetIds
+    endpoint_public_access  = true
+    endpoint_private_access = true
+    public_access_cidrs     = ["0.0.0.0/0"]
   }
 
   enabled_cluster_log_types = var.logTypes
@@ -80,6 +77,9 @@ resource "aws_eks_cluster" "cluster" {
       resources = ["secrets"]
     }
   }
+  kubernetes_network_config {
+    service_ipv4_cidr = var.k8sSvcCidr
+  }
 }
 
 resource "aws_iam_openid_connect_provider" "oid" {
@@ -87,8 +87,6 @@ resource "aws_iam_openid_connect_provider" "oid" {
   thumbprint_list = []
   url             = aws_eks_cluster.cluster.identity.0.oidc.0.issuer
 }
-
-data "aws_caller_identity" "current" {}
 
 data "aws_iam_policy_document" "oidpolicy" {
   statement {
@@ -111,4 +109,8 @@ data "aws_iam_policy_document" "oidpolicy" {
 resource "aws_iam_role" "oidrole" {
   assume_role_policy = data.aws_iam_policy_document.oidpolicy.json
   name_prefix        = "${var.clusterName}-oid-role-"
+  tags = {
+    Name        = "${var.clusterName}-oidrole"
+    Terraformed = true
+  }
 }

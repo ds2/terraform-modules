@@ -11,5 +11,6 @@ output "accesskey" {
 }
 
 output "secret" {
-  value = aws_iam_access_key.acckey.secret
+  description = "the secret key of the user"
+  value       = aws_iam_access_key.acckey.secret
 }

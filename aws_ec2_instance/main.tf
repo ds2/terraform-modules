@@ -50,11 +50,6 @@ resource "aws_security_group_rule" "vpcingress" {
   ipv6_cidr_blocks  = length(local.access_cidrs6) > 0 ? local.access_cidrs6 : null
 }
 
-locals {
-  d1 = var.unlimitedCpuCredits == true ? "unlimited" : "standard"
-  d2 = var.unlimitedCpuCredits == null ? null : local.d1
-}
-
 resource "aws_security_group_rule" "extingressudp" {
   count             = length(local.extUdpPortList)
   security_group_id = aws_security_group.extsg.id
@@ -111,14 +106,8 @@ resource "aws_instance" "instance" {
     Terraformed = true
   }
 
-  volume_tags = {
-    Name        = var.name
-    Terraformed = false
-    AwsCreated  = true
-  }
-
   credit_specification {
-    cpu_credits = local.d2
+    cpu_credits = var.unlimitedCpuCredits ? "unlimited" : "standard"
   }
 
   lifecycle {
@@ -134,7 +123,9 @@ module "monitoring" {
   dimensions = {
     InstanceId = aws_instance.instance.id
   }
-  snsTopicArns = var.snsTopicArns
+  snsTopicArns           = var.snsTopicArns
+  creditUsageThreshold   = var.creditUsageThreshold
+  creditBalanceThreshold = var.creditBalanceThreshold
 }
 
 data "aws_route53_zone" "dnszone" {

@@ -138,95 +138,14 @@ resource "aws_db_instance" "db" {
   ]
 }
 
-resource "aws_cloudwatch_metric_alarm" "cpuutilalert" {
-  alarm_name                = "${var.name} High CPU Usage"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUUtilization"
-  namespace                 = "AWS/RDS"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = var.cpuUtilThreshold
-  alarm_description         = "The cpu utilization for the db instance ${var.name} is very high. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  treat_missing_data        = var.missingData
-  dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.id
-  }
-  tags = {
-    Name        = "${var.name} CPU Utilization"
-    Terraformed = true
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "connectionhigh" {
-  alarm_name                = "${var.name} High Connection Count"
-  comparison_operator       = "GreaterThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "DatabaseConnections"
-  namespace                 = "AWS/RDS"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = var.highConnectionThreshold
-  alarm_description         = "The connection count for the db instance ${var.name} is very high. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  treat_missing_data        = var.missingData
-  dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.id
-  }
-  tags = {
-    Name        = "${var.name} Connection High"
-    Terraformed = true
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "freestoragesize" {
-  alarm_name                = "${var.name} Storage Low"
-  comparison_operator       = "LessThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "FreeStorageSpace"
-  namespace                 = "AWS/RDS"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = var.storageBytesThreshold
-  alarm_description         = "The storage size for the db instance ${var.name} is very low. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  treat_missing_data        = var.missingData
-  dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.id
-  }
-  tags = {
-    Name        = "${var.name} Free Storage"
-    Terraformed = true
-  }
-}
-
-resource "aws_cloudwatch_metric_alarm" "cpucreditbalance" {
-  count                     = var.monitorCreditBalance ? 1 : 0
-  alarm_name                = "${var.name} Low CPUCreditBalance"
-  comparison_operator       = "LessThanOrEqualToThreshold"
-  evaluation_periods        = "2"
-  metric_name               = "CPUCreditBalance"
-  namespace                 = "AWS/RDS"
-  period                    = "120"
-  statistic                 = "Average"
-  threshold                 = 30
-  alarm_description         = "The credit balance for the db instance ${var.name} is very low. Please check!"
-  insufficient_data_actions = []
-  alarm_actions             = var.snsTopicArns
-  ok_actions                = var.snsTopicArns
-  treat_missing_data        = var.missingData
-  dimensions = {
-    DBInstanceIdentifier = aws_db_instance.db.id
-  }
-  tags = {
-    Name        = "${var.name} CPU Credit Balance"
-    Terraformed = true
-  }
+module "cw_alerts" {
+  source                  = "../aws_rds_cw_alerts"
+  dbInstanceId            = aws_db_instance.db.id
+  storageBytesThreshold   = var.storageBytesThreshold
+  cpuUtilThreshold        = var.cpuUtilThreshold
+  monitorCreditBalance    = var.monitorCreditBalance
+  highConnectionThreshold = var.highConnectionThreshold
+  alarmSnsArns            = var.snsTopicArns
+  okSnsArns               = var.snsTopicArns
+  insufficientSnsArns     = var.snsTopicArns
 }
