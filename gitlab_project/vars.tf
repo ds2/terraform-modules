@@ -126,3 +126,13 @@ variable "packagesEnabled" {
   type    = bool
   default = false
 }
+
+variable "mainBranchName" {
+  type    = string
+  default = "main"
+}
+
+variable "developBranchName" {
+  type    = string
+  default = "develop"
+}
