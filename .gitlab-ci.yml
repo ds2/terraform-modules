@@ -16,13 +16,15 @@ cache:
     - tests/github/.terraform
     - tests/gitlab/.terraform
 
-before_script:
-  - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-  - terraform --version
-
 stages:
+  - init
   - validate
   - release
+
+init:
+  stage: init
+  script:
+    - terraform --version
 
 validate-aws:
   stage: validate
@@ -68,5 +70,5 @@ release:
     description: "another tagged release"
     tag_name: "$CI_COMMIT_TAG"
     milestones:
-        - 'v0.3'
-        - 'v0.2'
+      - "v0.3"
+      - "v0.2"
