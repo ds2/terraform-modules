@@ -24,15 +24,10 @@ resource "aws_iam_policy" "policy_one" {
   })
 }
 
-resource "aws_iam_role" "role" {
-  name_prefix         = "${var.id}-role"
-  assume_role_policy  = data.aws_iam_policy_document.instance-assume-role-policy.json
-  managed_policy_arns = [aws_iam_policy.policy_one.arn]
-  tags = {
-    Terraformed = true
-    Name        = var.id
-  }
-  lifecycle {
-    ignore_changes = [managed_policy_arns] # for some reason, AWS creates its own policy and attaches it to this role. So, we ignore this afterwards ;)
-  }
+module "iamrole" {
+  source           = "../aws_iam_role"
+  name             = "${var.id}-role"
+  description      = "The role to use for writing data to cloudwatch from cloudtrail"
+  assumeRolePolicy = data.aws_iam_policy_document.instance-assume-role-policy.json
+  policyArns       = [aws_iam_policy.policy_one.arn]
 }

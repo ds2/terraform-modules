@@ -133,4 +133,7 @@ resource "aws_s3_bucket_public_access_block" "publicaccess" {
   ignore_public_acls      = var.ignorePublicAcls
   block_public_policy     = var.blockPublicPolicy
   restrict_public_buckets = var.restrictPublicBuckets
+  depends_on = [
+    aws_s3_bucket_policy.policy
+  ]
 }

@@ -17,13 +17,13 @@ module "loggroup" {
 }
 
 resource "aws_cloudtrail" "trail" {
-  name                          = var.id
-  s3_bucket_name                = module.logbucket.id
-  s3_key_prefix                 = var.logPrefix
-  is_multi_region_trail         = var.multiRegion
-  kms_key_id                    = var.logKmsKeyArn
-  cloud_watch_logs_group_arn    = "${module.loggroup.arn}:*" # logstream wildcard
-  cloud_watch_logs_role_arn     = aws_iam_role.role.arn
+  name                       = var.id
+  s3_bucket_name             = module.logbucket.id
+  s3_key_prefix              = var.logPrefix
+  is_multi_region_trail      = var.multiRegion
+  kms_key_id                 = var.logKmsKeyArn
+  cloud_watch_logs_group_arn = "${module.loggroup.arn}:*" # logstream wildcard
+  cloud_watch_logs_role_arn  = module.iamrole.arn
   tags = {
     Name        = var.id
     Terraformed = true
