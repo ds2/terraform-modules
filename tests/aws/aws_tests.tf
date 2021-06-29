@@ -208,22 +208,22 @@ module "sns_test" {
 #   records   = ["127.0.0.1", "192.168.1.1"]
 # }
 
-module "kmsevents" {
-  source          = "../../aws_cloudtrail"
-  id              = "my-kms-test-events"
-  logPrefix       = "kms-events"
-  logKmsKeyArn    = module.aws_kms_test2.arn
-  s3LogBucketName = "my-kms-test-events-bucket"
-}
+# module "kmsevents" {
+#   source          = "../../aws_cloudtrail"
+#   id              = "my-kms-test-events"
+#   logPrefix       = "kms-events"
+#   logKmsKeyArn    = module.aws_kms_test2.arn
+#   s3LogBucketName = "my-kms-test-events-bucket"
+# }
 
-module "kmsBucketAlerts" {
-  source       = "../../aws_s3_bucket_alerts"
-  s3BucketName = module.kmsevents.s3BucketName
-}
+# module "kmsBucketAlerts" {
+#   source       = "../../aws_s3_bucket_alerts"
+#   s3BucketName = module.kmsevents.s3BucketName
+# }
 
-module "cwalerts" {
-  source       = "../../aws_cloudwatch_metricfilters"
-  logGroupName = module.kmsevents.logGroupName
-  snsAlarmArns = [module.sns_test.arn]
-  snsOkArns    = [module.sns_test.arn]
-}
+# module "cwalerts" {
+#   source       = "../../aws_cloudwatch_metricfilters"
+#   logGroupName = module.kmsevents.logGroupName
+#   snsAlarmArns = [module.sns_test.arn]
+#   snsOkArns    = [module.sns_test.arn]
+# }
