@@ -1,8 +1,8 @@
 image:
   name: registry.gitlab.com/gitlab-org/gitlab-build-images:terraform
   entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+    - "/usr/bin/env"
+    - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Default output file for Terraform plan
 variables:
@@ -54,3 +54,18 @@ validate-gh:
     - cd tests/github
     - terraform init -input=false
     - terraform validate
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "Nothing special to do here"
+  release:
+    name: "My awesome release"
+    description: "another tagged release"
+    tag_name: "$CI_COMMIT_TAG"
+    milestones:
+        - 'v0.3'
+        - 'v0.2'
