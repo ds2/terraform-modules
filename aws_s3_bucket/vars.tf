@@ -112,3 +112,24 @@ variable "versionObjPrefix" {
   type    = string
   default = null
 }
+variable "blockPublicAcl" {
+  type    = bool
+  default = true
+}
+variable "blockPublicPolicy" {
+  type    = bool
+  default = true
+}
+variable "ignorePublicAcls" {
+  type    = bool
+  default = true
+}
+variable "restrictPublicBuckets" {
+  type    = bool
+  default = true
+}
+
+variable "policy" {
+  type    = string
+  default = null
+}
