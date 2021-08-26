@@ -9,26 +9,78 @@ locals {
 
 data "aws_iam_policy_document" "keypolicy" {
   statement {
-    sid    = "1"
+    sid    = "Allow root all ops"
     effect = "Allow"
     principals {
       type        = "AWS"
-      identifiers = sort(distinct(compact(concat(local.keyPeople, tolist(var.adminArns)))))
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"]
     }
     actions   = ["kms:*"]
     resources = ["*"]
   }
   statement {
-    sid    = "2"
+    sid    = "Allow Admins all ops"
     effect = "Allow"
     principals {
-      type = "AWS"
-      identifiers = [
-        "*",
-      ]
+      type        = "AWS"
+      identifiers = sort(distinct(compact(concat(local.keyPeople, tolist(var.adminArns)))))
     }
-    actions   = ["kms:Encrypt", "kms:Decrypt"]
+    actions = ["kms:Create*",
+      "kms:Describe*",
+      "kms:Enable*",
+      "kms:List*",
+      "kms:Put*",
+      "kms:Update*",
+      "kms:Revoke*",
+      "kms:Disable*",
+      "kms:Get*",
+      "kms:Delete*",
+      "kms:TagResource",
+      "kms:UntagResource",
+      "kms:ScheduleKeyDeletion",
+    "kms:CancelKeyDeletion"]
     resources = ["*"]
+  }
+  dynamic "statement" {
+    for_each = length(var.userArns) > 0 ? [1] : []
+    content {
+      sid    = "Allow Users ops"
+      effect = "Allow"
+      principals {
+        type        = "AWS"
+        identifiers = sort(var.userArns)
+      }
+      actions = ["kms:Encrypt",
+        "kms:Decrypt",
+        "kms:ReEncrypt*",
+        "kms:GenerateDataKey*",
+        "kms:GetPublicKey",
+        "kms:DescribeKey",
+        "kms:Sign",
+        "kms:Verify"
+      ]
+      resources = ["*"]
+    }
+  }
+  dynamic "statement" {
+    for_each = length(var.userArns) > 0 ? [1] : []
+    content {
+      sid    = "Allow Users Grant ops"
+      effect = "Allow"
+      principals {
+        type        = "AWS"
+        identifiers = sort(var.userArns)
+      }
+      actions = ["kms:CreateGrant",
+        "kms:ListGrants",
+      "kms:RevokeGrant"]
+      condition {
+        test     = "Bool"
+        variable = "kms:GrantIsForAWSResource"
+        values   = ["true"]
+      }
+      resources = ["*"]
+    }
   }
   statement {
     sid       = "Allow CloudTrail to encrypt logs"
