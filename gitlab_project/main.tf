@@ -13,6 +13,7 @@ resource "gitlab_project" "project" {
   pipelines_enabled                                = var.pipelinesEnabled
   snippets_enabled                                 = var.snippetsEnabled
   visibility_level                                 = var.visibility
+  pages_access_level                               = var.pagesVisibility
   default_branch                                   = var.defaultBranch
   shared_runners_enabled                           = var.sharedRunnersEnabled
   request_access_enabled                           = false
