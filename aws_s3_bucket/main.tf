@@ -18,18 +18,51 @@ resource "aws_s3_bucket" "bucket" {
     prefix  = var.versionObjPrefix
     enabled = var.versioned
 
+    # tags = {
+    #   Name         = var.name
+    #   rule         = "agingOutdatedVersions"
+    #   Terraformed  = true
+    #   s3BucketName = var.name
+    #   autoclean    = "true"
+    # }
+
     noncurrent_version_transition {
-      days          = var.ncvDays
-      storage_class = "STANDARD_IA"
+      days          = var.oneZoneDays
+      storage_class = "GLACIER"
+    }
+    noncurrent_version_transition {
+      days          = var.oneZoneDays + 90
+      storage_class = "DEEP_ARCHIVE"
     }
 
     noncurrent_version_expiration {
-      days = var.ncvExpireDays
+      days = var.oneZoneDays + 120
+    }
+    expiration {
+      expired_object_delete_marker = true
+    }
+  }
+
+  lifecycle_rule {
+    id = "agingCurrentVersions"
+
+    prefix  = var.versionObjPrefix
+    enabled = var.enableCurrVersionAging
+
+    tags = {
+      rule         = "agingCurrentVersions"
+      autoclean    = "true"
+      Terraformed  = true
+      s3BucketName = var.name
     }
 
-    expiration {
-      days                         = var.delCurrObjAfterDays
-      expired_object_delete_marker = true
+    transition {
+      days          = var.oneZoneDays
+      storage_class = "ONEZONE_IA"
+    }
+    transition {
+      days          = var.glacierDays
+      storage_class = "GLACIER"
     }
   }
 

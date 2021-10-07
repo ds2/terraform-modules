@@ -12,6 +12,10 @@ variable "versioned" {
   default = false
 }
 
+variable "enableCurrVersionAging" {
+  type    = bool
+  default = true
+}
 variable "readonlyIamArn" {
   type        = set(string)
   description = "the ARNs of the users who can only read data from the bucket"
@@ -29,15 +33,15 @@ variable "maxUploadDays" {
   default = 3
 }
 
-variable "ncvDays" {
+variable "oneZoneDays" {
   type    = number
   default = 30
 }
-
-variable "ncvExpireDays" {
+variable "glacierDays" {
   type    = number
   default = 60
 }
+
 
 variable "kmsKeyArn" {
   type    = string
@@ -131,5 +135,5 @@ variable "restrictPublicBuckets" {
 
 variable "policy" {
   type    = string
-  default = null
+  default = ""
 }
