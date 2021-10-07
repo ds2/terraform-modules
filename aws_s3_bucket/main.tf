@@ -39,6 +39,7 @@ resource "aws_s3_bucket" "bucket" {
       days = var.oneZoneDays + 120
     }
     expiration {
+      days                         = var.delCurrObjAfterDays
       expired_object_delete_marker = true
     }
   }
