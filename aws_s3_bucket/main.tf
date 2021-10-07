@@ -25,18 +25,22 @@ resource "aws_s3_bucket" "bucket" {
     #   s3BucketName = var.name
     #   autoclean    = "true"
     # }
-
     noncurrent_version_transition {
       days          = var.oneZoneDays
+      storage_class = "ONEZONE_IA"
+    }
+
+    noncurrent_version_transition {
+      days          = var.glacierDays
       storage_class = "GLACIER"
     }
     noncurrent_version_transition {
-      days          = var.oneZoneDays + 90
+      days          = var.deepArchiveDays
       storage_class = "DEEP_ARCHIVE"
     }
 
     noncurrent_version_expiration {
-      days = var.oneZoneDays + 120
+      days = var.ncvExpirationDays
     }
     expiration {
       days                         = var.delCurrObjAfterDays
@@ -60,10 +64,6 @@ resource "aws_s3_bucket" "bucket" {
     transition {
       days          = var.oneZoneDays
       storage_class = "ONEZONE_IA"
-    }
-    transition {
-      days          = var.glacierDays
-      storage_class = "GLACIER"
     }
   }
 

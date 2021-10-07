@@ -41,6 +41,15 @@ variable "glacierDays" {
   type    = number
   default = 60
 }
+variable "deepArchiveDays" {
+  type    = number
+  default = 150
+}
+variable "ncvExpirationDays" {
+  type    = number
+  default = 160
+}
+
 
 
 variable "kmsKeyArn" {
