@@ -1,6 +1,7 @@
 resource "aws_s3_bucket" "bucket" {
-  bucket = var.name
-  acl    = var.acl
+  bucket        = var.name
+  acl           = var.acl
+  force_destroy = true
 
   tags = {
     Name         = var.name
@@ -17,18 +18,52 @@ resource "aws_s3_bucket" "bucket" {
     prefix  = var.versionObjPrefix
     enabled = var.versioned
 
+    # tags = {
+    #   Name         = var.name
+    #   rule         = "agingOutdatedVersions"
+    #   Terraformed  = true
+    #   s3BucketName = var.name
+    #   autoclean    = "true"
+    # }
     noncurrent_version_transition {
-      days          = var.ncvDays
-      storage_class = "STANDARD_IA"
+      days          = var.oneZoneDays
+      storage_class = "ONEZONE_IA"
+    }
+
+    noncurrent_version_transition {
+      days          = var.glacierDays
+      storage_class = "GLACIER"
+    }
+    noncurrent_version_transition {
+      days          = var.deepArchiveDays
+      storage_class = "DEEP_ARCHIVE"
     }
 
     noncurrent_version_expiration {
-      days = var.ncvExpireDays
+      days = var.ncvExpirationDays
     }
-
     expiration {
       days                         = var.delCurrObjAfterDays
       expired_object_delete_marker = true
+    }
+  }
+
+  lifecycle_rule {
+    id = "agingCurrentVersions"
+
+    prefix  = var.versionObjPrefix
+    enabled = var.enableCurrVersionAging
+
+    tags = {
+      rule         = "agingCurrentVersions"
+      autoclean    = "true"
+      Terraformed  = true
+      s3BucketName = var.name
+    }
+
+    transition {
+      days          = var.oneZoneDays
+      storage_class = "ONEZONE_IA"
     }
   }
 
@@ -121,7 +156,18 @@ locals {
 }
 
 resource "aws_s3_bucket_policy" "policy" {
-  count  = local.allCounts > 0 ? 1 : 0
+  count  = local.allCounts > 0 || length(var.policy) > 0 ? 1 : 0
   bucket = aws_s3_bucket.bucket.id
-  policy = data.aws_iam_policy_document.cdnPolicy.json
+  policy = length(var.policy) > 0 ? var.policy : data.aws_iam_policy_document.cdnPolicy.json
+}
+
+resource "aws_s3_bucket_public_access_block" "publicaccess" {
+  bucket                  = aws_s3_bucket.bucket.id
+  block_public_acls       = var.blockPublicAcl
+  ignore_public_acls      = var.ignorePublicAcls
+  block_public_policy     = var.blockPublicPolicy
+  restrict_public_buckets = var.restrictPublicBuckets
+  depends_on = [
+    aws_s3_bucket_policy.policy
+  ]
 }

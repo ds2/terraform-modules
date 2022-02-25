@@ -12,6 +12,10 @@ variable "versioned" {
   default = false
 }
 
+variable "enableCurrVersionAging" {
+  type    = bool
+  default = true
+}
 variable "readonlyIamArn" {
   type        = set(string)
   description = "the ARNs of the users who can only read data from the bucket"
@@ -29,15 +33,24 @@ variable "maxUploadDays" {
   default = 3
 }
 
-variable "ncvDays" {
+variable "oneZoneDays" {
   type    = number
   default = 30
 }
-
-variable "ncvExpireDays" {
+variable "glacierDays" {
   type    = number
   default = 60
 }
+variable "deepArchiveDays" {
+  type    = number
+  default = 150
+}
+variable "ncvExpirationDays" {
+  type    = number
+  default = 160
+}
+
+
 
 variable "kmsKeyArn" {
   type    = string
@@ -111,4 +124,25 @@ variable "delObjPrefix" {
 variable "versionObjPrefix" {
   type    = string
   default = null
+}
+variable "blockPublicAcl" {
+  type    = bool
+  default = true
+}
+variable "blockPublicPolicy" {
+  type    = bool
+  default = true
+}
+variable "ignorePublicAcls" {
+  type    = bool
+  default = true
+}
+variable "restrictPublicBuckets" {
+  type    = bool
+  default = true
+}
+
+variable "policy" {
+  type    = string
+  default = ""
 }

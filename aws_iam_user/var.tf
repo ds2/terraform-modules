@@ -3,7 +3,7 @@ variable "username" {
 }
 
 variable "policyArns" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 

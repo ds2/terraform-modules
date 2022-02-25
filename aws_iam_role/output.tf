@@ -15,5 +15,5 @@ output "id" {
 }
 
 output "policyArn" {
-  value = aws_iam_policy.policy.arn
+  value = var.policyData != null ? aws_iam_policy.userpolicy[0].arn : null
 }
