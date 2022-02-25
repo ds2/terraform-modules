@@ -17,6 +17,9 @@ The ref parameter defines the tag name to checkout. You should update it to the 
 
 ## Release
 
-Done via
+Simply apply a tag in the format "vMYVERSION". Examples:
 
-    ./gradlew clean release -Prelease.useAutomaticVersion=true -Prelease.newVersion=0.3-SNAPSHOT -Prelease.releaseVersion=0.3.0
+* v1.2.3
+* v0.3.10
+
+etc. Semantic versioning.
