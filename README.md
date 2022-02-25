@@ -20,5 +20,6 @@ The ref parameter defines the tag name to checkout. You should update it to the 
 Simply apply a tag in the format "vMYVERSION". Semantic versioning.
 You can do so by running:
 
-    git tag -sva v0.3.10
-    git push origin v0.3.10
+    # please update the release tag here!!
+    MYTAG="v0.3.10"
+    git tag -s ${MYTAG} && git tag -v ${MYTAG} -m "Releasing version ${MYTAG}" && git push origin ${MYTAG}
