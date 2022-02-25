@@ -33,5 +33,4 @@ module "testrepo" {
   reviewers    = [var.username]
   projectId    = module.testproject1.key
   hasPipelines = false
-  # reviewers = [data.bitbucket_user.lexxy23.uuid]
 }
