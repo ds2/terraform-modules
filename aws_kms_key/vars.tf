@@ -42,3 +42,8 @@ variable "adminArns" {
   type    = set(string)
   default = []
 }
+
+variable "userArns" {
+  type    = set(string)
+  default = []
+}

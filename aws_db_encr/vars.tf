@@ -56,7 +56,7 @@ variable "vpcId" {
 
 variable "dbVersion" {
   type    = string
-  default = "12.3"
+  default = "13.1"
 }
 
 variable "dbName" {
@@ -111,4 +111,9 @@ variable "monitorCreditBalance" {
 variable "logfileRetentionDays" {
   type    = number
   default = 365
+}
+
+variable "allowMajorUpgrade" {
+  type    = bool
+  default = false
 }

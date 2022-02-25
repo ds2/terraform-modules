@@ -7,11 +7,6 @@ variable "description" {
   default = null
 }
 
-variable "policyData" {
-  type    = string
-  default = null
-}
-
 variable "assumeRolePolicy" {
   type    = string
   default = <<EOF
@@ -36,11 +31,6 @@ variable "useNameNotPrefix" {
   default = false
 }
 
-variable "templateData" {
-  type    = string
-  default = null
-}
-
 variable "rolePath" {
   type    = string
   default = null
@@ -48,5 +38,15 @@ variable "rolePath" {
 
 variable "maxSessionSeconds" {
   type    = number
+  default = null
+}
+
+variable "policyArns" {
+  type    = list(string)
+  default = []
+}
+
+variable "policyData" {
+  type    = string
   default = null
 }

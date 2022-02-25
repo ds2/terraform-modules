@@ -109,7 +109,7 @@ resource "aws_db_instance" "db" {
   engine                          = "postgres"
   engine_version                  = var.dbVersion
   port                            = var.dbPort
-  allow_major_version_upgrade     = true
+  allow_major_version_upgrade     = var.allowMajorUpgrade
   auto_minor_version_upgrade      = true
   name                            = var.dbName
   final_snapshot_identifier       = "${var.name}-final-snapshot"
