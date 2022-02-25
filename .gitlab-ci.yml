@@ -1,13 +1,12 @@
 image:
-  name: registry.gitlab.com/gitlab-org/gitlab-build-images:terraform
-  entrypoint:
-    - '/usr/bin/env'
-    - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+  name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
 
 # Default output file for Terraform plan
 variables:
-  PLAN: plan.tfplan
-  JSON_PLAN_FILE: tfplan.json
+  TF_PLAN: "plan.tfplan"
+  TF_INPUT: "true"
+  TF_IN_AUTOMATION: "yes"
+  JSON_PLAN_FILE: "tfplan.json"
 
 cache:
   paths:
@@ -16,12 +15,15 @@ cache:
     - tests/github/.terraform
     - tests/gitlab/.terraform
 
-before_script:
-  - alias convert_report="jq -r '([.resource_changes[]?.change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-  - terraform --version
-
 stages:
+  - init
   - validate
+  - release
+
+init:
+  stage: init
+  script:
+    - terraform --version
 
 validate-aws:
   stage: validate
@@ -54,3 +56,18 @@ validate-gh:
     - cd tests/github
     - terraform init -input=false
     - terraform validate
+
+release:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  rules:
+    - if: $CI_COMMIT_TAG
+  script:
+    - echo "Nothing special to do here"
+  release:
+    name: "My awesome release"
+    description: "another tagged release"
+    tag_name: "$CI_COMMIT_TAG"
+    milestones:
+      - "v0.3"
+      - "v0.2"

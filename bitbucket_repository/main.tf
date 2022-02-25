@@ -17,7 +17,7 @@ resource "bitbucket_repository" "repo" {
 }
 
 
-resource "bitbucket_branch_restriction" "repo_master" {
+resource "bitbucket_branch_restriction" "br_main" {
   count      = var.reviewers != null ? 1 : 0
   owner      = bitbucket_repository.repo.owner
   repository = bitbucket_repository.repo.slug
@@ -27,7 +27,7 @@ resource "bitbucket_branch_restriction" "repo_master" {
   users   = var.reviewers
 }
 
-resource "bitbucket_branch_restriction" "repo_develop" {
+resource "bitbucket_branch_restriction" "br_develop" {
   count      = var.reviewers != null ? 1 : 0
   owner      = bitbucket_repository.repo.owner
   repository = bitbucket_repository.repo.slug

@@ -9,20 +9,25 @@ resource "aws_iam_role" "role" {
     Terraformed = true
     Name        = var.name
   }
+  lifecycle {
+    ignore_changes = [managed_policy_arns] # for some reason, AWS creates its own policy and attaches it to this role. So, we ignore this afterwards ;)
+  }
 }
 
-data "template_file" "policy_template" {
-  template = var.templateData
-}
-
-resource "aws_iam_policy" "policy" {
+resource "aws_iam_policy" "userpolicy" {
+  count       = var.policyData != null ? 1 : 0
   name_prefix = "${var.name}-policy-"
-  description = "the policy for ${var.name}"
-
-  policy = var.templateData != null ? data.template_file.policy_template.rendered : var.policyData
+  description = "the user shipped policy for ${var.name}"
+  policy      = var.policyData
+}
+resource "aws_iam_role_policy_attachment" "user-attach" {
+  count      = var.policyData != null ? 1 : 0
+  role       = aws_iam_role.role.name
+  policy_arn = aws_iam_policy.userpolicy[0].arn
 }
 
 resource "aws_iam_role_policy_attachment" "policy-attach" {
+  count      = length(var.policyArns)
   role       = aws_iam_role.role.name
-  policy_arn = aws_iam_policy.policy.arn
+  policy_arn = var.policyArns[count.index]
 }

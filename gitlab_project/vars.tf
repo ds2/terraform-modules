@@ -80,6 +80,11 @@ variable "visibility" {
   default = "private"
 }
 
+variable "pagesVisibility" {
+  type    = string
+  default = "private"
+}
+
 variable "defaultBranch" {
   type    = string
   default = "main"
