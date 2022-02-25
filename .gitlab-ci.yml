@@ -1,17 +1,12 @@
 image:
-  #name: registry.gitlab.com/gitlab-org/gitlab-build-images:terraform
   name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
-  #name: hashicorp/terraform:1.1.6
-  # entrypoint:
-  #   - "/usr/bin/env"
-  #   - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
 # Default output file for Terraform plan
 variables:
-  TF_PLAN: plan.tfplan
-  TF_INPUT: 0
-  TF_IN_AUTOMATION: yes
-  JSON_PLAN_FILE: tfplan.json
+  TF_PLAN: "plan.tfplan"
+  TF_INPUT: "true"
+  TF_IN_AUTOMATION: "yes"
+  JSON_PLAN_FILE: "tfplan.json"
 
 cache:
   paths:
