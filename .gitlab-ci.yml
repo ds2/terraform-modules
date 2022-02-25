@@ -65,9 +65,10 @@ release:
   script:
     - echo "Nothing special to do here"
   release:
-    name: "My awesome release"
-    description: "another tagged release"
+    name: "Release $CI_COMMIT_TAG"
+    description: "Created using the release-cli $EXTRA_DESCRIPTION"
     tag_name: "$CI_COMMIT_TAG"
+    ref: "$CI_COMMIT_TAG"
     milestones:
       - "v0.3"
       - "v0.2"
