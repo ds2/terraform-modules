@@ -22,4 +22,4 @@ You can do so by running:
 
     # please update the release tag here!!
     MYTAG="v0.3.10"
-    git tag -s ${MYTAG} && git tag -v ${MYTAG} -m "Releasing version ${MYTAG}" && git push origin ${MYTAG}
+    git tag -s ${MYTAG} -m "Releasing version ${MYTAG}" && git tag -v ${MYTAG} && git push origin ${MYTAG}
