@@ -1,9 +1,7 @@
 terraform {
   required_providers {
     bitbucket = {
-      source = "andsafe-ag/bitbucket"
-      # version = "2.5.0"
+      source = "aeirola/bitbucket"
     }
   }
-  # required_version = "~> 1.0"
 }
