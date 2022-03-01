@@ -1,6 +1,5 @@
 provider "github" {
   token        = var.gh_token
-  version      = "~> 2.8"
   organization = var.gh_org
 }
 
