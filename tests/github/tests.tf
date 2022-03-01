@@ -1,14 +1,14 @@
 provider "github" {
-  token        = var.gh_token
-  organization = var.gh_org
+  token = var.gh_token
+  owner = var.gh_org
 }
 
 terraform {
   required_version = "~> 1.1.0"
   required_providers {
     github = {
-      source  = "hashicorp/github"
-      version = "~> 2.9.2"
+      source  = "integrations/github"
+      version = "~> 4.0"
     }
   }
 }
