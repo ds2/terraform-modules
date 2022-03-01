@@ -20,12 +20,12 @@ module "team1" {
   members     = ["ds2ci"]
 }
 
-# module "repo1" {
-#   source              = "../../github_project"
-#   name                = "infra001-test-bucket-20200520"
-#   topics              = ["test", "maven", "java"]
-#   initialize          = true
-#   isPrivate           = false
-#   projectLicenseId    = "agpl-3.0"
-#   gitignoreTemplateId = "Gradle"
-# }
+module "repo1" {
+  source              = "../../github_project"
+  name                = "infra001-test-bucket-20220301"
+  topics              = ["test", "maven", "java"]
+  initialize          = true
+  isPrivate           = false
+  projectLicenseId    = "agpl-3.0"
+  gitignoreTemplateId = "Gradle"
+}
