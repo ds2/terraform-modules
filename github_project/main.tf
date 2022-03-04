@@ -2,12 +2,11 @@ resource "github_repository" "project" {
   name                   = var.name
   description            = var.description
   homepage_url           = var.homepage
-  private                = var.isPrivate
+  visibility             = var.isPrivate ? "private" : "public"
   has_projects           = var.hasProjects
   has_issues             = var.hasIssues
   has_wiki               = var.hasWiki
   has_downloads          = var.hasDownloads
-  default_branch         = var.initialize ? null : var.defaultBranch
   delete_branch_on_merge = true
   topics                 = var.topics
   auto_init              = var.initialize
@@ -20,8 +19,13 @@ resource "github_repository" "project" {
   archived               = false
 }
 
+resource "github_branch_default" "defaultBranch" {
+  repository = github_repository.project.name
+  branch     = var.defaultBranch
+}
+
 resource "github_repository_collaborator" "admins" {
-  for_each   = var.admins
+  for_each   = toset(var.admins)
   repository = github_repository.project.name
   username   = each.key
   permission = "admin"
@@ -29,7 +33,7 @@ resource "github_repository_collaborator" "admins" {
 }
 
 resource "github_team_repository" "teams" {
-  for_each   = var.teamIds
+  for_each   = toset(var.teamIds)
   team_id    = each.key
   repository = github_repository.project.name
   permission = "push"
@@ -41,56 +45,32 @@ resource "github_branch" "branch_develop" {
   branch        = "develop"
 }
 
-resource "github_branch_protection" "protect_master" {
-  repository             = github_repository.project.name
-  branch                 = var.defaultBranch
-  enforce_admins         = var.masterProtection.enforceAdmins
-  require_signed_commits = var.masterProtection.signed
-
-  required_status_checks {
-    strict   = var.masterProtection.ciSuccessful
-    contexts = var.masterProtection.statusCheckContexts
-  }
-
-  required_pull_request_reviews {
-    require_code_owner_reviews      = var.masterProtection.prCodeOwnerReview
-    required_approving_review_count = var.masterProtection.prApprovalCount
-    dismiss_stale_reviews           = true
-    dismissal_users                 = var.masterProtection.prDismissFromUsers
-    dismissal_teams                 = var.masterProtection.prDismissFromTeamSlugs
-  }
-
-  restrictions {
-    users = var.masterProtection.restrictToUsers
-    teams = var.masterProtection.restrictToTeamSlugs
-    apps  = var.masterProtection.restrictToApps
-  }
-
+data "github_users" "admins" {
+  usernames = var.admins
 }
 
-resource "github_branch_protection" "protect_develop" {
-  repository             = github_repository.project.name
-  branch                 = "develop"
-  enforce_admins         = var.developProtection.enforceAdmins
-  require_signed_commits = var.developProtection.signed
+resource "github_branch_protection" "protect_main" {
+  repository_id                   = github_repository.project.node_id
+  pattern                         = var.defaultBranch
+  enforce_admins                  = true
+  require_signed_commits          = false
+  required_linear_history         = true
+  require_conversation_resolution = true
+  allows_deletions                = false
+  allows_force_pushes             = false
+  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds)
 
   required_status_checks {
-    strict   = var.developProtection.ciSuccessful
-    contexts = var.developProtection.statusCheckContexts
+    strict   = var.requireStrictStatusChecks
+    contexts = var.requiredStatusChecksContextsMain
   }
 
   required_pull_request_reviews {
-    require_code_owner_reviews      = var.developProtection.prCodeOwnerReview
-    required_approving_review_count = var.developProtection.prApprovalCount
+    require_code_owner_reviews      = true
     dismiss_stale_reviews           = true
-    dismissal_users                 = var.developProtection.prDismissFromUsers
-    dismissal_teams                 = var.developProtection.prDismissFromTeamSlugs
+    restrict_dismissals             = true
+    dismissal_restrictions          = data.github_users.admins.node_ids
+    required_approving_review_count = 1
   }
 
-  restrictions {
-    users = var.developProtection.restrictToUsers
-    teams = var.developProtection.restrictToTeamSlugs
-    apps  = var.developProtection.restrictToApps
-  }
-  depends_on = [github_branch.branch_develop]
 }
