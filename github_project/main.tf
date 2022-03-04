@@ -1,5 +1,7 @@
 resource "github_repository" "project" {
   name                   = var.name
+  vulnerability_alerts   = var.vulnerabilityAlerts
+  archive_on_destroy     = true
   description            = var.description
   homepage_url           = var.homepage
   visibility             = var.isPrivate ? "private" : "public"

@@ -109,3 +109,8 @@ variable "developBranchName" {
   type    = string
   default = ""
 }
+
+variable "vulnerabilityAlerts" {
+  type    = bool
+  default = true
+}
