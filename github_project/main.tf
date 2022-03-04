@@ -13,7 +13,7 @@ resource "github_repository" "project" {
   topics                 = var.topics
   auto_init              = var.initialize
   allow_rebase_merge     = true
-  allow_squash_merge     = true
+  allow_squash_merge     = var.allowSquashMerge
   allow_merge_commit     = true
   is_template            = false
   license_template       = var.projectLicenseId
@@ -23,7 +23,7 @@ resource "github_repository" "project" {
 
 resource "github_branch_default" "defaultBranch" {
   repository = github_repository.project.name
-  branch     = var.defaultBranch
+  branch     = var.defaultBranchName
 }
 
 resource "github_repository_collaborator" "admins" {
@@ -44,7 +44,7 @@ resource "github_team_repository" "team2repo" {
 resource "github_branch" "branch_develop" {
   count         = length(var.developBranchName) > 0 ? 1 : 0
   repository    = github_repository.project.name
-  source_branch = var.defaultBranch
+  source_branch = var.defaultBranchName
   branch        = var.developBranchName
 }
 
@@ -59,7 +59,7 @@ data "github_team" "teams" {
 
 resource "github_branch_protection" "protect_main" {
   repository_id                   = github_repository.project.node_id
-  pattern                         = var.defaultBranch
+  pattern                         = var.defaultBranchName
   enforce_admins                  = true
   require_signed_commits          = false
   required_linear_history         = true

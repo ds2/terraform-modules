@@ -28,7 +28,7 @@ variable "homepage" {
   type    = string
   default = null
 }
-variable "defaultBranch" {
+variable "defaultBranchName" {
   type    = string
   default = "main"
 }
@@ -111,6 +111,11 @@ variable "developBranchName" {
 }
 
 variable "vulnerabilityAlerts" {
+  type    = bool
+  default = false
+}
+
+variable "allowSquashMerge" {
   type    = bool
   default = true
 }
