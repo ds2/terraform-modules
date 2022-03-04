@@ -32,8 +32,8 @@ resource "github_repository_collaborator" "admins" {
   depends_on = [github_repository.project]
 }
 
-resource "github_team_repository" "teams" {
-  for_each   = toset(var.teamIds)
+resource "github_team_repository" "team2repo" {
+  for_each   = toset(data.github_team.teams[*].id)
   team_id    = each.key
   repository = github_repository.project.name
   permission = "push"
@@ -49,6 +49,11 @@ data "github_users" "admins" {
   usernames = var.admins
 }
 
+data "github_team" "teams" {
+  count = length(var.teamSlugs)
+  slug = var.teamSlugs[count.index]
+}
+
 resource "github_branch_protection" "protect_main" {
   repository_id                   = github_repository.project.node_id
   pattern                         = var.defaultBranch
@@ -58,7 +63,7 @@ resource "github_branch_protection" "protect_main" {
   require_conversation_resolution = true
   allows_deletions                = false
   allows_force_pushes             = false
-  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds)
+  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds, data.github_team.teams[*].node_id)
 
   required_status_checks {
     strict   = var.requireStrictStatusChecks

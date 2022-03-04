@@ -43,7 +43,7 @@ variable "admins" {
   default = []
 }
 
-variable "teamIds" {
+variable "teamSlugs" {
   type    = list(string)
   default = []
 }

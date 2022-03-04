@@ -29,5 +29,5 @@ module "repo1" {
   projectLicenseId    = "agpl-3.0"
   gitignoreTemplateId = "Gradle"
   admins              = ["lexxy23", "ds2ci"]
-  # teamIds             = [module.team1.id]
+  teamSlugs           = [module.team1.slug]
 }
