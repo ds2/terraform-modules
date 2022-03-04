@@ -104,3 +104,8 @@ variable "requireStrictStatusChecks" {
   type    = bool
   default = true
 }
+
+variable "developBranchName" {
+  type    = string
+  default = ""
+}

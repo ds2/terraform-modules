@@ -40,9 +40,10 @@ resource "github_team_repository" "team2repo" {
 }
 
 resource "github_branch" "branch_develop" {
+  count         = length(var.developBranchName) > 0 ? 1 : 0
   repository    = github_repository.project.name
   source_branch = var.defaultBranch
-  branch        = "develop"
+  branch        = var.developBranchName
 }
 
 data "github_users" "admins" {
@@ -51,7 +52,7 @@ data "github_users" "admins" {
 
 data "github_team" "teams" {
   count = length(var.teamSlugs)
-  slug = var.teamSlugs[count.index]
+  slug  = var.teamSlugs[count.index]
 }
 
 resource "github_branch_protection" "protect_main" {
@@ -81,8 +82,9 @@ resource "github_branch_protection" "protect_main" {
 }
 
 resource "github_branch_protection" "protect_develop" {
+  count                           = length(var.developBranchName) > 0 ? 1 : 0
   repository_id                   = github_repository.project.node_id
-  pattern                         = "develop"
+  pattern                         = var.developBranchName
   enforce_admins                  = true
   require_signed_commits          = false
   required_linear_history         = true
