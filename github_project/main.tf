@@ -11,7 +11,7 @@ resource "github_repository" "project" {
   topics                 = var.topics
   auto_init              = var.initialize
   allow_rebase_merge     = true
-  allow_squash_merge     = false
+  allow_squash_merge     = true
   allow_merge_commit     = true
   is_template            = false
   license_template       = var.projectLicenseId
