@@ -79,3 +79,28 @@ resource "github_branch_protection" "protect_main" {
   }
 
 }
+
+resource "github_branch_protection" "protect_develop" {
+  repository_id                   = github_repository.project.node_id
+  pattern                         = "develop"
+  enforce_admins                  = true
+  require_signed_commits          = false
+  required_linear_history         = true
+  require_conversation_resolution = true
+  allows_deletions                = false
+  allows_force_pushes             = false
+  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds, data.github_team.teams[*].node_id)
+
+  required_status_checks {
+    strict   = var.requireStrictStatusChecks
+    contexts = var.requiredStatusChecksContextsMain
+  }
+
+  required_pull_request_reviews {
+    require_code_owner_reviews      = true
+    dismiss_stale_reviews           = true
+    restrict_dismissals             = true
+    dismissal_restrictions          = data.github_users.admins.node_ids
+    required_approving_review_count = 1
+  }
+}
