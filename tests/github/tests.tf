@@ -1,32 +1,33 @@
 provider "github" {
-  token        = var.gh_token
-  version      = "~> 2.8"
-  organization = var.gh_org
+  token = var.gh_token
+  owner = var.gh_org
 }
 
 terraform {
   required_version = "~> 1.1.0"
   required_providers {
     github = {
-      source  = "hashicorp/github"
-      version = "~> 2.9.2"
+      source  = "integrations/github"
+      version = "~> 4.0"
     }
   }
 }
 
 module "team1" {
   source      = "../../github_team"
-  name        = "infra001-test-team1_20210111"
+  name        = "infra001-test-team1_20220304"
   description = "a test team"
   members     = ["ds2ci"]
 }
 
-# module "repo1" {
-#   source              = "../../github_project"
-#   name                = "infra001-test-bucket-20200520"
-#   topics              = ["test", "maven", "java"]
-#   initialize          = true
-#   isPrivate           = false
-#   projectLicenseId    = "agpl-3.0"
-#   gitignoreTemplateId = "Gradle"
-# }
+module "repo1" {
+  source              = "../../github_project"
+  name                = "infra001-test-bucket-20220304"
+  topics              = ["test", "maven", "java"]
+  initialize          = true
+  isPrivate           = false
+  projectLicenseId    = "agpl-3.0"
+  gitignoreTemplateId = "Gradle"
+  admins              = ["lexxy23", "ds2ci"]
+  teamSlugs           = [module.team1.slug]
+}

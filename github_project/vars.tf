@@ -30,7 +30,7 @@ variable "homepage" {
 }
 variable "defaultBranch" {
   type    = string
-  default = "master"
+  default = "main"
 }
 
 variable "isPrivate" {
@@ -39,12 +39,12 @@ variable "isPrivate" {
 }
 
 variable "admins" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
-variable "teamIds" {
-  type    = set(string)
+variable "teamSlugs" {
+  type    = list(string)
   default = []
 }
 
@@ -76,79 +76,31 @@ variable "protect_master_inclAdmins" {
 }
 
 variable "protect_master_admins" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
 variable "protect_master_teams" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
 variable "protect_master_apps" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
-variable "masterProtection" {
-  type = object({
-    signed                 = bool
-    enforceAdmins          = bool
-    restrictToUsers        = set(string)
-    restrictToTeamSlugs    = set(string)
-    restrictToApps         = set(string)
-    statusCheckContexts    = set(string)
-    prCodeOwnerReview      = bool
-    prApprovalCount        = number
-    prDismissFromUsers     = set(string)
-    prDismissFromTeamSlugs = set(string)
-    ciSuccessful           = bool
-    }
-  )
-  default = {
-    signed                 = false
-    enforceAdmins          = false
-    ciSuccessful           = false
-    restrictToUsers        = []
-    restrictToTeamSlugs    = []
-    restrictToApps         = []
-    statusCheckContexts    = ["ci/travis"]
-    prCodeOwnerReview      = true
-    prApprovalCount        = 1
-    prDismissFromUsers     = []
-    prDismissFromTeamSlugs = []
-  }
-
+variable "allowPushToMainFromNodeIds" {
+  type    = list(string)
+  default = []
 }
 
+variable "requiredStatusChecksContextsMain" {
+  type    = list(string)
+  default = ["ci/travis"]
+}
 
-variable "developProtection" {
-  type = object({
-    signed                 = bool
-    enforceAdmins          = bool
-    restrictToUsers        = set(string)
-    restrictToTeamSlugs    = set(string)
-    restrictToApps         = set(string)
-    statusCheckContexts    = set(string)
-    prCodeOwnerReview      = bool
-    prApprovalCount        = number
-    prDismissFromUsers     = set(string)
-    prDismissFromTeamSlugs = set(string)
-    ciSuccessful           = bool
-    }
-  )
-  default = {
-    signed                 = false
-    enforceAdmins          = false
-    ciSuccessful           = false
-    restrictToUsers        = []
-    restrictToTeamSlugs    = []
-    restrictToApps         = []
-    statusCheckContexts    = ["ci/travis"]
-    prCodeOwnerReview      = true
-    prApprovalCount        = 1
-    prDismissFromUsers     = []
-    prDismissFromTeamSlugs = []
-  }
-
+variable "requireStrictStatusChecks" {
+  type    = bool
+  default = true
 }
