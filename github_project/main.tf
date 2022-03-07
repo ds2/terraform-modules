@@ -65,7 +65,7 @@ resource "github_branch_protection" "protect_main" {
   required_linear_history         = true
   require_conversation_resolution = true
   allows_deletions                = false
-  allows_force_pushes             = false
+  allows_force_pushes             = var.allowForcePushToMain
   push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds, data.github_team.teams[*].node_id)
 
   required_status_checks {
