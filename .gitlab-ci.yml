@@ -14,6 +14,7 @@ cache:
     - tests/bitbucket/.terraform
     - tests/github/.terraform
     - tests/gitlab/.terraform
+    - tests/azure/.terraform
 
 stages:
   - init
@@ -54,6 +55,14 @@ validate-gh:
   script:
     - echo "pwd is $(pwd)"
     - cd tests/github
+    - terraform init -input=false
+    - terraform validate
+
+validate-az:
+  stage: validate
+  script:
+    - echo "pwd is $(pwd)"
+    - cd tests/azure
     - terraform init -input=false
     - terraform validate
 

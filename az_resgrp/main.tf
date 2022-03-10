@@ -1,8 +1,8 @@
 resource "azurerm_resource_group" "resgrp" {
-  name     = var.name
+  name     = var.id
   location = var.location
   tags = {
-    Name        = var.name
+    Name        = var.id
     Terraformed = true
   }
 }
