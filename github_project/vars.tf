@@ -120,6 +120,11 @@ variable "allowSquashMerge" {
   default = true
 }
 
+variable "allowMergeCommits" {
+  type    = bool
+  default = true
+}
+
 variable "allowForcePushToMain" {
   type    = bool
   default = false
