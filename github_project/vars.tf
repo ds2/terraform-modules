@@ -120,6 +120,11 @@ variable "allowSquashMerge" {
   default = true
 }
 
+variable "allowRebaseMerge" {
+  type    = bool
+  default = true
+}
+
 variable "allowMergeCommits" {
   type    = bool
   default = true
@@ -128,4 +133,9 @@ variable "allowMergeCommits" {
 variable "allowForcePushToMain" {
   type    = bool
   default = false
+}
+
+variable "deleteBranchOnMerge" {
+  type    = bool
+  default = true
 }

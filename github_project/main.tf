@@ -9,10 +9,10 @@ resource "github_repository" "project" {
   has_issues             = var.hasIssues
   has_wiki               = var.hasWiki
   has_downloads          = var.hasDownloads
-  delete_branch_on_merge = true
+  delete_branch_on_merge = var.deleteBranchOnMerge
   topics                 = var.topics
   auto_init              = var.initialize
-  allow_rebase_merge     = true
+  allow_rebase_merge     = var.allowRebaseMerge
   allow_squash_merge     = var.allowSquashMerge
   allow_merge_commit     = var.allowMergeCommits
   is_template            = false
