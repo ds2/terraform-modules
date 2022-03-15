@@ -59,3 +59,4 @@ local.properties
 !.terraform.lock.hcl
 aws_eks_cluster/.terraform.lock.hcl
 aws_eks_nodegroup/.terraform.lock.hcl
+docs
