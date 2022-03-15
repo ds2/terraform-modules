@@ -16,6 +16,9 @@ module "resgrp" {
   source   = "../../az_resgrp"
   id       = "tm-test-2022.03.09"
   location = var.location
+  additionalTags = {
+    "createdBy" = "me"
+  }
 }
 
 # Create a virtual network within the resource group
