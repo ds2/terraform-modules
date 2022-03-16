@@ -4,6 +4,10 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "~>2.0"
     }
+    tls = {
+      source  = "hashicorp/tls"
+      version = "~>3.0"
+    }
   }
   required_version = "~> 1.1.0"
 }
@@ -19,6 +23,18 @@ module "resgrp" {
   additionalTags = {
     "createdBy" = "me"
   }
+}
+
+resource "tls_private_key" "ssh" {
+  algorithm = "RSA"
+  rsa_bits  = "4096"
+}
+
+module "pubkey" {
+  source            = "../../az_ssh_pubkey"
+  name              = "Mein Key"
+  resourceGroupName = module.resgrp.name
+  rsaPublicKey      = chomp(tls_private_key.ssh.public_key_openssh)
 }
 
 # Create a virtual network within the resource group
