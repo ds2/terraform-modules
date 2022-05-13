@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "bucket" {
   bucket        = var.name
-  acl           = var.acl
   force_destroy = true
 
   tags = {
@@ -8,81 +7,122 @@ resource "aws_s3_bucket" "bucket" {
     Terraformed  = true
     s3BucketName = var.name
   }
-  versioning {
-    enabled = var.versioned
-  }
+}
 
-  lifecycle_rule {
+resource "aws_s3_bucket_acl" "example_bucket_acl" {
+  bucket = aws_s3_bucket.bucket.id
+  acl    = var.acl
+}
+
+resource "aws_s3_bucket_versioning" "versioning" {
+  bucket = aws_s3_bucket.bucket.id
+  versioning_configuration {
+    status = var.versioned ? "Enabled" : "Disabled"
+  }
+}
+
+
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "sse" {
+  count  = var.encryptContent ? 1 : 0
+  bucket = aws_s3_bucket.bucket.bucket
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = var.kmsKeyArn != null ? var.kmsKeyArn : null
+      sse_algorithm     = var.kmsKeyArn != null ? "aws:kms" : "AES256"
+    }
+  }
+}
+
+resource "aws_s3_bucket_lifecycle_configuration" "lifecycles" {
+  bucket = aws_s3_bucket.bucket.bucket
+  rule {
     id = "agingOutdatedVersions"
 
-    prefix  = var.versionObjPrefix
-    enabled = var.versioned
+    filter {
+      prefix = var.versionObjPrefix
+    }
+    status = var.versioned ? "Enabled" : "Disabled"
 
-    # tags = {
-    #   Name         = var.name
-    #   rule         = "agingOutdatedVersions"
-    #   Terraformed  = true
-    #   s3BucketName = var.name
-    #   autoclean    = "true"
-    # }
     noncurrent_version_transition {
-      days          = var.oneZoneDays
-      storage_class = "ONEZONE_IA"
+      noncurrent_days = var.oneZoneDays
+      storage_class   = "ONEZONE_IA"
     }
 
     noncurrent_version_transition {
-      days          = var.glacierDays
-      storage_class = "GLACIER"
+      noncurrent_days = var.glacierDays
+      storage_class   = "GLACIER"
     }
     noncurrent_version_transition {
-      days          = var.deepArchiveDays
-      storage_class = "DEEP_ARCHIVE"
+      noncurrent_days = var.deepArchiveDays
+      storage_class   = "DEEP_ARCHIVE"
     }
 
     noncurrent_version_expiration {
-      days = var.ncvExpirationDays
+      noncurrent_days = var.ncvExpirationDays
     }
     expiration {
       days                         = var.delCurrObjAfterDays
       expired_object_delete_marker = true
     }
   }
+  rule {
+    id     = "removeIncompleteUploads"
+    status = var.maxUploadDays > 0 ? "Enabled" : "Disabled"
+    abort_incomplete_multipart_upload {
+      days_after_initiation = var.maxUploadDays
+    }
+  }
 
-  lifecycle_rule {
+  rule {
+    id     = "deleteAfterDays"
+    status = var.delCurrObjAfterDays > 0 && !var.versioned ? "Enabled" : "Disabled"
+    filter {
+      prefix = var.delObjPrefix
+    }
+
+    expiration {
+      days                         = var.delCurrObjAfterDays
+      expired_object_delete_marker = true
+    }
+  }
+
+  rule {
     id = "agingCurrentVersions"
 
-    prefix  = var.versionObjPrefix
-    enabled = var.enableCurrVersionAging
-
-    tags = {
-      rule         = "agingCurrentVersions"
-      autoclean    = "true"
-      Terraformed  = true
-      s3BucketName = var.name
+    filter {
+      prefix = var.versionObjPrefix
     }
+    status = var.enableCurrVersionAging ? "Enabled" : "Disabled"
 
     transition {
       days          = var.oneZoneDays
       storage_class = "ONEZONE_IA"
     }
   }
+}
 
-  lifecycle_rule {
-    id      = "deleteAfterDays"
-    enabled = var.delCurrObjAfterDays > 0 && !var.versioned
-    prefix  = var.delObjPrefix
+resource "aws_s3_bucket_website_configuration" "website" {
+  count  = var.isWebsite ? 1 : 0
+  bucket = aws_s3_bucket.bucket.bucket
 
-    expiration {
-      days                         = var.delCurrObjAfterDays
-      expired_object_delete_marker = true
-    }
+  index_document {
+    suffix = var.websiteRedirectAllTo != null ? null : var.websiteIndexFile
   }
 
-  lifecycle_rule {
-    id                                     = "removeIncompleteUploads"
-    enabled                                = var.maxUploadDays > 0
-    abort_incomplete_multipart_upload_days = var.maxUploadDays
+  error_document {
+    key = var.websiteRedirectAllTo != null ? null : var.websiteErrorFile
   }
+  redirect_all_requests_to {
+    protocol  = "https"
+    host_name = var.websiteRedirectAllTo
+  }
+
+}
+
+resource "aws_s3_bucket_cors_configuration" "cors" {
+  bucket = aws_s3_bucket.bucket.bucket
 
   cors_rule {
     allowed_headers = ["Authorization"]
@@ -90,28 +130,6 @@ resource "aws_s3_bucket" "bucket" {
     allowed_origins = ["*"]
     expose_headers  = ["ETag"]
     max_age_seconds = 3000
-  }
-
-  dynamic "website" {
-    for_each = var.isWebsite ? [1] : []
-    content {
-      index_document           = var.websiteRedirectAllTo != null ? null : var.websiteIndexFile
-      error_document           = var.websiteRedirectAllTo != null ? null : var.websiteErrorFile
-      redirect_all_requests_to = var.websiteRedirectAllTo
-      routing_rules            = var.websiteRoutingRulesJson
-    }
-  }
-
-  dynamic "server_side_encryption_configuration" {
-    for_each = var.encryptContent ? [1] : []
-    content {
-      rule {
-        apply_server_side_encryption_by_default {
-          kms_master_key_id = var.kmsKeyArn != null ? var.kmsKeyArn : null
-          sse_algorithm     = var.kmsKeyArn != null ? "aws:kms" : "AES256"
-        }
-      }
-    }
   }
 }
 
