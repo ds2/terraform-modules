@@ -2,11 +2,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 3.0"
+      version = "~> 4.0"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = "~> 2.0.0"
+      version = "~> 2.0"
     }
     template = {
       source  = "hashicorp/template"
@@ -24,9 +24,9 @@ provider "aws" {
 provider "template" {
 }
 
-# resource "aws_cloudfront_origin_access_identity" "oai" {
-#   comment = "Test Origin Identity"
-# }
+resource "aws_cloudfront_origin_access_identity" "oai" {
+  comment = "Test Origin Identity"
+}
 
 # module "role_test" {
 #   source           = "../../aws_iam_role"
