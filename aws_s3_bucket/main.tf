@@ -17,7 +17,7 @@ resource "aws_s3_bucket_acl" "example_bucket_acl" {
 resource "aws_s3_bucket_versioning" "versioning" {
   bucket = aws_s3_bucket.bucket.id
   versioning_configuration {
-    status = var.versioned ? "Enabled" : "Disabled"
+    status = var.versioned ? "Enabled" : "Suspended"
   }
 }
 
