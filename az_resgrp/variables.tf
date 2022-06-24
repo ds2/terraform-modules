@@ -4,7 +4,7 @@ variable "id" {
 
 variable "location" {
   type    = string
-  default = "Westeuropa"
+  default = "germanywestcentral"
 }
 
 variable "additionalTags" {
