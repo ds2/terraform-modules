@@ -52,13 +52,16 @@ resource "azurerm_storage_account" "storageaccount" {
   tags = local.tagMap
 }
 
-# resource "azurerm_storage_container" "container1" {
-#   name                  = "snapshots"
-#   storage_account_name  = azurerm_storage_account.storageaccount.name
-#   container_access_type = "private"
-# }
-# resource "azurerm_storage_container" "container2" {
-#   name                  = "releases"
-#   storage_account_name  = azurerm_storage_account.storageaccount.name
-#   container_access_type = "private"
-# }
+resource "azurerm_storage_container" "blobcontainer" {
+  for_each              = var.blobs
+  name                  = each.key
+  storage_account_name  = azurerm_storage_account.storageaccount.name
+  container_access_type = "blob"
+}
+
+resource "azurerm_storage_container" "privcontainer" {
+  for_each              = var.privates
+  name                  = each.key
+  storage_account_name  = azurerm_storage_account.storageaccount.name
+  container_access_type = "private"
+}

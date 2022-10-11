@@ -9,11 +9,12 @@ terraform {
       version = "~>3.0"
     }
   }
-  required_version = "~> 1.2.0"
+  required_version = "~> 1.3.0"
 }
 
 provider "azurerm" {
   features {}
+  subscription_id = var.az_subscription_id
 }
 
 module "resgrp" {
@@ -46,7 +47,7 @@ module "pubkey" {
 # }
 
 module "blob1" {
-  source             = "../../az_blobstorage"
+  source             = "../../az_storageaccount"
   storageAccountName = "ds2testacc1"
   resourceGroupName  = module.resgrp.name
 }

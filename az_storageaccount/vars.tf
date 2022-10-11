@@ -25,3 +25,13 @@ variable "additionalTags" {
   type    = map(string)
   default = {}
 }
+
+variable "blobs" {
+  type    = set(string)
+  default = []
+}
+
+variable "privates" {
+  type    = set(string)
+  default = []
+}
