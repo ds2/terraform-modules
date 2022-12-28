@@ -1,6 +1,6 @@
-variable "appName" {
+variable "name" {
   type        = string
-  description = "The name of the application for this principal"
+  description = "The principal name, also the app name"
 }
 
 variable "description" {
