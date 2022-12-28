@@ -6,6 +6,7 @@ variable "name" {
 variable "description" {
   type        = string
   description = "the description of the role"
+  default     = null
 }
 
 variable "actions" {

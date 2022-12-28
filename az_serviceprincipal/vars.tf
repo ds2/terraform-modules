@@ -6,6 +6,7 @@ variable "name" {
 variable "description" {
   type        = string
   description = "The description of the Service Principal"
+  default     = null
 }
 
 variable "pwRotationDays" {
