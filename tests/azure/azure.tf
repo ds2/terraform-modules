@@ -58,7 +58,7 @@ module "blob1" {
 module "principal" {
   source      = "../../az_serviceprincipal"
   description = "test principal 1"
-  appName     = "Test App 1"
+  name        = "Test App 1"
 }
 
 module "role1" {
@@ -83,13 +83,21 @@ module "role1" {
   ]
 }
 
-resource "random_uuid" "test" {
-}
+# resource "random_uuid" "test" {
+# }
 
-resource "azurerm_role_assignment" "roleassign1" {
-  name               = random_uuid.test.result
-  scope              = module.blob1.id
-  role_definition_id = module.role1.resourceId
-  principal_id       = module.principal.object_id
-  description        = "test assign 1"
+# resource "azurerm_role_assignment" "roleassign1" {
+#   name               = random_uuid.test.result
+#   scope              = module.blob1.id
+#   role_definition_id = module.role1.resourceId
+#   principal_id       = module.principal.object_id
+#   description        = "test assign 1"
+# }
+
+module "roleassign1" {
+  source            = "../../az_role_assign"
+  scopeId           = module.blob1.id
+  roleResourceId    = module.role1.resourceId
+  principalObjectId = module.principal.object_id
+  description       = "test assign 2"
 }
