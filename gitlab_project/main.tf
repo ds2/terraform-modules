@@ -8,9 +8,9 @@ resource "gitlab_project" "project" {
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
   approvals_before_merge                           = var.approvalsBeforeMerge
-  container_registry_enabled                       = var.dockerRegistryEnabled
+  container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
-  pipelines_enabled                                = var.pipelinesEnabled
+  builds_access_level                              = var.pipelinesEnabled ? var.pipelinesVisibility : "disabled"
   snippets_enabled                                 = var.snippetsEnabled
   visibility_level                                 = var.visibility
   pages_access_level                               = var.pagesVisibility
@@ -24,6 +24,7 @@ resource "gitlab_project" "project" {
 }
 
 resource "gitlab_branch_protection" "master_protect" {
+  allow_force_push   = var.allowMainForcePush
   project            = gitlab_project.project.id
   branch             = var.mainBranchName
   push_access_level  = "maintainer"
@@ -33,6 +34,7 @@ resource "gitlab_branch_protection" "master_protect" {
 resource "gitlab_branch_protection" "develop_protect" {
   project            = gitlab_project.project.id
   branch             = var.developBranchName
+  allow_force_push   = var.allowDevelopForcePush
   push_access_level  = "maintainer"
   merge_access_level = "developer"
 }

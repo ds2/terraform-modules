@@ -37,9 +37,21 @@ variable "pipelinesEnabled" {
   default = true
 }
 
+variable "pipelinesVisibility" {
+  type        = string
+  description = "Set to private or public!"
+  default     = "private"
+}
+
 variable "dockerRegistryEnabled" {
   type    = bool
   default = false
+}
+
+variable "dockerRegistryVisibility" {
+  type        = string
+  description = "Set to private or public"
+  default     = "private"
 }
 
 variable "approvalsBeforeMerge" {
@@ -140,4 +152,14 @@ variable "mainBranchName" {
 variable "developBranchName" {
   type    = string
   default = "develop"
+}
+
+variable "allowDevelopForcePush" {
+  type    = bool
+  default = false
+}
+
+variable "allowMainForcePush" {
+  type    = bool
+  default = false
 }
