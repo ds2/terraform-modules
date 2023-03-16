@@ -6,15 +6,16 @@ terraform {
     }
     tls = {
       source  = "hashicorp/tls"
-      version = "~>3.0"
+      version = "~>4.0"
     }
   }
-  required_version = "~> 1.3.0"
+  required_version = "~> 1.0"
 }
 
 provider "azurerm" {
   features {}
   subscription_id = var.az_subscription_id
+  tenant_id       = var.azTenantId
 }
 
 data "azurerm_subscription" "primary" {
@@ -30,8 +31,8 @@ module "resgrp" {
 }
 
 resource "tls_private_key" "ssh" {
-  algorithm = "RSA"
-  rsa_bits  = "4096"
+  algorithm = "RSA" # Azure only allows RSA keys, sry
+  rsa_bits  = 4096
 }
 
 module "pubkey" {
@@ -39,15 +40,35 @@ module "pubkey" {
   name              = "mein_key_1"
   resourceGroupName = module.resgrp.name
   rsaPublicKey      = chomp(tls_private_key.ssh.public_key_openssh)
+  additionalTags = {
+    "createdBy" = "aqcae"
+  }
 }
-
-# Create a virtual network within the resource group
-# resource "azurerm_virtual_network" "vnet1" {
-#   name                = "tm-test-nw1"
-#   resource_group_name = module.resgrp.name
-#   location            = module.resgrp.location
-#   address_space       = ["10.185.0.0/16"]
+module "pubkey2" {
+  source            = "../../az_ssh_key"
+  name              = "mein_key_2"
+  resourceGroupName = module.resgrp.name
+  additionalTags = {
+    "createdBy" = "aqcae"
+  }
+}
+# module "pubkey3" {
+#   source            = "../../az_ssh_key"
+#   name              = "mein_key_3"
+#   resourceGroupName = module.resgrp.name
+#   rsaPublicKey      = file("~/.ssh/dedalus_rsa.pub")
+#   additionalTags = {
+#     "createdBy" = "aqcae"
+#   }
 # }
+
+module "vnet1" {
+  source            = "../../az_virtualnetwork"
+  name              = "tm-test-vnet01"
+  resourceGroupName = module.resgrp.name
+  # see https://www.unique-local-ipv6.com/
+  cidrs = ["10.186.0.0/16", "fd5b:7944:9952::/48"]
+}
 
 module "blob1" {
   source             = "../../az_storageaccount"
@@ -101,3 +122,22 @@ module "roleassign1" {
   principalObjectId = module.principal.object_id
   description       = "test assign 2"
 }
+
+module "subnet01" {
+  source             = "../../az_subnet"
+  name               = "internal-snet01"
+  resourceGroupName  = module.resgrp.name
+  virtualNetworkName = module.vnet1.name
+  cidrs              = ["10.186.2.0/24", "fd5b:7944:9952::/64"]
+}
+
+# module "vm01" {
+#   source             = "../../az_vm"
+#   name               = "dirktest01"
+#   resourceGroupName  = module.resgrp.name
+#   sshPubKeyNames     = [module.pubkey2.name]
+#   subnetName         = module.subnet01.name
+#   virtualNetworkName = module.vnet1.name
+#   encryptionAtHost   = false
+#   dailyShutdownTime  = "2109"
+# }
