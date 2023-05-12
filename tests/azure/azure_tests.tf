@@ -141,3 +141,9 @@ module "subnet01" {
 #   encryptionAtHost   = false
 #   dailyShutdownTime  = "2109"
 # }
+
+module "web01" {
+  source            = "../../az_static_webapp"
+  name              = "az-ws-test-01"
+  resourceGroupName = module.resgrp.name
+}
