@@ -1,4 +1,4 @@
-formatter: "markdown" # this is required
+formatter: "asciidoc" # this is required
 
 version: ""
 
@@ -7,7 +7,7 @@ footer-from: ""
 
 recursive:
   enabled: false
-  path: modules
+  path: .
 
 sections:
   hide: []
@@ -19,12 +19,10 @@ sections:
 content: ""
 
 output:
-  file: ""
-  mode: inject
+  file: "README.adoc"
+  mode: replace
   template: |-
-    <!-- BEGIN_TF_DOCS -->
     {{ .Content }}
-    <!-- END_TF_DOCS -->
 
 output-values:
   enabled: false

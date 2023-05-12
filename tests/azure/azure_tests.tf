@@ -18,8 +18,8 @@ provider "azurerm" {
   tenant_id       = var.azTenantId
 }
 
-data "azurerm_subscription" "primary" {
-}
+# data "azurerm_subscription" "primary" {
+# }
 
 module "resgrp" {
   source   = "../../az_resgrp"
