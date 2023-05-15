@@ -1,0 +1,68 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |~> 3.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |~> 3.0
+|[[provider_random]] <<provider_random,random>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment[azurerm_role_assignment.roleassign1] |resource
+|https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid[random_uuid.idgen] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_description]] <<input_description,description>>
+|the description of the assignment
+|`string`
+|`null`
+|no
+
+|[[input_principalObjectId]] <<input_principalObjectId,principalObjectId>>
+|The principal object id
+|`string`
+|n/a
+|yes
+
+|[[input_roleResourceId]] <<input_roleResourceId,roleResourceId>>
+|The resource id of the role
+|`string`
+|n/a
+|yes
+
+|[[input_scopeId]] <<input_scopeId,scopeId>>
+|The scope id of the role assignment
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |n/a
+|===

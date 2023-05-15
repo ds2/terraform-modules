@@ -1,0 +1,120 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_bitbucket]] <<provider_bitbucket,bitbucket>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/drfaust92/bitbucket/latest/docs/resources/branch_restriction[bitbucket_branch_restriction.br_develop] |resource
+|https://registry.terraform.io/providers/drfaust92/bitbucket/latest/docs/resources/branch_restriction[bitbucket_branch_restriction.br_main] |resource
+|https://registry.terraform.io/providers/drfaust92/bitbucket/latest/docs/resources/default_reviewers[bitbucket_default_reviewers.reviewers] |resource
+|https://registry.terraform.io/providers/drfaust92/bitbucket/latest/docs/resources/repository[bitbucket_repository.repo] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_descr]] <<input_descr,descr>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_forkPolicy]] <<input_forkPolicy,forkPolicy>>
+|n/a
+|`string`
+|`"no_forks"`
+|no
+
+|[[input_hasIssues]] <<input_hasIssues,hasIssues>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_hasPipelines]] <<input_hasPipelines,hasPipelines>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_hasWiki]] <<input_hasWiki,hasWiki>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_id]] <<input_id,id>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_isPrivate]] <<input_isPrivate,isPrivate>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_language]] <<input_language,language>>
+|n/a
+|`string`
+|`"java"`
+|no
+
+|[[input_mainBranchName]] <<input_mainBranchName,mainBranchName>>
+|n/a
+|`string`
+|`"main"`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_ownerName]] <<input_ownerName,ownerName>>
+|the username who will own this repository
+|`string`
+|n/a
+|yes
+
+|[[input_projectId]] <<input_projectId,projectId>>
+|the project key. If set, the owner must be the project owner!!
+|`string`
+|`null`
+|no
+
+|[[input_reviewers]] <<input_reviewers,reviewers>>
+|The usernames to add as reviewers (NOT UUID!!)
+|`set(string)`
+|`null`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_clone_https]] <<output_clone_https,clone_https>> |n/a
+|[[output_clone_ssh]] <<output_clone_ssh,clone_ssh>> |n/a
+|===

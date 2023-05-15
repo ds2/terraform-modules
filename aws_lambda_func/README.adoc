@@ -1,0 +1,111 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group[aws_cloudwatch_log_group.cwlg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy[aws_iam_policy.lambda_logging] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role[aws_iam_role.iam_for_lambda] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.lambda_logs] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/lambda_function[aws_lambda_function.lambda_func] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.lambda_exec_policy] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`"my test function"`
+|no
+
+|[[input_environment]] <<input_environment,environment>>
+|n/a
+|`map(any)`
+|`{}`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|(optional) the KMS Key ARN
+|`string`
+|`null`
+|no
+
+|[[input_methodPath]] <<input_methodPath,methodPath>>
+|the path to the module. Usually FILENAME<DOT>METHODNAME, basically index.js with exports.handler() -> index.handler
+|`string`
+|`"index.handler"`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_publish]] <<input_publish,publish>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_retentionDays]] <<input_retentionDays,retentionDays>>
+|n/a
+|`number`
+|`14`
+|no
+
+|[[input_runtime]] <<input_runtime,runtime>>
+|n/a
+|`string`
+|`"nodejs12.x"`
+|no
+
+|[[input_t0]] <<input_t0,t0>>
+|n/a
+|`number`
+|`3`
+|no
+
+|[[input_zipFile]] <<input_zipFile,zipFile>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_invoke_arn]] <<output_invoke_arn,invoke_arn>> |n/a
+|[[output_last_modified]] <<output_last_modified,last_modified>> |n/a
+|[[output_qualified_arn]] <<output_qualified_arn,qualified_arn>> |n/a
+|[[output_version]] <<output_version,version>> |n/a
+|===

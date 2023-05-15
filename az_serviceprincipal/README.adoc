@@ -1,0 +1,67 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_azuread]] <<requirement_azuread,azuread>> |~> 2.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azuread]] <<provider_azuread,azuread>> |~> 2.0
+|[[provider_time]] <<provider_time,time>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/application[azuread_application.app] |resource
+|https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal[azuread_service_principal.principal] |resource
+|https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/resources/service_principal_password[azuread_service_principal_password.pw] |resource
+|https://registry.terraform.io/providers/hashicorp/time/latest/docs/resources/rotating[time_rotating.days] |resource
+|https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/client_config[azuread_client_config.current] |data source
+|https://registry.terraform.io/providers/hashicorp/azuread/latest/docs/data-sources/domains[azuread_domains.doms] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_description]] <<input_description,description>>
+|The description of the Service Principal
+|`string`
+|`null`
+|no
+
+|[[input_name]] <<input_name,name>>
+|The principal name, also the app name
+|`string`
+|n/a
+|yes
+
+|[[input_pwRotationDays]] <<input_pwRotationDays,pwRotationDays>>
+|n/a
+|`number`
+|`14`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_object_id]] <<output_object_id,object_id>> |the object_id of the principal
+|[[output_principalPw]] <<output_principalPw,principalPw>> |the generated password for this principal
+|===

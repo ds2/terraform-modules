@@ -1,0 +1,97 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy[aws_iam_policy.userpolicy] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role[aws_iam_role.role] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.policy-attach] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.user-attach] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_assumeRolePolicy]] <<input_assumeRolePolicy,assumeRolePolicy>>
+|n/a
+|`string`
+|`"{\n      \"Version\": \"2012-10-17\",\n      \"Statement\": [\n        {\n          \"Action\": \"sts:AssumeRole\",\n          \"Principal\": {\n            \"Service\": \"ec2.amazonaws.com\"\n          },\n          \"Effect\": \"Allow\",\n          \"Sid\": \"rolePolicy1\"\n        }\n      ]\n    }\n"`
+|no
+
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_maxSessionSeconds]] <<input_maxSessionSeconds,maxSessionSeconds>>
+|n/a
+|`number`
+|`null`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_policyArns]] <<input_policyArns,policyArns>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_policyData]] <<input_policyData,policyData>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_rolePath]] <<input_rolePath,rolePath>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_useNameNotPrefix]] <<input_useNameNotPrefix,useNameNotPrefix>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|[[output_policyArn]] <<output_policyArn,policyArn>> |n/a
+|[[output_unique_id]] <<output_unique_id,unique_id>> |n/a
+|===

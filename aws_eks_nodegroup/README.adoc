@@ -1,0 +1,174 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpucreditbalance] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_node_group[aws_eks_node_group.eksng] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role[aws_iam_role.workerrole] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.worker-cni] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.worker-np] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.worker-reg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/launch_template[aws_launch_template.ngtmpl] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group[aws_security_group.ngsg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.allow-https] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.allow-ssh] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.demo-cluster-ingress-node-https] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ngsg-ingress-cluster] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ngsg-ingress-self] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ngsg_443] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ngsg_sshout] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet[aws_subnet.sn1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami[aws_ami.eks-image] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/availability_zones[aws_availability_zones.available] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster[aws_eks_cluster.targetCluster] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc[aws_vpc.vpc] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_bootExtraArgs]] <<input_bootExtraArgs,bootExtraArgs>>
+|n/a
+|`string`
+|`""`
+|no
+
+|[[input_clusterDnsIpAddress]] <<input_clusterDnsIpAddress,clusterDnsIpAddress>>
+|the internal kube-dns ip address
+|`string`
+|`"10.100.0.10"`
+|no
+
+|[[input_clusterMaxSize]] <<input_clusterMaxSize,clusterMaxSize>>
+|n/a
+|`number`
+|`10`
+|no
+
+|[[input_clusterName]] <<input_clusterName,clusterName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_clusterSize]] <<input_clusterSize,clusterSize>>
+|n/a
+|`number`
+|`1`
+|no
+
+|[[input_createNodegroup]] <<input_createNodegroup,createNodegroup>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_creditBalanceThreshold]] <<input_creditBalanceThreshold,creditBalanceThreshold>>
+|n/a
+|`number`
+|`10`
+|no
+
+|[[input_diskSize]] <<input_diskSize,diskSize>>
+|n/a
+|`number`
+|`21`
+|no
+
+|[[input_encrypt]] <<input_encrypt,encrypt>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_instanceTypes]] <<input_instanceTypes,instanceTypes>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "t3a.medium",
+  "t3.medium"
+]
+----
+
+|no
+
+|[[input_k8sVersion]] <<input_k8sVersion,k8sVersion>>
+|The NG kubernetes version. Should be same or less than 1 version behind the cluster k8s version!
+|`string`
+|`null`
+|no
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_sshKeyName]] <<input_sshKeyName,sshKeyName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_subnetIds]] <<input_subnetIds,subnetIds>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_useOwnLaunchTemplate]] <<input_useOwnLaunchTemplate,useOwnLaunchTemplate>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_vpcId]] <<input_vpcId,vpcId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+No outputs.

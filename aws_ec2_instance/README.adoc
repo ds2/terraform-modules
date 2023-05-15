@@ -1,0 +1,259 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_monitoring]] <<module_monitoring,monitoring>> |../aws_instance_alerts |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ebs_volume[aws_ebs_volume.swap] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance[aws_instance.instance] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record[aws_route53_record.privdnsrecord] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record[aws_route53_record.pubdnsrecord] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group[aws_security_group.extsg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.extegress] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.extegressport] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.extingress] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.extingressudp] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.vpcingress] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/volume_attachment[aws_volume_attachment.swap_attach] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region[aws_region.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone[aws_route53_zone.dnszone] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.subnet] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc[aws_vpc.thisvpc] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_allowUnsecureEgress]] <<input_allowUnsecureEgress,allowUnsecureEgress>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_allowedEgressTcpPorts]] <<input_allowedEgressTcpPorts,allowedEgressTcpPorts>>
+|n/a
+|`set(number)`
+|
+
+[source]
+----
+[
+  80,
+  443
+]
+----
+
+|no
+
+|[[input_allowedEgressUdpPorts]] <<input_allowedEgressUdpPorts,allowedEgressUdpPorts>>
+|n/a
+|`set(number)`
+|
+
+[source]
+----
+[
+  123
+]
+----
+
+|no
+
+|[[input_allowedExternalTcpPorts]] <<input_allowedExternalTcpPorts,allowedExternalTcpPorts>>
+|n/a
+|`set(number)`
+|`[]`
+|no
+
+|[[input_allowedExternalUdpPorts]] <<input_allowedExternalUdpPorts,allowedExternalUdpPorts>>
+|n/a
+|`set(number)`
+|`[]`
+|no
+
+|[[input_allowedVpcTcpPorts]] <<input_allowedVpcTcpPorts,allowedVpcTcpPorts>>
+|n/a
+|`set(number)`
+|
+
+[source]
+----
+[
+  22
+]
+----
+
+|no
+
+|[[input_amiId]] <<input_amiId,amiId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_availActionArns]] <<input_availActionArns,availActionArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_availCheckCount]] <<input_availCheckCount,availCheckCount>>
+|n/a
+|`number`
+|`3`
+|no
+
+|[[input_availCheckPeriod]] <<input_availCheckPeriod,availCheckPeriod>>
+|n/a
+|`number`
+|`60`
+|no
+
+|[[input_creditBalanceThreshold]] <<input_creditBalanceThreshold,creditBalanceThreshold>>
+|n/a
+|`number`
+|`100`
+|no
+
+|[[input_creditUsageThreshold]] <<input_creditUsageThreshold,creditUsageThreshold>>
+|n/a
+|`number`
+|`2`
+|no
+
+|[[input_dnsDomain]] <<input_dnsDomain,dnsDomain>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_dnsInternalNamePostfix]] <<input_dnsInternalNamePostfix,dnsInternalNamePostfix>>
+|n/a
+|`string`
+|`"-internal"`
+|no
+
+|[[input_dnsName]] <<input_dnsName,dnsName>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_instanceType]] <<input_instanceType,instanceType>>
+|n/a
+|`string`
+|`"t3a.nano"`
+|no
+
+|[[input_isPublic]] <<input_isPublic,isPublic>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_securityGroupIds]] <<input_securityGroupIds,securityGroupIds>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_sshKeyName]] <<input_sshKeyName,sshKeyName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_subnetId]] <<input_subnetId,subnetId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_swapDevName]] <<input_swapDevName,swapDevName>>
+|n/a
+|`string`
+|`"/dev/xvdf"`
+|no
+
+|[[input_swapSize]] <<input_swapSize,swapSize>>
+|n/a
+|`number`
+|`0`
+|no
+
+|[[input_unlimitedCpuCredits]] <<input_unlimitedCpuCredits,unlimitedCpuCredits>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_volumeSize]] <<input_volumeSize,volumeSize>>
+|n/a
+|`number`
+|`null`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_ipv6_addresses]] <<output_ipv6_addresses,ipv6_addresses>> |n/a
+|[[output_private_dns]] <<output_private_dns,private_dns>> |n/a
+|[[output_private_ip]] <<output_private_ip,private_ip>> |n/a
+|[[output_public_dns]] <<output_public_dns,public_dns>> |n/a
+|[[output_public_ip]] <<output_public_ip,public_ip>> |n/a
+|===

@@ -1,0 +1,89 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_hcloud]] <<provider_hcloud,hcloud>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/hcloud/latest/docs/resources/server[hcloud_server.server] |resource
+|https://registry.terraform.io/providers/hashicorp/hcloud/latest/docs/resources/server_network[hcloud_server_network.nwassign] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_datacenterName]] <<input_datacenterName,datacenterName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_image]] <<input_image,image>>
+|n/a
+|`string`
+|`"centos-8"`
+|no
+
+|[[input_ipAddress]] <<input_ipAddress,ipAddress>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_ipAddressAliases]] <<input_ipAddressAliases,ipAddressAliases>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_networkId]] <<input_networkId,networkId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_serverType]] <<input_serverType,serverType>>
+|n/a
+|`string`
+|`"cx21"`
+|no
+
+|[[input_sshKeyIds]] <<input_sshKeyIds,sshKeyIds>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_ipv4address]] <<output_ipv4address,ipv4address>> |n/a
+|[[output_ipv6address]] <<output_ipv6address,ipv6address>> |n/a
+|===

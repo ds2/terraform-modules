@@ -1,0 +1,96 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |~> 3.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |~> 3.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_account[azurerm_storage_account.storageaccount] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container[azurerm_storage_container.blobcontainer] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/storage_container[azurerm_storage_container.privcontainer] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group[azurerm_resource_group.resgrp] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_access_tier]] <<input_access_tier,access_tier>>
+|n/a
+|`string`
+|`"Cool"`
+|no
+
+|[[input_additionalTags]] <<input_additionalTags,additionalTags>>
+|n/a
+|`map(string)`
+|`{}`
+|no
+
+|[[input_allowPublicItems]] <<input_allowPublicItems,allowPublicItems>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_blobs]] <<input_blobs,blobs>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_privates]] <<input_privates,privates>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_replicationStrategy]] <<input_replicationStrategy,replicationStrategy>>
+|n/a
+|`string`
+|`"LRS"`
+|no
+
+|[[input_resourceGroupName]] <<input_resourceGroupName,resourceGroupName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_storageAccountName]] <<input_storageAccountName,storageAccountName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_endpoint1]] <<output_endpoint1,endpoint1>> |n/a
+|[[output_endpoint2]] <<output_endpoint2,endpoint2>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|===
