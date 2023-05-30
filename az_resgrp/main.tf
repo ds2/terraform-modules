@@ -1,6 +1,6 @@
 /**
  * # Azure Resourcegroup
- * 
+ *
  * to easily setup an azure resourcegroup via terraform.
 */
 
