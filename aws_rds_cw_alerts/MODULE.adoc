@@ -1,0 +1,96 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.connectionhigh] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpucreditbalance] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpuutilalert] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.freestoragesize] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/db_instance[aws_db_instance.db] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_alarmSnsArns]] <<input_alarmSnsArns,alarmSnsArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_cpuUtilThreshold]] <<input_cpuUtilThreshold,cpuUtilThreshold>>
+|n/a
+|`number`
+|`80`
+|no
+
+|[[input_dbInstanceId]] <<input_dbInstanceId,dbInstanceId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_highConnectionThreshold]] <<input_highConnectionThreshold,highConnectionThreshold>>
+|n/a
+|`number`
+|`50`
+|no
+
+|[[input_insufficientSnsArns]] <<input_insufficientSnsArns,insufficientSnsArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_missingData]] <<input_missingData,missingData>>
+|n/a
+|`string`
+|`"missing"`
+|no
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_okSnsArns]] <<input_okSnsArns,okSnsArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_storageBytesThreshold]] <<input_storageBytesThreshold,storageBytesThreshold>>
+|n/a
+|`number`
+|`1073741824`
+|no
+
+|===
+
+== Outputs
+
+No outputs.

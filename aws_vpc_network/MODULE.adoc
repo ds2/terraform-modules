@@ -1,0 +1,91 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/egress_only_internet_gateway[aws_egress_only_internet_gateway.egress_only] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eip[aws_eip.nat] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/internet_gateway[aws_internet_gateway.gw] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/nat_gateway[aws_nat_gateway.nat] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl[aws_network_acl.privacl] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/network_acl[aws_network_acl.pubacl] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table[aws_route_table.private] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table[aws_route_table.pubroute] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association[aws_route_table_association.private] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table_association[aws_route_table_association.public] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet[aws_subnet.private] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/subnet[aws_subnet.public] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/vpc[aws_vpc.vpc] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_availZones]] <<input_availZones,availZones>>
+|n/a
+|`list(string)`
+|n/a
+|yes
+
+|[[input_cidr]] <<input_cidr,cidr>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_enableIpv6]] <<input_enableIpv6,enableIpv6>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_enableNatGateway]] <<input_enableNatGateway,enableNatGateway>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_ipv6_cidr]] <<output_ipv6_cidr,ipv6_cidr>> |n/a
+|[[output_private_subnet_arns]] <<output_private_subnet_arns,private_subnet_arns>> |n/a
+|[[output_private_subnet_ids]] <<output_private_subnet_ids,private_subnet_ids>> |n/a
+|[[output_public_subnet_arns]] <<output_public_subnet_arns,public_subnet_arns>> |n/a
+|[[output_public_subnet_ids]] <<output_public_subnet_ids,public_subnet_ids>> |n/a
+|[[output_vpc_arn]] <<output_vpc_arn,vpc_arn>> |n/a
+|[[output_vpc_id]] <<output_vpc_id,vpc_id>> |n/a
+|===

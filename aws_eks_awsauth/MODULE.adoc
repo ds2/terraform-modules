@@ -1,0 +1,84 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|[[provider_kubernetes]] <<provider_kubernetes,kubernetes>> |n/a
+|[[provider_null]] <<provider_null,null>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/config_map[kubernetes_config_map.aws_auth] |resource
+|https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource[null_resource.wait_for_cluster] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity[aws_caller_identity.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster[aws_eks_cluster.cluster] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth[aws_eks_cluster_auth.cluster] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_addAwsAuth]] <<input_addAwsAuth,addAwsAuth>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_admGroupArns]] <<input_admGroupArns,admGroupArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_admRoleArns]] <<input_admRoleArns,admRoleArns>>
+|this is the list of roles that can access the eks controlplane. Usually this is the nodegroup arn
+|`set(string)`
+|`[]`
+|no
+
+|[[input_admUserArns]] <<input_admUserArns,admUserArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_clusterName]] <<input_clusterName,clusterName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_cmName]] <<input_cmName,cmName>>
+|n/a
+|`string`
+|`"aws-auth"`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_token]] <<output_token,token>> |n/a
+|===

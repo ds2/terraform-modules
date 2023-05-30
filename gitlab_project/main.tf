@@ -1,3 +1,9 @@
+/**
+ * # gitlab_project
+ *
+ * To create a gitlab project.
+ */
+
 resource "gitlab_project" "project" {
   name                                             = var.name
   namespace_id                                     = var.groupId

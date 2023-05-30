@@ -1,0 +1,210 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_cw]] <<module_cw,cw>> |../aws_cloudwatch_loggroup |
+|[[module_cw_alerts]] <<module_cw_alerts,cw_alerts>> |../aws_rds_cw_alerts |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_instance[aws_db_instance.db] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_parameter_group[aws_db_parameter_group.dbparams] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/db_subnet_group[aws_db_subnet_group.sngrp] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group[aws_security_group.db-sg1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.egress1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ing1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.accesssubnets] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.subnets] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc[aws_vpc.vpc] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_accessSubnetGrpIds]] <<input_accessSubnetGrpIds,accessSubnetGrpIds>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|[[input_allowMajorUpgrade]] <<input_allowMajorUpgrade,allowMajorUpgrade>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_backupRetentionDays]] <<input_backupRetentionDays,backupRetentionDays>>
+|n/a
+|`number`
+|`30`
+|no
+
+|[[input_cpuUtilThreshold]] <<input_cpuUtilThreshold,cpuUtilThreshold>>
+|n/a
+|`number`
+|`90`
+|no
+
+|[[input_dbAdminPw]] <<input_dbAdminPw,dbAdminPw>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_dbAdminUser]] <<input_dbAdminUser,dbAdminUser>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_dbName]] <<input_dbName,dbName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_dbParams]] <<input_dbParams,dbParams>>
+|n/a
+|`map(any)`
+|`{}`
+|no
+
+|[[input_dbPort]] <<input_dbPort,dbPort>>
+|n/a
+|`number`
+|`5432`
+|no
+
+|[[input_dbVersion]] <<input_dbVersion,dbVersion>>
+|n/a
+|`string`
+|`"13.1"`
+|no
+
+|[[input_highConnectionThreshold]] <<input_highConnectionThreshold,highConnectionThreshold>>
+|n/a
+|`number`
+|`40`
+|no
+
+|[[input_instanceClass]] <<input_instanceClass,instanceClass>>
+|n/a
+|`string`
+|`"db.t3.micro"`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|the arn of the symmetric key
+|`string`
+|`null`
+|no
+
+|[[input_logfileRetentionDays]] <<input_logfileRetentionDays,logfileRetentionDays>>
+|n/a
+|`number`
+|`365`
+|no
+
+|[[input_maxStorage]] <<input_maxStorage,maxStorage>>
+|n/a
+|`number`
+|`null`
+|no
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_multiAZ]] <<input_multiAZ,multiAZ>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_paramFamily]] <<input_paramFamily,paramFamily>>
+|n/a
+|`string`
+|`"postgres12"`
+|no
+
+|[[input_paramsApplied]] <<input_paramsApplied,paramsApplied>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_storageBytesThreshold]] <<input_storageBytesThreshold,storageBytesThreshold>>
+|n/a
+|`number`
+|`435000000`
+|no
+
+|[[input_storageSize]] <<input_storageSize,storageSize>>
+|n/a
+|`number`
+|`5`
+|no
+
+|[[input_subnetGrpIds]] <<input_subnetGrpIds,subnetGrpIds>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|[[input_vpcId]] <<input_vpcId,vpcId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_address]] <<output_address,address>> |n/a
+|[[output_allocated_storage]] <<output_allocated_storage,allocated_storage>> |n/a
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_endpoint]] <<output_endpoint,endpoint>> |n/a
+|[[output_engine_version]] <<output_engine_version,engine_version>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|===

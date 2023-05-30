@@ -1,0 +1,75 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route53_record[aws_route53_record.zonerecord] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route53_zone[aws_route53_zone.zone] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_domain]] <<input_domain,domain>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_records]] <<input_records,records>>
+|n/a
+|`list(string)`
+|n/a
+|yes
+
+|[[input_subdomain]] <<input_subdomain,subdomain>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_ttl]] <<input_ttl,ttl>>
+|n/a
+|`number`
+|`60`
+|no
+
+|[[input_type]] <<input_type,type>>
+|n/a
+|`string`
+|`"CNAME"`
+|no
+
+|[[input_weights]] <<input_weights,weights>>
+|n/a
+|`list(number)`
+|`[]`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_fqdns]] <<output_fqdns,fqdns>> |n/a
+|===

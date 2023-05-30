@@ -1,0 +1,86 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_iamrole]] <<module_iamrole,iamrole>> |../aws_iam_role |
+|[[module_logbucket]] <<module_logbucket,logbucket>> |../aws_s3_bucket |
+|[[module_loggroup]] <<module_loggroup,loggroup>> |../aws_cloudwatch_loggroup |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudtrail[aws_cloudtrail.trail] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_policy[aws_iam_policy.policy_one] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity[aws_caller_identity.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.bucketpolicy] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.instance-assume-role-policy] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region[aws_region.current] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_id]] <<input_id,id>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_logKmsKeyArn]] <<input_logKmsKeyArn,logKmsKeyArn>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_logPrefix]] <<input_logPrefix,logPrefix>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_multiRegion]] <<input_multiRegion,multiRegion>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_s3LogBucketName]] <<input_s3LogBucketName,s3LogBucketName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_logGroupName]] <<output_logGroupName,logGroupName>> |n/a
+|[[output_s3BucketArn]] <<output_s3BucketArn,s3BucketArn>> |n/a
+|[[output_s3BucketName]] <<output_s3BucketName,s3BucketName>> |n/a
+|===

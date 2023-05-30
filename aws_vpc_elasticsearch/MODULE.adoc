@@ -1,0 +1,206 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_loggroup]] <<module_loggroup,loggroup>> |../aws_cloudwatch_loggroup |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_resource_policy[aws_cloudwatch_log_resource_policy.policy] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.freestoragesize] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain[aws_elasticsearch_domain.domain] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/elasticsearch_domain_policy[aws_elasticsearch_domain_policy.main] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_service_linked_role[aws_iam_service_linked_role.es] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group[aws_security_group.es_sg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity[aws_caller_identity.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.policy] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region[aws_region.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.accesssubnets] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.subnets] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc[aws_vpc.selected] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_accessSubnetGrpIds]] <<input_accessSubnetGrpIds,accessSubnetGrpIds>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|[[input_adminArns]] <<input_adminArns,adminArns>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "*"
+]
+----
+
+|no
+
+|[[input_esVersion]] <<input_esVersion,esVersion>>
+|n/a
+|`string`
+|`"7.4"`
+|no
+
+|[[input_instanceCount]] <<input_instanceCount,instanceCount>>
+|n/a
+|`number`
+|`1`
+|no
+
+|[[input_instanceType]] <<input_instanceType,instanceType>>
+|n/a
+|`string`
+|`"r5.large.elasticsearch"`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_logTypes]] <<input_logTypes,logTypes>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "INDEX_SLOW_LOGS",
+  "SEARCH_SLOW_LOGS",
+  "ES_APPLICATION_LOGS"
+]
+----
+
+|no
+
+|[[input_masterCount]] <<input_masterCount,masterCount>>
+|n/a
+|`number`
+|`0`
+|no
+
+|[[input_masterInstanceType]] <<input_masterInstanceType,masterInstanceType>>
+|n/a
+|`string`
+|`"r5.large.elasticsearch"`
+|no
+
+|[[input_missingData]] <<input_missingData,missingData>>
+|n/a
+|`string`
+|`"missing"`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_readArns]] <<input_readArns,readArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_roleSuffix]] <<input_roleSuffix,roleSuffix>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_snapshotStartHourUtc]] <<input_snapshotStartHourUtc,snapshotStartHourUtc>>
+|n/a
+|`number`
+|`23`
+|no
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_storageBytesThreshold]] <<input_storageBytesThreshold,storageBytesThreshold>>
+|n/a
+|`number`
+|`2048`
+|no
+
+|[[input_subnetGrpIds]] <<input_subnetGrpIds,subnetGrpIds>>
+|The subnet group id to use. If zoneAware is set to true, then two subnets must be given from different zones!
+|`set(string)`
+|n/a
+|yes
+
+|[[input_volumeSize]] <<input_volumeSize,volumeSize>>
+|n/a
+|`number`
+|`10`
+|no
+
+|[[input_vpcId]] <<input_vpcId,vpcId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_writeArns]] <<input_writeArns,writeArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_zoneAware]] <<input_zoneAware,zoneAware>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_cw_loggroup_arn]] <<output_cw_loggroup_arn,cw_loggroup_arn>> |n/a
+|[[output_domain_id]] <<output_domain_id,domain_id>> |n/a
+|[[output_domain_name]] <<output_domain_name,domain_name>> |n/a
+|[[output_endpoint]] <<output_endpoint,endpoint>> |n/a
+|[[output_kibana_endpoint]] <<output_kibana_endpoint,kibana_endpoint>> |n/a
+|===

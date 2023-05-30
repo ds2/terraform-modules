@@ -1,0 +1,67 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_group[aws_cloudwatch_log_group.loggroup] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_prefix]] <<input_prefix,prefix>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_retentionDays]] <<input_retentionDays,retentionDays>>
+|n/a
+|`number`
+|`90`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|===

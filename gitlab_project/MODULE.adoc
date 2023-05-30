@@ -1,0 +1,255 @@
+# gitlab_project
+
+To create a gitlab project.
+
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=16.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=16.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/branch_protection[gitlab_branch_protection.develop_protect] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/branch_protection[gitlab_branch_protection.master_protect] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/branch_protection[gitlab_branch_protection.release_protect] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/integration_jira[gitlab_integration_jira.jira] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project[gitlab_project.project] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_approval_rule[gitlab_project_approval_rule.approverule1] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_level_mr_approvals[gitlab_project_level_mr_approvals.mrapprovals] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_membership[gitlab_project_membership.devMembers] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_membership[gitlab_project_membership.guestMembers] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/project_membership[gitlab_project_membership.reportMembers] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/tag_protection[gitlab_tag_protection.protect_tags] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/user[gitlab_user.developers] |data source
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/user[gitlab_user.guests] |data source
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/user[gitlab_user.reporters] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_allowDevelopForcePush]] <<input_allowDevelopForcePush,allowDevelopForcePush>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_allowMainForcePush]] <<input_allowMainForcePush,allowMainForcePush>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_approvalsBeforeMerge]] <<input_approvalsBeforeMerge,approvalsBeforeMerge>>
+|n/a
+|`number`
+|`1`
+|no
+
+|[[input_defaultBranch]] <<input_defaultBranch,defaultBranch>>
+|n/a
+|`string`
+|`"main"`
+|no
+
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`"my new project"`
+|no
+
+|[[input_developBranchName]] <<input_developBranchName,developBranchName>>
+|n/a
+|`string`
+|`"develop"`
+|no
+
+|[[input_developers]] <<input_developers,developers>>
+|the email addresses of the developers for this project
+|`set(string)`
+|`[]`
+|no
+
+|[[input_dockerRegistryEnabled]] <<input_dockerRegistryEnabled,dockerRegistryEnabled>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_dockerRegistryVisibility]] <<input_dockerRegistryVisibility,dockerRegistryVisibility>>
+|Set to private or public
+|`string`
+|`"private"`
+|no
+
+|[[input_groupId]] <<input_groupId,groupId>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_guests]] <<input_guests,guests>>
+|the email addresses of the guests for this project
+|`set(string)`
+|`[]`
+|no
+
+|[[input_initialize]] <<input_initialize,initialize>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_issuesEnabled]] <<input_issuesEnabled,issuesEnabled>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_jiraProjectKey]] <<input_jiraProjectKey,jiraProjectKey>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_jiraPw]] <<input_jiraPw,jiraPw>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_jiraUrl]] <<input_jiraUrl,jiraUrl>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_jiraUser]] <<input_jiraUser,jiraUser>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_lfsEnabled]] <<input_lfsEnabled,lfsEnabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_mainBranchName]] <<input_mainBranchName,mainBranchName>>
+|n/a
+|`string`
+|`"main"`
+|no
+
+|[[input_mergeRequestsEnabled]] <<input_mergeRequestsEnabled,mergeRequestsEnabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_packagesEnabled]] <<input_packagesEnabled,packagesEnabled>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_pagesVisibility]] <<input_pagesVisibility,pagesVisibility>>
+|n/a
+|`string`
+|`"private"`
+|no
+
+|[[input_pipelinesEnabled]] <<input_pipelinesEnabled,pipelinesEnabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_pipelinesVisibility]] <<input_pipelinesVisibility,pipelinesVisibility>>
+|Set to private or public!
+|`string`
+|`"private"`
+|no
+
+|[[input_releaseTagPattern]] <<input_releaseTagPattern,releaseTagPattern>>
+|n/a
+|`string`
+|`"v*"`
+|no
+
+|[[input_reporters]] <<input_reporters,reporters>>
+|the email addresses of the reporters for this project
+|`set(string)`
+|`[]`
+|no
+
+|[[input_sharedRunnersEnabled]] <<input_sharedRunnersEnabled,sharedRunnersEnabled>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_snippetsEnabled]] <<input_snippetsEnabled,snippetsEnabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_tags]] <<input_tags,tags>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_visibility]] <<input_visibility,visibility>>
+|n/a
+|`string`
+|`"private"`
+|no
+
+|[[input_wikiEnabled]] <<input_wikiEnabled,wikiEnabled>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_httpUrl]] <<output_httpUrl,httpUrl>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_sshUrl]] <<output_sshUrl,sshUrl>> |n/a
+|[[output_webUrl]] <<output_webUrl,webUrl>> |n/a
+|===
