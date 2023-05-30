@@ -7,7 +7,6 @@ resource "gitlab_project" "project" {
   lfs_enabled                                      = var.lfsEnabled
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
-  approvals_before_merge                           = var.approvalsBeforeMerge
   container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
   builds_access_level                              = var.pipelinesEnabled ? var.pipelinesVisibility : "disabled"
@@ -46,7 +45,7 @@ resource "gitlab_branch_protection" "release_protect" {
   merge_access_level = "developer"
 }
 
-resource "gitlab_service_jira" "jira" {
+resource "gitlab_integration_jira" "jira" {
   for_each    = var.jiraUrl != null ? toset([""]) : []
   project     = gitlab_project.project.id
   project_key = var.jiraProjectKey
@@ -78,29 +77,43 @@ data "gitlab_user" "developers" {
 
 resource "gitlab_project_membership" "devMembers" {
   for_each     = data.gitlab_user.developers
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "developer"
 }
 
 resource "gitlab_project_membership" "guestMembers" {
   for_each     = data.gitlab_user.guests
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "guest"
 }
 
 resource "gitlab_project_membership" "reportMembers" {
   for_each     = data.gitlab_user.reporters
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "reporter"
 }
 
 resource "gitlab_project_level_mr_approvals" "mrapprovals" {
-  project_id                                     = gitlab_project.project.id
+  project                                        = gitlab_project.project.id
   reset_approvals_on_push                        = true
   disable_overriding_approvers_per_merge_request = false
   merge_requests_author_approval                 = false
   merge_requests_disable_committers_approval     = true
+}
+
+locals {
+  developer_user_ids = toset([for k, v in data.gitlab_user.developers : v.user_id])
+  dui                = [for user in data.gitlab_user.developers : user.id]
+}
+
+resource "gitlab_project_approval_rule" "approverule1" {
+  project            = gitlab_project.project.id
+  name               = "Users allowed to approve a MR"
+  approvals_required = 1
+  user_ids           = local.dui
+  rule_type          = "regular"
+  # group_ids          = [51]
 }
