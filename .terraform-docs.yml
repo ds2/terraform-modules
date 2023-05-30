@@ -19,7 +19,7 @@ sections:
 content: ""
 
 output:
-  file: "README.adoc"
+  file: "MODULE.adoc"
   mode: replace
   template: |-
     {{ .Content }}
