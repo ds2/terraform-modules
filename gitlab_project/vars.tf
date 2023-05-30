@@ -163,3 +163,8 @@ variable "allowMainForcePush" {
   type    = bool
   default = false
 }
+
+variable "squash" {
+  type    = string
+  default = "default_on"
+}

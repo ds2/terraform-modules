@@ -223,6 +223,12 @@ No modules.
 |`true`
 |no
 
+|[[input_squash]] <<input_squash,squash>>
+|n/a
+|`string`
+|`"default_on"`
+|no
+
 |[[input_tags]] <<input_tags,tags>>
 |n/a
 |`set(string)`

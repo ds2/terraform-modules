@@ -8,11 +8,13 @@ resource "gitlab_project" "project" {
   name                                             = var.name
   namespace_id                                     = var.groupId
   description                                      = var.description
-  tags                                             = var.tags
+  topics                                           = var.tags
   wiki_enabled                                     = var.wikiEnabled
   lfs_enabled                                      = var.lfsEnabled
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
+  merge_method                                     = "rebase_merge"
+  keep_latest_artifact                             = true
   container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
   builds_access_level                              = var.pipelinesEnabled ? var.pipelinesVisibility : "disabled"
@@ -25,7 +27,10 @@ resource "gitlab_project" "project" {
   initialize_with_readme                           = var.initialize
   only_allow_merge_if_pipeline_succeeds            = true
   only_allow_merge_if_all_discussions_are_resolved = true
+  allow_merge_on_skipped_pipeline                  = false
   remove_source_branch_after_merge                 = true
+  squash_option                                    = var.squash
+  ci_separated_caches                              = true
 }
 
 resource "gitlab_branch_protection" "master_protect" {

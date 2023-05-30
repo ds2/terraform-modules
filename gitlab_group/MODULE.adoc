@@ -1,0 +1,110 @@
+# gitlab_group
+
+to create a group within Gitlab.
+
+Be aware that on GitLab SaaS (aka gitlab.com), you must use the GitLab UI to create groups without a parent group. You cannot use the API to do this.
+
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=16.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=16.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group[gitlab_group.grp] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_allowEmails]] <<input_allowEmails,allowEmails>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_autoDevOps]] <<input_autoDevOps,autoDevOps>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_branchProtectionId]] <<input_branchProtectionId,branchProtectionId>>
+|n/a
+|`number`
+|`2`
+|no
+
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`"Another group"`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|`"My group name"`
+|no
+
+|[[input_parent_group_id]] <<input_parent_group_id,parent_group_id>>
+|n/a
+|`number`
+|`null`
+|no
+
+|[[input_path]] <<input_path,path>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_preventOutsideGrpForking]] <<input_preventOutsideGrpForking,preventOutsideGrpForking>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_require2FA]] <<input_require2FA,require2FA>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_visibility]] <<input_visibility,visibility>>
+|n/a
+|`string`
+|`"private"`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |the id of the group
+|[[output_web_url]] <<output_web_url,web_url>> |n/a
+|===
