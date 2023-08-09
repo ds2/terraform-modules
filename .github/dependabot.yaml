@@ -1,0 +1,99 @@
+version: 2
+
+updates:
+  - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
+    directory: "/tests/github"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 20
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    commit-message:
+      prefix: "⬆️"
+    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
+    labels:
+      - "terraform"  # you may also use java, rust, go, pip-dependencies
+      - "dependencies"
+  - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
+    directory: "/tests/aws"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 20
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    commit-message:
+      prefix: "⬆️"
+    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
+    labels:
+      - "terraform"  # you may also use java, rust, go, pip-dependencies
+      - "dependencies"
+  - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
+    directory: "/tests/bitbucket"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 20
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    commit-message:
+      prefix: "⬆️"
+    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
+    labels:
+      - "terraform"  # you may also use java, rust, go, pip-dependencies
+      - "dependencies"
+  - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
+    directory: "/tests/azure"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 20
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    commit-message:
+      prefix: "⬆️"
+    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
+    labels:
+      - "terraform"  # you may also use java, rust, go, pip-dependencies
+      - "dependencies"
+  - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
+    directory: "/tests/gitlab"
+    schedule:
+      interval: "daily"
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    open-pull-requests-limit: 20
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    commit-message:
+      prefix: "⬆️"
+    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
+    labels:
+      - "terraform"  # you may also use java, rust, go, pip-dependencies
+      - "dependencies"
+  - package-ecosystem: "github-actions" # See documentation for possible values
+    directory: "/" # Location of package manifests
+    schedule:
+      interval: "weekly"
+      day: "sunday" # only when weekly is set!
+      time: "09:00"
+      timezone: "Europe/Berlin"
+    reviewers: # you can also use assignees
+      - "lexxy23"
+      - "ds2/owners"
+    labels:
+      - "githubactions"
+      - "updates"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "🔨"
