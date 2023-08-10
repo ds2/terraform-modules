@@ -15,7 +15,7 @@ provider "bitbucket" {
 }
 
 data "bitbucket_user" "lexxy23" {
-  username = "{f5aee987-bd9b-4da0-beab-ba903286e189}"
+  uuid = var.userUuid
 }
 
 module "testproject1" {
