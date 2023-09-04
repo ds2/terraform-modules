@@ -97,7 +97,7 @@ variable "allowPushToMainFromNodeIds" {
 
 variable "requiredStatusChecksContextsMain" {
   type    = list(string)
-  default = ["ci/travis"]
+  default = []
 }
 
 variable "requireStrictStatusChecks" {
