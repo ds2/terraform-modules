@@ -12,11 +12,9 @@
     "reviewersFromCodeOwners": true,
     "additionalReviewers": [
 		"lexxy23",
-		"rusty232"
+		"rusty232",
+		"team:owners"
 	],
 	"branchConcurrentLimit": 5,
-	"prConcurrentLimit": 9,
-    "baseBranches": [
-		"develop"
-	]
+	"prConcurrentLimit": 9
 }
