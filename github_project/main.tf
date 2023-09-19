@@ -79,6 +79,8 @@ resource "github_branch_protection" "protect_main" {
     restrict_dismissals             = true
     dismissal_restrictions          = data.github_users.admins.node_ids
     required_approving_review_count = 1
+    pull_request_bypassers          = data.github_users.admins.node_ids
+    require_last_push_approval      = var.prRequireLastApproval
   }
 
 }
@@ -106,5 +108,7 @@ resource "github_branch_protection" "protect_develop" {
     restrict_dismissals             = true
     dismissal_restrictions          = data.github_users.admins.node_ids
     required_approving_review_count = 1
+    pull_request_bypassers          = data.github_users.admins.node_ids
+    require_last_push_approval      = var.prRequireLastApproval
   }
 }

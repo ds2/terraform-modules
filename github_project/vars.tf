@@ -139,3 +139,8 @@ variable "deleteBranchOnMerge" {
   type    = bool
   default = true
 }
+
+variable "prRequireLastApproval" {
+  type    = bool
+  default = true
+}
