@@ -144,3 +144,8 @@ variable "prRequireLastApproval" {
   type    = bool
   default = true
 }
+
+variable "enforceAdmins" {
+  type    = bool
+  default = false
+}

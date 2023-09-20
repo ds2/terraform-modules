@@ -60,7 +60,7 @@ data "github_team" "teams" {
 resource "github_branch_protection" "protect_main" {
   repository_id                   = github_repository.project.node_id
   pattern                         = var.defaultBranchName
-  enforce_admins                  = true
+  enforce_admins                  = var.enforceAdmins
   require_signed_commits          = false
   required_linear_history         = true
   require_conversation_resolution = true
@@ -89,7 +89,7 @@ resource "github_branch_protection" "protect_develop" {
   count                           = length(var.developBranchName) > 0 ? 1 : 0
   repository_id                   = github_repository.project.node_id
   pattern                         = var.developBranchName
-  enforce_admins                  = true
+  enforce_admins                  = var.enforceAdmins
   require_signed_commits          = false
   required_linear_history         = true
   require_conversation_resolution = true
