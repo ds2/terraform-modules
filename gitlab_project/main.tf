@@ -113,6 +113,10 @@ resource "gitlab_project_level_mr_approvals" "mrapprovals" {
   disable_overriding_approvers_per_merge_request = false
   merge_requests_author_approval                 = false
   merge_requests_disable_committers_approval     = true
+  lifecycle {
+    ignore_changes = [reset_approvals_on_push # because closed source repos do not support it on GITLAB cloud.
+    ]
+  }
 }
 
 locals {

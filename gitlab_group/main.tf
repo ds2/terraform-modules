@@ -17,4 +17,8 @@ resource "gitlab_group" "grp" {
   prevent_forking_outside_group     = var.preventOutsideGrpForking
   require_two_factor_authentication = var.require2FA
   default_branch_protection         = var.branchProtectionId
+
+  lifecycle {
+    ignore_changes = [prevent_forking_outside_group]
+  }
 }
