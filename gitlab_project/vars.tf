@@ -168,3 +168,8 @@ variable "squash" {
   type    = string
   default = "default_on"
 }
+
+variable "resetApprovalsOnPush" {
+  type    = bool
+  default = null
+}
