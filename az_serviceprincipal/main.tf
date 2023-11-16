@@ -6,9 +6,9 @@ resource "azuread_application" "app" {
 
 # Create a service principal
 resource "azuread_service_principal" "principal" {
-  application_id = azuread_application.app.application_id
-  description    = var.description
-  owners         = [data.azuread_client_config.current.object_id]
+  client_id   = azuread_application.app.client_id
+  description = var.description
+  owners      = [data.azuread_client_config.current.object_id]
 }
 
 resource "time_rotating" "days" {
