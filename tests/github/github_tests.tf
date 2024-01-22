@@ -32,3 +32,18 @@ module "repo1" {
   teamSlugs           = [module.team1.slug]
   allowUpdateBranch   = false
 }
+
+# Create a new, red colored label
+resource "github_issue_labels" "test_repo" {
+  repository = module.repo1.name
+
+  label {
+    name  = "Urgent"
+    color = "FF0000"
+  }
+
+  label {
+    name  = "Critical"
+    color = "FF0000"
+  }
+}
