@@ -31,19 +31,9 @@ module "repo1" {
   admins              = ["lexxy23", "ds2ci"]
   teamSlugs           = [module.team1.slug]
   allowUpdateBranch   = false
-}
-
-# Create a new, red colored label
-resource "github_issue_labels" "test_repo" {
-  repository = module.repo1.name
-
-  label {
-    name  = "Urgent"
-    color = "FF0000"
-  }
-
-  label {
-    name  = "Critical"
-    color = "FF0000"
+  hasIssues           = true
+  labels = {
+    "urgent"   = ["ff0000", "urgent tasks to do"]
+    "critical" = ["ff0000"]
   }
 }

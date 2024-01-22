@@ -114,3 +114,11 @@ resource "github_branch_protection" "protect_develop" {
     require_last_push_approval      = var.prRequireLastApproval
   }
 }
+
+resource "github_issue_label" "labels" {
+  for_each    = var.labels
+  repository  = github_repository.project.name
+  name        = each.key
+  color       = each.value[0]
+  description = length(each.value) > 1 ? each.value[1] : null
+}

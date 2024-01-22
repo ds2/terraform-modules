@@ -159,3 +159,9 @@ variable "allowUpdateBranch" {
   type    = bool
   default = true
 }
+
+variable "labels" {
+  type        = map(list(string))
+  default     = {}
+  description = "A map of labels to add to the repository. The key is the label name and the value is a list of label color (hexacedimal, required) and label description (optional)"
+}
