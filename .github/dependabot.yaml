@@ -10,13 +10,9 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     commit-message:
       prefix: "⬆️"
-    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
-    labels:
-      - "terraform"  # you may also use java, rust, go, pip-dependencies
-      - "dependencies"
   - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
     directory: "/tests/aws"
     schedule:
@@ -26,13 +22,9 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     commit-message:
       prefix: "⬆️"
-    # here you define the labels, if required. You may also omit them to rely on dependabots default values!
-    labels:
-      - "terraform"  # you may also use java, rust, go, pip-dependencies
-      - "dependencies"
   - package-ecosystem: "terraform"  # can also be maven, gradle, gomod, pip, pub, terraform, docker, compose
     directory: "/tests/bitbucket"
     schedule:
@@ -42,7 +34,7 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     commit-message:
       prefix: "⬆️"
     # here you define the labels, if required. You may also omit them to rely on dependabots default values!
@@ -58,7 +50,7 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     commit-message:
       prefix: "⬆️"
     # here you define the labels, if required. You may also omit them to rely on dependabots default values!
@@ -74,7 +66,7 @@ updates:
     open-pull-requests-limit: 20
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     commit-message:
       prefix: "⬆️"
     # here you define the labels, if required. You may also omit them to rely on dependabots default values!
@@ -90,7 +82,7 @@ updates:
       timezone: "Europe/Berlin"
     reviewers: # you can also use assignees
       - "lexxy23"
-      - "ds2/owners"
+      - "rusty232"
     labels:
       - "githubactions"
       - "updates"
