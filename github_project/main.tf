@@ -15,6 +15,8 @@ resource "github_repository" "project" {
   allow_rebase_merge     = var.allowRebaseMerge
   allow_squash_merge     = var.allowSquashMerge
   allow_merge_commit     = var.allowMergeCommits
+  allow_auto_merge       = var.allowAutoMerge
+  allow_update_branch    = var.allowUpdateBranch
   is_template            = false
   license_template       = var.projectLicenseId
   gitignore_template     = var.gitignoreTemplateId

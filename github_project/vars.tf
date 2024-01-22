@@ -149,3 +149,13 @@ variable "enforceAdmins" {
   type    = bool
   default = false
 }
+
+variable "allowAutoMerge" {
+  type    = bool
+  default = false
+}
+
+variable "allowUpdateBranch" {
+  type    = bool
+  default = true
+}

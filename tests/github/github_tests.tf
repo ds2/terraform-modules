@@ -30,4 +30,5 @@ module "repo1" {
   gitignoreTemplateId = "Gradle"
   admins              = ["lexxy23", "ds2ci"]
   teamSlugs           = [module.team1.slug]
+  allowUpdateBranch   = false
 }
