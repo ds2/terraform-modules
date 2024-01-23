@@ -112,7 +112,7 @@ resource "github_branch_protection" "protect_develop" {
     dismiss_stale_reviews           = true
     restrict_dismissals             = true
     dismissal_restrictions          = data.github_users.admins.node_ids
-    required_approving_review_count = 1
+    required_approving_review_count = var.prRequireLastApproval ? var.prApprovalCount : null
     pull_request_bypassers          = data.github_users.prBypassers.node_ids
     require_last_push_approval      = var.prRequireLastApproval
   }
