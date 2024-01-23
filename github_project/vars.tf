@@ -43,6 +43,12 @@ variable "admins" {
   default = []
 }
 
+variable "prBypassers" {
+  type        = list(string)
+  default     = []
+  description = "the usernames of the organization to bypass PR reviews"
+}
+
 variable "teamSlugs" {
   type    = list(string)
   default = []
@@ -143,6 +149,11 @@ variable "deleteBranchOnMerge" {
 variable "prRequireLastApproval" {
   type    = bool
   default = true
+}
+
+variable "prApprovalCount" {
+  type    = number
+  default = 1
 }
 
 variable "enforceAdmins" {

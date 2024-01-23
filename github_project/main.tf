@@ -53,6 +53,9 @@ resource "github_branch" "branch_develop" {
 data "github_users" "admins" {
   usernames = var.admins
 }
+data "github_users" "prBypassers" {
+  usernames = length(var.prBypassers) > 0 ? var.prBypassers : var.admins
+}
 
 data "github_team" "teams" {
   count = length(var.teamSlugs)
@@ -80,8 +83,8 @@ resource "github_branch_protection" "protect_main" {
     dismiss_stale_reviews           = true
     restrict_dismissals             = true
     dismissal_restrictions          = data.github_users.admins.node_ids
-    required_approving_review_count = 1
-    pull_request_bypassers          = data.github_users.admins.node_ids
+    required_approving_review_count = var.prRequireLastApproval ? var.prApprovalCount : null
+    pull_request_bypassers          = data.github_users.prBypassers.node_ids
     require_last_push_approval      = var.prRequireLastApproval
   }
 
@@ -110,7 +113,7 @@ resource "github_branch_protection" "protect_develop" {
     restrict_dismissals             = true
     dismissal_restrictions          = data.github_users.admins.node_ids
     required_approving_review_count = 1
-    pull_request_bypassers          = data.github_users.admins.node_ids
+    pull_request_bypassers          = data.github_users.prBypassers.node_ids
     require_last_push_approval      = var.prRequireLastApproval
   }
 }
