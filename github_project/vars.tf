@@ -43,6 +43,16 @@ variable "admins" {
   default = []
 }
 
+variable "protectDefaultBranch" {
+  type    = bool
+  default = true
+}
+
+variable "protectDevelopBranch" {
+  type    = bool
+  default = true
+}
+
 variable "prBypassers" {
   type        = list(string)
   default     = []

@@ -53,8 +53,13 @@ resource "github_branch" "branch_develop" {
 data "github_users" "admins" {
   usernames = var.admins
 }
+
+locals {
+  prBypassers = distinct(concat(var.admins, var.prBypassers))
+}
+
 data "github_users" "prBypassers" {
-  usernames = length(var.prBypassers) > 0 ? var.prBypassers : var.admins
+  usernames = length(local.prBypassers) > 0 ? local.prBypassers : var.admins
 }
 
 data "github_team" "teams" {
@@ -63,6 +68,7 @@ data "github_team" "teams" {
 }
 
 resource "github_branch_protection" "protect_main" {
+  count                           = var.protectDefaultBranch ? 1 : 0
   repository_id                   = github_repository.project.node_id
   pattern                         = var.defaultBranchName
   enforce_admins                  = var.enforceAdmins
@@ -91,7 +97,7 @@ resource "github_branch_protection" "protect_main" {
 }
 
 resource "github_branch_protection" "protect_develop" {
-  count                           = length(var.developBranchName) > 0 ? 1 : 0
+  count                           = length(var.developBranchName) > 0 && var.protectDevelopBranch ? 1 : 0
   repository_id                   = github_repository.project.node_id
   pattern                         = var.developBranchName
   enforce_admins                  = var.enforceAdmins
