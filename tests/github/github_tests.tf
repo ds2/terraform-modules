@@ -37,3 +37,9 @@ module "repo1" {
     "critical" = ["ff0000"]
   }
 }
+
+module "repo1_main" {
+  source             = "../../github_protect_branch"
+  pattern            = "main"
+  repository_node_id = module.repo1.node_id
+}
