@@ -29,3 +29,7 @@ output "etag" {
 output "id" {
   value = github_repository.project.id
 }
+
+output "node_id" {
+  value = github_repository.project.node_id
+}

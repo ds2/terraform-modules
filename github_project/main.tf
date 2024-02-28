@@ -50,78 +50,9 @@ resource "github_branch" "branch_develop" {
   branch        = var.developBranchName
 }
 
-data "github_users" "admins" {
-  usernames = var.admins
-}
-
-locals {
-  prBypassers = distinct(concat(var.admins, var.prBypassers))
-}
-
-data "github_users" "prBypassers" {
-  usernames = length(local.prBypassers) > 0 ? local.prBypassers : var.admins
-}
-
 data "github_team" "teams" {
   count = length(var.teamSlugs)
   slug  = var.teamSlugs[count.index]
-}
-
-resource "github_branch_protection" "protect_main" {
-  count                           = var.protectDefaultBranch ? 1 : 0
-  repository_id                   = github_repository.project.node_id
-  pattern                         = var.defaultBranchName
-  enforce_admins                  = var.enforceAdmins
-  require_signed_commits          = false
-  required_linear_history         = true
-  require_conversation_resolution = true
-  allows_deletions                = false
-  allows_force_pushes             = var.allowForcePushToMain
-  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds, data.github_team.teams[*].node_id)
-
-  required_status_checks {
-    strict   = var.requireStrictStatusChecks
-    contexts = var.requiredStatusChecksContextsMain
-  }
-
-  required_pull_request_reviews {
-    require_code_owner_reviews      = true
-    dismiss_stale_reviews           = true
-    restrict_dismissals             = true
-    dismissal_restrictions          = data.github_users.admins.node_ids
-    required_approving_review_count = var.prRequireLastApproval ? var.prApprovalCount : null
-    pull_request_bypassers          = data.github_users.prBypassers.node_ids
-    require_last_push_approval      = var.prRequireLastApproval
-  }
-
-}
-
-resource "github_branch_protection" "protect_develop" {
-  count                           = length(var.developBranchName) > 0 && var.protectDevelopBranch ? 1 : 0
-  repository_id                   = github_repository.project.node_id
-  pattern                         = var.developBranchName
-  enforce_admins                  = var.enforceAdmins
-  require_signed_commits          = false
-  required_linear_history         = true
-  require_conversation_resolution = true
-  allows_deletions                = false
-  allows_force_pushes             = false
-  push_restrictions               = concat(data.github_users.admins.node_ids, var.allowPushToMainFromNodeIds, data.github_team.teams[*].node_id)
-
-  required_status_checks {
-    strict   = var.requireStrictStatusChecks
-    contexts = var.requiredStatusChecksContextsMain
-  }
-
-  required_pull_request_reviews {
-    require_code_owner_reviews      = true
-    dismiss_stale_reviews           = true
-    restrict_dismissals             = true
-    dismissal_restrictions          = data.github_users.admins.node_ids
-    required_approving_review_count = var.prRequireLastApproval ? var.prApprovalCount : null
-    pull_request_bypassers          = data.github_users.prBypassers.node_ids
-    require_last_push_approval      = var.prRequireLastApproval
-  }
 }
 
 resource "github_issue_label" "labels" {
