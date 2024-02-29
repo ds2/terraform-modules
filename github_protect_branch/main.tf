@@ -8,7 +8,10 @@ resource "github_branch_protection" "bp" {
   require_conversation_resolution = true
   allows_deletions                = false
   allows_force_pushes             = var.allowForcePush
-  push_restrictions               = var.push_node_ids
+
+  restrict_pushes {
+    push_allowances = var.push_node_ids
+  }
 
   required_status_checks {
     strict   = var.requireStrictStatusChecks

@@ -22,7 +22,7 @@ variable "allowForcePush" {
 
 variable "push_node_ids" {
   type    = list(string)
-  default = []
+  default = null
 }
 
 variable "dismissal_node_ids" {

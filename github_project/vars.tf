@@ -156,16 +156,6 @@ variable "deleteBranchOnMerge" {
   default = true
 }
 
-variable "prRequireLastApproval" {
-  type    = bool
-  default = true
-}
-
-variable "prApprovalCount" {
-  type    = number
-  default = 1
-}
-
 variable "enforceAdmins" {
   type    = bool
   default = false
