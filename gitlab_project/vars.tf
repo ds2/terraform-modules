@@ -173,3 +173,8 @@ variable "resetApprovalsOnPush" {
   type    = bool
   default = null
 }
+
+variable "prStrategy" {
+  type    = string
+  default = "rebase_merge"
+}

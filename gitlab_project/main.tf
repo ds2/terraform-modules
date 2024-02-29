@@ -13,7 +13,7 @@ resource "gitlab_project" "project" {
   lfs_enabled                                      = var.lfsEnabled
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
-  merge_method                                     = "rebase_merge"
+  merge_method                                     = var.prStrategy
   keep_latest_artifact                             = true
   container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
