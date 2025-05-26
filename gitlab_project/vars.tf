@@ -84,7 +84,7 @@ variable "guests" {
 
 variable "issuesEnabled" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "visibility" {
