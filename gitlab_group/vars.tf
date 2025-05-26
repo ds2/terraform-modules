@@ -22,11 +22,6 @@ variable "parent_group_id" {
   default = null
 }
 
-variable "branchProtectionId" {
-  type    = number
-  default = 2
-}
-
 variable "require2FA" {
   type    = bool
   default = true

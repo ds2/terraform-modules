@@ -12,11 +12,14 @@ resource "gitlab_group" "grp" {
   visibility_level                  = var.visibility
   parent_id                         = var.parent_group_id
   auto_devops_enabled               = var.autoDevOps
-  emails_disabled                   = !var.allowEmails
+  emails_enabled                    = var.allowEmails
   lfs_enabled                       = true
   prevent_forking_outside_group     = var.preventOutsideGrpForking
   require_two_factor_authentication = var.require2FA
-  default_branch_protection         = var.branchProtectionId
+  default_branch_protection_defaults {
+    allow_force_push           = false
+    developer_can_initial_push = false
+  }
 
   lifecycle {
     ignore_changes = [prevent_forking_outside_group]
