@@ -8,7 +8,7 @@ To create a gitlab project.
 |===
 |Name |Version
 |[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
-|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=16.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=17.0
 |===
 
 == Providers
@@ -16,7 +16,7 @@ To create a gitlab project.
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=16.0
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=17.0
 |===
 
 == Modules
@@ -199,6 +199,12 @@ No modules.
 |`"private"`
 |no
 
+|[[input_prStrategy]] <<input_prStrategy,prStrategy>>
+|n/a
+|`string`
+|`"ff"`
+|no
+
 |[[input_releaseTagPattern]] <<input_releaseTagPattern,releaseTagPattern>>
 |n/a
 |`string`
@@ -209,6 +215,12 @@ No modules.
 |the email addresses of the reporters for this project
 |`set(string)`
 |`[]`
+|no
+
+|[[input_resetApprovalsOnPush]] <<input_resetApprovalsOnPush,resetApprovalsOnPush>>
+|n/a
+|`bool`
+|`null`
 |no
 
 |[[input_sharedRunnersEnabled]] <<input_sharedRunnersEnabled,sharedRunnersEnabled>>

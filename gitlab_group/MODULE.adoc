@@ -10,7 +10,7 @@ Be aware that on GitLab SaaS (aka gitlab.com), you must use the GitLab UI to cre
 |===
 |Name |Version
 |[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
-|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=16.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=17.0
 |===
 
 == Providers
@@ -18,7 +18,7 @@ Be aware that on GitLab SaaS (aka gitlab.com), you must use the GitLab UI to cre
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=16.0
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=17.0
 |===
 
 == Modules
@@ -48,12 +48,6 @@ No modules.
 |n/a
 |`bool`
 |`false`
-|no
-
-|[[input_branchProtectionId]] <<input_branchProtectionId,branchProtectionId>>
-|n/a
-|`number`
-|`2`
 |no
 
 |[[input_description]] <<input_description,description>>

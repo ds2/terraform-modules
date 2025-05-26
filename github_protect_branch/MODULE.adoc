@@ -1,0 +1,122 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_github]] <<requirement_github,github>> |>=6.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_github]] <<provider_github,github>> |>=6.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_protection[github_branch_protection.bp] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_allowForcePush]] <<input_allowForcePush,allowForcePush>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_dismissal_node_ids]] <<input_dismissal_node_ids,dismissal_node_ids>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_enabled]] <<input_enabled,enabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_enforceAdmins]] <<input_enforceAdmins,enforceAdmins>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_pattern]] <<input_pattern,pattern>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_prBypasserNodeIds]] <<input_prBypasserNodeIds,prBypasserNodeIds>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_push_node_ids]] <<input_push_node_ids,push_node_ids>>
+|n/a
+|`list(string)`
+|`null`
+|no
+
+|[[input_repository_node_id]] <<input_repository_node_id,repository_node_id>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_requireStrictStatusChecks]] <<input_requireStrictStatusChecks,requireStrictStatusChecks>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_require_code_owner_reviews]] <<input_require_code_owner_reviews,require_code_owner_reviews>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_require_last_push_approval]] <<input_require_last_push_approval,require_last_push_approval>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_required_approving_review_count]] <<input_required_approving_review_count,required_approving_review_count>>
+|n/a
+|`number`
+|`0`
+|no
+
+|[[input_restrict_dismissals]] <<input_restrict_dismissals,restrict_dismissals>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_status_checks_contexts]] <<input_status_checks_contexts,status_checks_contexts>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|===
+
+== Outputs
+
+No outputs.
