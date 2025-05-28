@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### 📚 Documentation
+
+- Add changelog
+
+### ⚙️ Miscellaneous Tasks
+
+- [**breaking**] Enable issues by default on gitlab projects
+
 ## [0.7.0] - 2025-05-26
 
 ### 📚 Documentation
