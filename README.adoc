@@ -21,7 +21,14 @@ The ref parameter defines the tag name to checkout. You should update it to the 
 
 == Release (for local Developers only!)
 
-Update the docs first:
+Format the tofu files:
+
+[,shell]
+----
+tofu fmt
+----
+
+Update the docs:
 
 [,shell]
 ----
