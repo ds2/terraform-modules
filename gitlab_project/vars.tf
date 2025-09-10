@@ -178,3 +178,9 @@ variable "prStrategy" {
   type    = string
   default = "ff"
 }
+
+variable "keepLatestArtifact" {
+  type        = bool
+  description = "Whether to keep all artifacts from a CI job, or to use their configured lifetime instead."
+  default     = null
+}

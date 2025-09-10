@@ -14,7 +14,7 @@ resource "gitlab_project" "project" {
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
   merge_method                                     = var.prStrategy
-  keep_latest_artifact                             = true
+  keep_latest_artifact                             = var.keepLatestArtifact
   container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
   builds_access_level                              = var.pipelinesEnabled ? var.pipelinesVisibility : "disabled"
