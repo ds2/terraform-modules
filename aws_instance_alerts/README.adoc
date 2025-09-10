@@ -1,0 +1,108 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpucreditbalance] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpucreditusage] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.cpuutil] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.instance_avail] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region[aws_region.current] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_availActionArns]] <<input_availActionArns,availActionArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_availCheckCount]] <<input_availCheckCount,availCheckCount>>
+|n/a
+|`number`
+|`2`
+|no
+
+|[[input_availCheckPeriod]] <<input_availCheckPeriod,availCheckPeriod>>
+|n/a
+|`number`
+|`120`
+|no
+
+|[[input_cpuUsageThreshold]] <<input_cpuUsageThreshold,cpuUsageThreshold>>
+|n/a
+|`number`
+|`80`
+|no
+
+|[[input_creditBalanceThreshold]] <<input_creditBalanceThreshold,creditBalanceThreshold>>
+|n/a
+|`number`
+|`100`
+|no
+
+|[[input_creditUsageThreshold]] <<input_creditUsageThreshold,creditUsageThreshold>>
+|n/a
+|`number`
+|`2`
+|no
+
+|[[input_dimensions]] <<input_dimensions,dimensions>>
+|n/a
+|`map(string)`
+|n/a
+|yes
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_rebootIfNotAvail]] <<input_rebootIfNotAvail,rebootIfNotAvail>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|===
+
+== Outputs
+
+No outputs.

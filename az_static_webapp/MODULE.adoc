@@ -1,0 +1,81 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/static_site[azurerm_static_site.site] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group[azurerm_resource_group.resgrp] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_additionalTags]] <<input_additionalTags,additionalTags>>
+|Some additional tags to add
+|`map(string)`
+|`{}`
+|no
+
+|[[input_location]] <<input_location,location>>
+|n/a
+|`string`
+|`"westeurope"`
+|no
+
+|[[input_name]] <<input_name,name>>
+|the id of the website
+|`string`
+|n/a
+|yes
+
+|[[input_resourceGroupName]] <<input_resourceGroupName,resourceGroupName>>
+|the name of the resourcegroup to add this website to.
+|`string`
+|n/a
+|yes
+
+|[[input_skuSize]] <<input_skuSize,skuSize>>
+|n/a
+|`string`
+|`"Free"`
+|no
+
+|[[input_skuTier]] <<input_skuTier,skuTier>>
+|n/a
+|`string`
+|`"Free"`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_api_key]] <<output_api_key,api_key>> |n/a
+|[[output_hostname]] <<output_hostname,hostname>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|===

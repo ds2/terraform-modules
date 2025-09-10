@@ -1,0 +1,77 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_github]] <<provider_github,github>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team[github_team.team] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_membership[github_team_membership.maintainers] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_membership[github_team_membership.members] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_isSecret]] <<input_isSecret,isSecret>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_maintainers]] <<input_maintainers,maintainers>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_members]] <<input_members,members>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_parentTeamId]] <<input_parentTeamId,parentTeamId>>
+|n/a
+|`string`
+|`null`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_slug]] <<output_slug,slug>> |n/a
+|===

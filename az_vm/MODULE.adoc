@@ -1,0 +1,205 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |~> 1.0
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/dev_test_global_vm_shutdown_schedule[azurerm_dev_test_global_vm_shutdown_schedule.shutdown] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/linux_virtual_machine[azurerm_linux_virtual_machine.machine] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface[azurerm_network_interface.if01] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_interface_security_group_association[azurerm_network_interface_security_group_association.sg2if] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_group[azurerm_network_security_group.sg] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/network_security_rule[azurerm_network_security_rule.ssh] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resource_group[azurerm_resource_group.resgrp] |data source
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/ssh_public_key[azurerm_ssh_public_key.pubkey] |data source
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subnet[azurerm_subnet.subnet] |data source
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/virtual_network[azurerm_virtual_network.vnet1] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_additionalTags]] <<input_additionalTags,additionalTags>>
+|n/a
+|`map(string)`
+|`{}`
+|no
+
+|[[input_adminpw]] <<input_adminpw,adminpw>>
+|the ssh password to use. PLEASE USE SSH KEY AUTH INSTEAD!!
+|`string`
+|`null`
+|no
+
+|[[input_adminuser]] <<input_adminuser,adminuser>>
+|the root user who can ssh into the machine
+|`string`
+|`"azureuser"`
+|no
+
+|[[input_dailyShutdownEmail]] <<input_dailyShutdownEmail,dailyShutdownEmail>>
+|the email address to use to notify the shutdown of the vm.
+|`string`
+|`null`
+|no
+
+|[[input_dailyShutdownTime]] <<input_dailyShutdownTime,dailyShutdownTime>>
+|A cron-like value, for example 2100 for 9pm
+|`string`
+|`null`
+|no
+
+|[[input_dailyShutdownTimezoneName]] <<input_dailyShutdownTimezoneName,dailyShutdownTimezoneName>>
+|the time zone for the shutdown time.
+|`string`
+|`"W. Europe Standard Time"`
+|no
+
+|[[input_dailyShutdownWebhookUrl]] <<input_dailyShutdownWebhookUrl,dailyShutdownWebhookUrl>>
+|the URL to call before we shut down the VM.
+|`string`
+|`null`
+|no
+
+|[[input_encryptionAtHost]] <<input_encryptionAtHost,encryptionAtHost>>
+|I guess this is being used on company subscriptions. For me, it is deactivated and has to be set to false.
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|the name of the VM
+|`string`
+|n/a
+|yes
+
+|[[input_osDiskEnableWriteAccelerator]] <<input_osDiskEnableWriteAccelerator,osDiskEnableWriteAccelerator>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_osDiskName]] <<input_osDiskName,osDiskName>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_osDiskSize]] <<input_osDiskSize,osDiskSize>>
+|the disk size in GB for the OS disk
+|`number`
+|`null`
+|no
+
+|[[input_osDiskStorageType]] <<input_osDiskStorageType,osDiskStorageType>>
+|The type of the OS disk. See http://go.microsoft.com/fwlink/?LinkId=2165317 for more info.
+|`string`
+|`"Standard_LRS"`
+|no
+
+|[[input_osImageVersion]] <<input_osImageVersion,osImageVersion>>
+|n/a
+|`string`
+|`"22.04.202303090"`
+|no
+
+|[[input_osOffer]] <<input_osOffer,osOffer>>
+|n/a
+|`string`
+|`"0001-com-ubuntu-server-jammy"`
+|no
+
+|[[input_osPublisher]] <<input_osPublisher,osPublisher>>
+|To configure the OS, you may want to use: az vm image list --all --publisher="Canonical" --sku="22_04-lts-gen2" --architecture="x64" >ubuntu_os.json
+|`string`
+|`"canonical"`
+|no
+
+|[[input_osVersion]] <<input_osVersion,osVersion>>
+|this is the SKU version of the OS.
+|`string`
+|`"22_04-lts-gen2"`
+|no
+
+|[[input_resourceGroupName]] <<input_resourceGroupName,resourceGroupName>>
+|the resource group name for this vm
+|`string`
+|n/a
+|yes
+
+|[[input_sshPort]] <<input_sshPort,sshPort>>
+|the ssh port we want to use
+|`number`
+|`22`
+|no
+
+|[[input_sshPubKeyNames]] <<input_sshPubKeyNames,sshPubKeyNames>>
+|the Azure SSH Pubkey names!
+|`set(string)`
+|`[]`
+|no
+
+|[[input_sshPubKeys]] <<input_sshPubKeys,sshPubKeys>>
+|some local SSH Keys that you have
+|`set(string)`
+|`[]`
+|no
+
+|[[input_subnetName]] <<input_subnetName,subnetName>>
+|the name of the subnet to put the vm in
+|`string`
+|n/a
+|yes
+
+|[[input_subnetUseIpv6]] <<input_subnetUseIpv6,subnetUseIpv6>>
+|Whether to use IPv6 on the subnet. Default is true ;)
+|`bool`
+|`true`
+|no
+
+|[[input_virtualNetworkName]] <<input_virtualNetworkName,virtualNetworkName>>
+|the name of the vnet where we also have the subnet from (required for lookup of the subnet)
+|`string`
+|n/a
+|yes
+
+|[[input_vmSize]] <<input_vmSize,vmSize>>
+|See https://aka.ms/azure-regionservices for info what to select. Also checkout https://azureprice.net/?region=northeurope just in case.
+|`string`
+|`"Standard_B1ls"`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_internalDomainSuffix]] <<output_internalDomainSuffix,internalDomainSuffix>> |n/a
+|[[output_ipAddress]] <<output_ipAddress,ipAddress>> |n/a
+|[[output_ipAddresses]] <<output_ipAddresses,ipAddresses>> |n/a
+|[[output_macAddress]] <<output_macAddress,macAddress>> |n/a
+|===

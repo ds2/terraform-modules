@@ -1,0 +1,128 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_ec2]] <<module_ec2,ec2>> |../aws_ec2_instance |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group[aws_security_group.sg] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.egress1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ingress1] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group_rule[aws_security_group_rule.ingress2] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami[aws_ami.img] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet[aws_subnet.subnet] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_imgNames]] <<input_imgNames,imgNames>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "amzn2-ami-hvm*"
+]
+----
+
+|no
+
+|[[input_instanceType]] <<input_instanceType,instanceType>>
+|n/a
+|`string`
+|`"t3a.nano"`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_monitorCreditBalance]] <<input_monitorCreditBalance,monitorCreditBalance>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_owners]] <<input_owners,owners>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "amazon",
+  "self"
+]
+----
+
+|no
+
+|[[input_snsTopicArns]] <<input_snsTopicArns,snsTopicArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_sshKeyName]] <<input_sshKeyName,sshKeyName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_subnetId]] <<input_subnetId,subnetId>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_ipv6_addresses]] <<output_ipv6_addresses,ipv6_addresses>> |n/a
+|[[output_private_dns]] <<output_private_dns,private_dns>> |n/a
+|[[output_private_ip]] <<output_private_ip,private_ip>> |n/a
+|[[output_public_dns]] <<output_public_dns,public_dns>> |n/a
+|[[output_public_ip]] <<output_public_ip,public_ip>> |n/a
+|===

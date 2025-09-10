@@ -37,9 +37,21 @@ variable "pipelinesEnabled" {
   default = true
 }
 
+variable "pipelinesVisibility" {
+  type        = string
+  description = "Set to private or public!"
+  default     = "private"
+}
+
 variable "dockerRegistryEnabled" {
   type    = bool
   default = false
+}
+
+variable "dockerRegistryVisibility" {
+  type        = string
+  description = "Set to private or public"
+  default     = "private"
 }
 
 variable "approvalsBeforeMerge" {
@@ -72,7 +84,7 @@ variable "guests" {
 
 variable "issuesEnabled" {
   type    = bool
-  default = false
+  default = true
 }
 
 variable "visibility" {
@@ -140,4 +152,35 @@ variable "mainBranchName" {
 variable "developBranchName" {
   type    = string
   default = "develop"
+}
+
+variable "allowDevelopForcePush" {
+  type    = bool
+  default = false
+}
+
+variable "allowMainForcePush" {
+  type    = bool
+  default = false
+}
+
+variable "squash" {
+  type    = string
+  default = "default_on"
+}
+
+variable "resetApprovalsOnPush" {
+  type    = bool
+  default = null
+}
+
+variable "prStrategy" {
+  type    = string
+  default = "ff"
+}
+
+variable "keepLatestArtifact" {
+  type        = bool
+  description = "Whether to keep all artifacts from a CI job, or to use their configured lifetime instead."
+  default     = null
 }

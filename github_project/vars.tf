@@ -28,9 +28,9 @@ variable "homepage" {
   type    = string
   default = null
 }
-variable "defaultBranch" {
+variable "defaultBranchName" {
   type    = string
-  default = "master"
+  default = "main"
 }
 
 variable "isPrivate" {
@@ -39,12 +39,28 @@ variable "isPrivate" {
 }
 
 variable "admins" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
-variable "teamIds" {
-  type    = set(string)
+variable "protectDefaultBranch" {
+  type    = bool
+  default = true
+}
+
+variable "protectDevelopBranch" {
+  type    = bool
+  default = true
+}
+
+variable "prBypassers" {
+  type        = list(string)
+  default     = []
+  description = "the usernames of the organization to bypass PR reviews"
+}
+
+variable "teamSlugs" {
+  type    = list(string)
   default = []
 }
 
@@ -76,79 +92,87 @@ variable "protect_master_inclAdmins" {
 }
 
 variable "protect_master_admins" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
 variable "protect_master_teams" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
 variable "protect_master_apps" {
-  type    = set(string)
+  type    = list(string)
   default = []
 }
 
-variable "masterProtection" {
-  type = object({
-    signed                 = bool
-    enforceAdmins          = bool
-    restrictToUsers        = set(string)
-    restrictToTeamSlugs    = set(string)
-    restrictToApps         = set(string)
-    statusCheckContexts    = set(string)
-    prCodeOwnerReview      = bool
-    prApprovalCount        = number
-    prDismissFromUsers     = set(string)
-    prDismissFromTeamSlugs = set(string)
-    ciSuccessful           = bool
-    }
-  )
-  default = {
-    signed                 = false
-    enforceAdmins          = false
-    ciSuccessful           = false
-    restrictToUsers        = []
-    restrictToTeamSlugs    = []
-    restrictToApps         = []
-    statusCheckContexts    = ["ci/travis"]
-    prCodeOwnerReview      = true
-    prApprovalCount        = 1
-    prDismissFromUsers     = []
-    prDismissFromTeamSlugs = []
-  }
-
+variable "allowPushToMainFromNodeIds" {
+  type    = list(string)
+  default = []
 }
 
+variable "requiredStatusChecksContextsMain" {
+  type    = list(string)
+  default = []
+}
 
-variable "developProtection" {
-  type = object({
-    signed                 = bool
-    enforceAdmins          = bool
-    restrictToUsers        = set(string)
-    restrictToTeamSlugs    = set(string)
-    restrictToApps         = set(string)
-    statusCheckContexts    = set(string)
-    prCodeOwnerReview      = bool
-    prApprovalCount        = number
-    prDismissFromUsers     = set(string)
-    prDismissFromTeamSlugs = set(string)
-    ciSuccessful           = bool
-    }
-  )
-  default = {
-    signed                 = false
-    enforceAdmins          = false
-    ciSuccessful           = false
-    restrictToUsers        = []
-    restrictToTeamSlugs    = []
-    restrictToApps         = []
-    statusCheckContexts    = ["ci/travis"]
-    prCodeOwnerReview      = true
-    prApprovalCount        = 1
-    prDismissFromUsers     = []
-    prDismissFromTeamSlugs = []
-  }
+variable "requireStrictStatusChecks" {
+  type    = bool
+  default = true
+}
 
+variable "developBranchName" {
+  type    = string
+  default = ""
+}
+
+variable "vulnerabilityAlerts" {
+  type    = bool
+  default = false
+}
+
+variable "allowSquashMerge" {
+  type    = bool
+  default = true
+}
+
+variable "allowRebaseMerge" {
+  type    = bool
+  default = true
+}
+
+variable "allowMergeCommits" {
+  type    = bool
+  default = true
+}
+
+variable "allowForcePushToMain" {
+  type    = bool
+  default = false
+}
+
+variable "deleteBranchOnMerge" {
+  type    = bool
+  default = true
+}
+
+variable "enforceAdmins" {
+  type    = bool
+  default = false
+}
+
+variable "allowAutoMerge" {
+  type    = bool
+  default = false
+}
+
+variable "allowUpdateBranch" {
+  type    = bool
+  default = true
+}
+
+variable "labels" {
+  type        = map(list(string))
+  default     = {}
+  description = "A map of labels to add to the repository. The key is the label name and the value is a list of label color (hexacedimal, required) and label description (optional)"
 }

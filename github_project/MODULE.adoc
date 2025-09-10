@@ -1,0 +1,272 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_github]] <<requirement_github,github>> |>=6.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_github]] <<provider_github,github>> |>=6.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch[github_branch.branch_develop] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/branch_default[github_branch_default.defaultBranch] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/issue_label[github_issue_label.labels] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository[github_repository.project] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/repository_collaborator[github_repository_collaborator.admins] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/resources/team_repository[github_team_repository.team2repo] |resource
+|https://registry.terraform.io/providers/integrations/github/latest/docs/data-sources/team[github_team.teams] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_admins]] <<input_admins,admins>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_allowAutoMerge]] <<input_allowAutoMerge,allowAutoMerge>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_allowForcePushToMain]] <<input_allowForcePushToMain,allowForcePushToMain>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_allowMergeCommits]] <<input_allowMergeCommits,allowMergeCommits>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_allowPushToMainFromNodeIds]] <<input_allowPushToMainFromNodeIds,allowPushToMainFromNodeIds>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_allowRebaseMerge]] <<input_allowRebaseMerge,allowRebaseMerge>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_allowSquashMerge]] <<input_allowSquashMerge,allowSquashMerge>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_allowUpdateBranch]] <<input_allowUpdateBranch,allowUpdateBranch>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_defaultBranchName]] <<input_defaultBranchName,defaultBranchName>>
+|n/a
+|`string`
+|`"main"`
+|no
+
+|[[input_deleteBranchOnMerge]] <<input_deleteBranchOnMerge,deleteBranchOnMerge>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_description]] <<input_description,description>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_developBranchName]] <<input_developBranchName,developBranchName>>
+|n/a
+|`string`
+|`""`
+|no
+
+|[[input_enforceAdmins]] <<input_enforceAdmins,enforceAdmins>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_gitignoreTemplateId]] <<input_gitignoreTemplateId,gitignoreTemplateId>>
+|See https://github.com/github/gitignore
+|`string`
+|`null`
+|no
+
+|[[input_hasDownloads]] <<input_hasDownloads,hasDownloads>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_hasIssues]] <<input_hasIssues,hasIssues>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_hasProjects]] <<input_hasProjects,hasProjects>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_hasWiki]] <<input_hasWiki,hasWiki>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_homepage]] <<input_homepage,homepage>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_initialize]] <<input_initialize,initialize>>
+|n/a
+|`bool`
+|`null`
+|no
+
+|[[input_isPrivate]] <<input_isPrivate,isPrivate>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_labels]] <<input_labels,labels>>
+|A map of labels to add to the repository. The key is the label name and the value is a list of label color (hexacedimal, required) and label description (optional)
+|`map(list(string))`
+|`{}`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_prBypassers]] <<input_prBypassers,prBypassers>>
+|the usernames of the organization to bypass PR reviews
+|`list(string)`
+|`[]`
+|no
+
+|[[input_projectLicenseId]] <<input_projectLicenseId,projectLicenseId>>
+|See https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
+|`string`
+|`null`
+|no
+
+|[[input_protectDefaultBranch]] <<input_protectDefaultBranch,protectDefaultBranch>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_protectDevelopBranch]] <<input_protectDevelopBranch,protectDevelopBranch>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_protect_master_admins]] <<input_protect_master_admins,protect_master_admins>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_protect_master_apps]] <<input_protect_master_apps,protect_master_apps>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_protect_master_inclAdmins]] <<input_protect_master_inclAdmins,protect_master_inclAdmins>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_protect_master_teams]] <<input_protect_master_teams,protect_master_teams>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_requireStrictStatusChecks]] <<input_requireStrictStatusChecks,requireStrictStatusChecks>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_requiredStatusChecksContextsMain]] <<input_requiredStatusChecksContextsMain,requiredStatusChecksContextsMain>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_teamSlugs]] <<input_teamSlugs,teamSlugs>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_topics]] <<input_topics,topics>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_vulnerabilityAlerts]] <<input_vulnerabilityAlerts,vulnerabilityAlerts>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_etag]] <<output_etag,etag>> |n/a
+|[[output_full_name]] <<output_full_name,full_name>> |n/a
+|[[output_git_clone_url]] <<output_git_clone_url,git_clone_url>> |n/a
+|[[output_html_url]] <<output_html_url,html_url>> |n/a
+|[[output_http_clone_url]] <<output_http_clone_url,http_clone_url>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|[[output_node_id]] <<output_node_id,node_id>> |n/a
+|[[output_ssh_clone_url]] <<output_ssh_clone_url,ssh_clone_url>> |n/a
+|===

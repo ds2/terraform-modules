@@ -1,0 +1,71 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_log_metric_filter[aws_cloudwatch_log_metric_filter.signinfails] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudwatch_metric_alarm[aws_cloudwatch_metric_alarm.signinfails] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_enabled]] <<input_enabled,enabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_logGroupName]] <<input_logGroupName,logGroupName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_loginThreshold]] <<input_loginThreshold,loginThreshold>>
+|n/a
+|`number`
+|`2`
+|no
+
+|[[input_snsAlarmArns]] <<input_snsAlarmArns,snsAlarmArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_snsNoDataArns]] <<input_snsNoDataArns,snsNoDataArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_snsOkArns]] <<input_snsOkArns,snsOkArns>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|===
+
+== Outputs
+
+No outputs.

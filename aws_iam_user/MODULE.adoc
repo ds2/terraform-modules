@@ -1,0 +1,65 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_access_key[aws_iam_access_key.acckey] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user[aws_iam_user.user] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_user_policy_attachment[aws_iam_user_policy_attachment.attach-roles] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_awsPath]] <<input_awsPath,awsPath>>
+|n/a
+|`string`
+|`"/"`
+|no
+
+|[[input_policyArns]] <<input_policyArns,policyArns>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|[[input_username]] <<input_username,username>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_accesskey]] <<output_accesskey,accesskey>> |n/a
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_secret]] <<output_secret,secret>> |the secret key of the user
+|[[output_secretkey]] <<output_secretkey,secretkey>> |n/a
+|===

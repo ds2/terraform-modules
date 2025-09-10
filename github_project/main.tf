@@ -1,96 +1,64 @@
 resource "github_repository" "project" {
   name                   = var.name
+  vulnerability_alerts   = var.vulnerabilityAlerts
+  archive_on_destroy     = true
   description            = var.description
   homepage_url           = var.homepage
-  private                = var.isPrivate
+  visibility             = var.isPrivate ? "private" : "public"
   has_projects           = var.hasProjects
   has_issues             = var.hasIssues
   has_wiki               = var.hasWiki
   has_downloads          = var.hasDownloads
-  default_branch         = var.initialize ? null : var.defaultBranch
-  delete_branch_on_merge = true
+  delete_branch_on_merge = var.deleteBranchOnMerge
   topics                 = var.topics
   auto_init              = var.initialize
-  allow_rebase_merge     = true
-  allow_squash_merge     = false
-  allow_merge_commit     = true
+  allow_rebase_merge     = var.allowRebaseMerge
+  allow_squash_merge     = var.allowSquashMerge
+  allow_merge_commit     = var.allowMergeCommits
+  allow_auto_merge       = var.allowAutoMerge
+  allow_update_branch    = var.allowUpdateBranch
   is_template            = false
   license_template       = var.projectLicenseId
   gitignore_template     = var.gitignoreTemplateId
   archived               = false
 }
 
+resource "github_branch_default" "defaultBranch" {
+  repository = github_repository.project.name
+  branch     = var.defaultBranchName
+}
+
 resource "github_repository_collaborator" "admins" {
-  for_each   = var.admins
+  for_each   = toset(var.admins)
   repository = github_repository.project.name
   username   = each.key
   permission = "admin"
   depends_on = [github_repository.project]
 }
 
-resource "github_team_repository" "teams" {
-  for_each   = var.teamIds
+resource "github_team_repository" "team2repo" {
+  for_each   = toset(data.github_team.teams[*].id)
   team_id    = each.key
   repository = github_repository.project.name
   permission = "push"
 }
 
 resource "github_branch" "branch_develop" {
+  count         = length(var.developBranchName) > 0 ? 1 : 0
   repository    = github_repository.project.name
-  source_branch = var.defaultBranch
-  branch        = "develop"
+  source_branch = var.defaultBranchName
+  branch        = var.developBranchName
 }
 
-resource "github_branch_protection" "protect_master" {
-  repository             = github_repository.project.name
-  branch                 = var.defaultBranch
-  enforce_admins         = var.masterProtection.enforceAdmins
-  require_signed_commits = var.masterProtection.signed
-
-  required_status_checks {
-    strict   = var.masterProtection.ciSuccessful
-    contexts = var.masterProtection.statusCheckContexts
-  }
-
-  required_pull_request_reviews {
-    require_code_owner_reviews      = var.masterProtection.prCodeOwnerReview
-    required_approving_review_count = var.masterProtection.prApprovalCount
-    dismiss_stale_reviews           = true
-    dismissal_users                 = var.masterProtection.prDismissFromUsers
-    dismissal_teams                 = var.masterProtection.prDismissFromTeamSlugs
-  }
-
-  restrictions {
-    users = var.masterProtection.restrictToUsers
-    teams = var.masterProtection.restrictToTeamSlugs
-    apps  = var.masterProtection.restrictToApps
-  }
-
+data "github_team" "teams" {
+  count = length(var.teamSlugs)
+  slug  = var.teamSlugs[count.index]
 }
 
-resource "github_branch_protection" "protect_develop" {
-  repository             = github_repository.project.name
-  branch                 = "develop"
-  enforce_admins         = var.developProtection.enforceAdmins
-  require_signed_commits = var.developProtection.signed
-
-  required_status_checks {
-    strict   = var.developProtection.ciSuccessful
-    contexts = var.developProtection.statusCheckContexts
-  }
-
-  required_pull_request_reviews {
-    require_code_owner_reviews      = var.developProtection.prCodeOwnerReview
-    required_approving_review_count = var.developProtection.prApprovalCount
-    dismiss_stale_reviews           = true
-    dismissal_users                 = var.developProtection.prDismissFromUsers
-    dismissal_teams                 = var.developProtection.prDismissFromTeamSlugs
-  }
-
-  restrictions {
-    users = var.developProtection.restrictToUsers
-    teams = var.developProtection.restrictToTeamSlugs
-    apps  = var.developProtection.restrictToApps
-  }
-  depends_on = [github_branch.branch_develop]
+resource "github_issue_label" "labels" {
+  for_each    = var.labels
+  repository  = github_repository.project.name
+  name        = each.key
+  color       = each.value[0]
+  description = length(each.value) > 1 ? each.value[1] : null
 }

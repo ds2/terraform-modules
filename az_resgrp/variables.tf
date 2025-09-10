@@ -1,8 +1,13 @@
-variable "name" {
+variable "id" {
   type = string
 }
 
 variable "location" {
   type    = string
-  default = "Westeuropa"
+  default = "germanywestcentral"
+}
+
+variable "additionalTags" {
+  type    = map(string)
+  default = {}
 }

@@ -1,0 +1,70 @@
+== Requirements
+
+No requirements.
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_bitbucket]] <<provider_bitbucket,bitbucket>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/drfaust92/bitbucket/latest/docs/resources/project[bitbucket_project.project] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_descr]] <<input_descr,descr>>
+|n/a
+|`string`
+|`"my test project"`
+|no
+
+|[[input_id]] <<input_id,id>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_isPrivate]] <<input_isPrivate,isPrivate>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_workspaceId]] <<input_workspaceId,workspaceId>>
+|the workspace id aka team
+|`string`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_key]] <<output_key,key>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|===

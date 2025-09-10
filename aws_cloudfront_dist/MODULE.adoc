@@ -1,0 +1,63 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_distribution[aws_cloudfront_distribution.distribution] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/cloudfront_origin_access_identity[aws_cloudfront_origin_access_identity.accessid] |resource
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_comment]] <<input_comment,comment>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_ipv6Enabled]] <<input_ipv6Enabled,ipv6Enabled>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_priceClass]] <<input_priceClass,priceClass>>
+|n/a
+|`string`
+|`"PriceClass_All"`
+|no
+
+|===
+
+== Outputs
+
+No outputs.

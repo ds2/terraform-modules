@@ -1,0 +1,247 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket[aws_s3_bucket.bucket] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_acl[aws_s3_bucket_acl.example_bucket_acl] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_cors_configuration[aws_s3_bucket_cors_configuration.cors] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_lifecycle_configuration[aws_s3_bucket_lifecycle_configuration.lifecycles] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_policy[aws_s3_bucket_policy.policy] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block[aws_s3_bucket_public_access_block.publicaccess] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_server_side_encryption_configuration[aws_s3_bucket_server_side_encryption_configuration.sse] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_versioning[aws_s3_bucket_versioning.versioning] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_website_configuration[aws_s3_bucket_website_configuration.website] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.cdnPolicy] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_acl]] <<input_acl,acl>>
+|n/a
+|`string`
+|`"private"`
+|no
+
+|[[input_adminIamArn]] <<input_adminIamArn,adminIamArn>>
+|the ARNs of the users who can only read data from the bucket
+|`set(string)`
+|`[]`
+|no
+
+|[[input_adminPermissions]] <<input_adminPermissions,adminPermissions>>
+|The permissions for all write users
+|`set(string)`
+|
+
+[source]
+----
+[
+  "s3:GetObject*",
+  "s3:PutObject*",
+  "s3:DeleteObject*",
+  "s3:GetBucket*",
+  "s3:ListBucket*",
+  "s3:ListMultipartUploadParts",
+  "s3:AbortMultipartUpload",
+  "s3:GetLifecycleConfiguration",
+  "s3:PutLifecycleConfiguration"
+]
+----
+
+|no
+
+|[[input_blockPublicAcl]] <<input_blockPublicAcl,blockPublicAcl>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_blockPublicPolicy]] <<input_blockPublicPolicy,blockPublicPolicy>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_deepArchiveDays]] <<input_deepArchiveDays,deepArchiveDays>>
+|n/a
+|`number`
+|`150`
+|no
+
+|[[input_delCurrObjAfterDays]] <<input_delCurrObjAfterDays,delCurrObjAfterDays>>
+|n/a
+|`number`
+|`0`
+|no
+
+|[[input_delObjPrefix]] <<input_delObjPrefix,delObjPrefix>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_enableCurrVersionAging]] <<input_enableCurrVersionAging,enableCurrVersionAging>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_encryptContent]] <<input_encryptContent,encryptContent>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_glacierDays]] <<input_glacierDays,glacierDays>>
+|n/a
+|`number`
+|`60`
+|no
+
+|[[input_ignorePublicAcls]] <<input_ignorePublicAcls,ignorePublicAcls>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_isWebsite]] <<input_isWebsite,isWebsite>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_maxUploadDays]] <<input_maxUploadDays,maxUploadDays>>
+|n/a
+|`number`
+|`3`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_ncvExpirationDays]] <<input_ncvExpirationDays,ncvExpirationDays>>
+|n/a
+|`number`
+|`160`
+|no
+
+|[[input_oneZoneDays]] <<input_oneZoneDays,oneZoneDays>>
+|n/a
+|`number`
+|`30`
+|no
+
+|[[input_policy]] <<input_policy,policy>>
+|n/a
+|`string`
+|`""`
+|no
+
+|[[input_readPermissions]] <<input_readPermissions,readPermissions>>
+|the permissions for readonly users
+|`set(string)`
+|
+
+[source]
+----
+[
+  "s3:GetObject"
+]
+----
+
+|no
+
+|[[input_readonlyIamArn]] <<input_readonlyIamArn,readonlyIamArn>>
+|the ARNs of the users who can only read data from the bucket
+|`set(string)`
+|`[]`
+|no
+
+|[[input_restrictPublicBuckets]] <<input_restrictPublicBuckets,restrictPublicBuckets>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_versionObjPrefix]] <<input_versionObjPrefix,versionObjPrefix>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_versioned]] <<input_versioned,versioned>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_websiteErrorFile]] <<input_websiteErrorFile,websiteErrorFile>>
+|n/a
+|`string`
+|`"error.html"`
+|no
+
+|[[input_websiteIndexFile]] <<input_websiteIndexFile,websiteIndexFile>>
+|n/a
+|`string`
+|`"index.html"`
+|no
+
+|[[input_websiteRedirectAllTo]] <<input_websiteRedirectAllTo,websiteRedirectAllTo>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_websiteRoutingRulesJson]] <<input_websiteRoutingRulesJson,websiteRoutingRulesJson>>
+|n/a
+|`string`
+|`null`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_bucketPolicy]] <<output_bucketPolicy,bucketPolicy>> |n/a
+|[[output_domain]] <<output_domain,domain>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_regionalName]] <<output_regionalName,regionalName>> |n/a
+|===

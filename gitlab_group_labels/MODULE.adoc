@@ -1,0 +1,39 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=17.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=17.0
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_label[gitlab_group_label.fixme] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_label[gitlab_group_label.prio1] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/resources/group_label[gitlab_group_label.prio2] |resource
+|https://registry.terraform.io/providers/gitlabhq/gitlab/latest/docs/data-sources/group[gitlab_group.group] |data source
+|===
+
+== Inputs
+
+No inputs.
+
+== Outputs
+
+No outputs.

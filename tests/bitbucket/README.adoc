@@ -1,0 +1,10 @@
+= Bitbucket Tests
+
+To get the UUID, use curl ..
+
+[,shell]
+----
+curl https://api.bitbucket.org/2.0/repositories/lexxy23/ds2-oss-core
+----
+
+under owner you will find the user uuid.

@@ -1,11 +1,11 @@
 terraform {
   required_providers {
     bitbucket = {
-      source  = "andsafe-AG/bitbucket"
+      source  = "drfaust92/bitbucket"
       version = "~> 2.0"
     }
   }
-  required_version = "~> 1.1.0"
+  required_version = "~> 1.0"
 }
 
 provider "bitbucket" {
@@ -15,7 +15,7 @@ provider "bitbucket" {
 }
 
 data "bitbucket_user" "lexxy23" {
-  username = "{f5aee987-bd9b-4da0-beab-ba903286e189}"
+  uuid = var.userUuid
 }
 
 module "testproject1" {

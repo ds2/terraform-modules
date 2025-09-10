@@ -1,0 +1,145 @@
+= Changelog
+:source-highlighter: highlight.js
+:toc:
+
+All notable changes to this project will be documented in this file.
+
+== 1.0.0 - 2025-09-10
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v1.0.0
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v1.0.0
+* **Delta**: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.7.0&to=v1.0.0
+
+=== ⚙️ Miscellaneous Tasks
+
+* [**breaking**] Enable issues by default on gitlab projects - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/8acdced2499213da15bf5bb83aa4e1c84740b29f[8acdced]
+** ⚠️ *BREAKING*: any gitlab project having not set the issuesEnabled flag, will now have it enabled by default (was disabled before).
+
+
+=== 📚 Documentation
+
+* Add changelog - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/adc94395cf0cc028a37255245d89afef63d6883b[adc9439]
+
+* Update changelog - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/46e71eea8f82c2ab98f3d4b68c710ad5e6b3a51a[46e71ee]
+
+* Update docs - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/ca3368c0edd15a4646e6bda42a21846ffb931535[ca3368c]
+
+* Give hint on how to format the tofu files - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/3309999c132bb223d82bd6d54b9a0f624b4a154e[3309999]
+
+* Update changelog - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/0de477fe2e12b151ccfd7cb7e464bf7b569f4346[0de477f]
+
+* Include changelog in readme - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/078a1f62c46de5641b729e1c0f336028458848fa[078a1f6]
+
+
+
+=== 🚀 Features
+
+* *(🔠 gitlab)* Allow to keep latest artifacts of CI jobs - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/8b1a5dbc1162db25d13785a4ee7de1aeb18d306b[8b1a5db]
+[source,text]
+----
+Or have them removed according to their configured lifetime.
+----
+
+
+
+== 0.7.0 - 2025-05-26
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v0.7.0
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v0.7.0
+* **Delta**: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.4.0&to=v0.7.0
+
+=== ⚙️ Miscellaneous Tasks
+
+* Update gitlab test to use Gitlab provider v17 - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/64a48cf163ee766c75aafe8be037e90a773c3dc1[64a48cf]
+
+* Require Gitlab provider v17 for GL modules - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/892eb88dda3a4825a4cf161e4edd9a098b1fa493[892eb88]
+
+* Allow greater versions for Azure providers - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/6b0c230eee8257b9b553005abab784a114236c91[6b0c230]
+
+
+
+=== 📚 Documentation
+
+* Update module docs - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/965a4550d9503616fc749c6a8e1fcb0588075fb9[965a455]
+
+
+
+
+== 0.4.0 - 2022-06-24
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v0.4.0
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v0.4.0
+
+=== 🐛 Bug Fixes
+
+* Use Suspended instead of Disabled - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/97fb6d5f6badd80a43a41ac96f1438993fe1950a[97fb6d5]
+
+
+
+
+== 0.3.14 - 2022-05-13
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v0.3.14
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v0.3.14
+* **Delta**: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.3.13a&to=v0.3.14
+
+=== 🚀 Features
+
+* Update aws impl - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/7ac63373acadddddaaff04a6ff598907e352832e[7ac6337]
+
+* Update tests - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/841efb2a8970ceb683ee8754b95ab03ea4ba22cc[841efb2]
+
+
+
+
+== 0.3.7 - 2021-10-04
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v0.3.7
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v0.3.7
+* **Delta**: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.3.6&to=v0.3.7
+
+=== 🚀 Features
+
+* Update kms policies - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/e6358eb0535a56b057e1a27cba9ef1c163ad86f5[e6358eb]
+[source,text]
+----
+Squashed commit of the following:
+
+commit 1b62e442b7818fdc1862001fd2b401088cfbf6b3
+Author: Dirk <472167-dstrauss@users.noreply.gitlab.com>
+Date:   Mon Aug 23 15:50:15 2021 +0200
+
+    TM-000: for tf cloud, the version must not be set
+
+commit 72210248dffa404a7a78118b34e2e1c585062c2c
+Author: Dirk <472167-dstrauss@users.noreply.gitlab.com>
+Date:   Mon Aug 23 15:27:15 2021 +0200
+
+    TM-000: use sort??
+
+commit f537352d27ef9aabd52c40c7a6e3c5696dc65413
+Author: Dirk <472167-dstrauss@users.noreply.gitlab.com>
+Date:   Mon Aug 23 15:27:04 2021 +0200
+
+    TM-000: upgrade to TF 1.0 for AWS
+
+commit 27eb4eb68dd70dd5e89c98926489c3017b151255
+Author: Dirk <472167-dstrauss@users.noreply.gitlab.com>
+Date:   Mon Aug 23 15:16:51 2021 +0200
+
+    - update policy
+----
+
+
+
+== 0.1.0 - 2020-05-15
+
+* **Release**: https://gitlab.com/ds_2/terraform-modules/-/releases/v0.1.0
+* **Tag**: https://gitlab.com/ds_2/terraform-modules/-/tags/v0.1.0
+
+
+== Version Table
+* 🔖[1.0.0]: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.7.0&to=v1.0.0
+* 🔖[0.7.0]: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.4.0&to=v0.7.0
+* 🔖[0.3.14]: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.3.13a&to=v0.3.14
+* 🔖[0.3.7]: https://gitlab.com/ds_2/terraform-modules/compare?from=v0.3.6&to=v0.3.7

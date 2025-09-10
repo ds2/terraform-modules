@@ -1,0 +1,119 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|===
+
+== Modules
+
+[cols="a,a,a",options="header,autowidth"]
+|===
+|Name |Source |Version
+|[[module_loggroup]] <<module_loggroup,loggroup>> |../aws_cloudwatch_loggroup |
+|===
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster[aws_eks_cluster.cluster] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_openid_connect_provider[aws_iam_openid_connect_provider.oid] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role[aws_iam_role.k8srole] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role[aws_iam_role.oidrole] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.eks-cluster-policy2k8srole] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment[aws_iam_role_policy_attachment.eks-service-policy2k8srole] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity[aws_caller_identity.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.oidpolicy] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region[aws_region.current] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_asgName]] <<input_asgName,asgName>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_clusterName]] <<input_clusterName,clusterName>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_k8sSvcCidr]] <<input_k8sSvcCidr,k8sSvcCidr>>
+|n/a
+|`string`
+|`"172.20.0.0/16"`
+|no
+
+|[[input_k8sVersion]] <<input_k8sVersion,k8sVersion>>
+|n/a
+|`string`
+|`"1.19"`
+|no
+
+|[[input_kmsKeyArn]] <<input_kmsKeyArn,kmsKeyArn>>
+|n/a
+|`string`
+|`null`
+|no
+
+|[[input_logRetentionDays]] <<input_logRetentionDays,logRetentionDays>>
+|n/a
+|`number`
+|`365`
+|no
+
+|[[input_logTypes]] <<input_logTypes,logTypes>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "api",
+  "audit",
+  "authenticator",
+  "controllerManager",
+  "scheduler"
+]
+----
+
+|no
+
+|[[input_subnetIds]] <<input_subnetIds,subnetIds>>
+|n/a
+|`set(string)`
+|n/a
+|yes
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_cacert]] <<output_cacert,cacert>> |n/a
+|[[output_endpoint]] <<output_endpoint,endpoint>> |n/a
+|[[output_id]] <<output_id,id>> |n/a
+|[[output_kubeConfigCmd]] <<output_kubeConfigCmd,kubeConfigCmd>> |n/a
+|[[output_name]] <<output_name,name>> |n/a
+|===

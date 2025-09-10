@@ -1,16 +1,23 @@
+/**
+ * # gitlab_project
+ *
+ * To create a gitlab project.
+ */
+
 resource "gitlab_project" "project" {
   name                                             = var.name
   namespace_id                                     = var.groupId
   description                                      = var.description
-  tags                                             = var.tags
+  topics                                           = var.tags
   wiki_enabled                                     = var.wikiEnabled
   lfs_enabled                                      = var.lfsEnabled
   issues_enabled                                   = var.issuesEnabled
   merge_requests_enabled                           = var.mergeRequestsEnabled
-  approvals_before_merge                           = var.approvalsBeforeMerge
-  container_registry_enabled                       = var.dockerRegistryEnabled
+  merge_method                                     = var.prStrategy
+  keep_latest_artifact                             = var.keepLatestArtifact
+  container_registry_access_level                  = var.dockerRegistryEnabled ? var.dockerRegistryVisibility : "disabled"
   packages_enabled                                 = var.packagesEnabled
-  pipelines_enabled                                = var.pipelinesEnabled
+  builds_access_level                              = var.pipelinesEnabled ? var.pipelinesVisibility : "disabled"
   snippets_enabled                                 = var.snippetsEnabled
   visibility_level                                 = var.visibility
   pages_access_level                               = var.pagesVisibility
@@ -20,10 +27,14 @@ resource "gitlab_project" "project" {
   initialize_with_readme                           = var.initialize
   only_allow_merge_if_pipeline_succeeds            = true
   only_allow_merge_if_all_discussions_are_resolved = true
+  allow_merge_on_skipped_pipeline                  = false
   remove_source_branch_after_merge                 = true
+  squash_option                                    = var.squash
+  ci_separated_caches                              = true
 }
 
 resource "gitlab_branch_protection" "master_protect" {
+  allow_force_push   = var.allowMainForcePush
   project            = gitlab_project.project.id
   branch             = var.mainBranchName
   push_access_level  = "maintainer"
@@ -33,6 +44,7 @@ resource "gitlab_branch_protection" "master_protect" {
 resource "gitlab_branch_protection" "develop_protect" {
   project            = gitlab_project.project.id
   branch             = var.developBranchName
+  allow_force_push   = var.allowDevelopForcePush
   push_access_level  = "maintainer"
   merge_access_level = "developer"
 }
@@ -44,7 +56,7 @@ resource "gitlab_branch_protection" "release_protect" {
   merge_access_level = "developer"
 }
 
-resource "gitlab_service_jira" "jira" {
+resource "gitlab_integration_jira" "jira" {
   for_each    = var.jiraUrl != null ? toset([""]) : []
   project     = gitlab_project.project.id
   project_key = var.jiraProjectKey
@@ -76,29 +88,47 @@ data "gitlab_user" "developers" {
 
 resource "gitlab_project_membership" "devMembers" {
   for_each     = data.gitlab_user.developers
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "developer"
 }
 
 resource "gitlab_project_membership" "guestMembers" {
   for_each     = data.gitlab_user.guests
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "guest"
 }
 
 resource "gitlab_project_membership" "reportMembers" {
   for_each     = data.gitlab_user.reporters
-  project_id   = gitlab_project.project.id
+  project      = gitlab_project.project.id
   user_id      = each.value.user_id
   access_level = "reporter"
 }
 
 resource "gitlab_project_level_mr_approvals" "mrapprovals" {
-  project_id                                     = gitlab_project.project.id
-  reset_approvals_on_push                        = true
+  project                                        = gitlab_project.project.id
+  reset_approvals_on_push                        = var.resetApprovalsOnPush
   disable_overriding_approvers_per_merge_request = false
   merge_requests_author_approval                 = false
   merge_requests_disable_committers_approval     = true
+  lifecycle {
+    ignore_changes = [reset_approvals_on_push # because closed source repos do not support it on GITLAB cloud.
+    ]
+  }
+}
+
+locals {
+  developer_user_ids = toset([for k, v in data.gitlab_user.developers : v.user_id])
+  dui                = [for user in data.gitlab_user.developers : user.id]
+}
+
+resource "gitlab_project_approval_rule" "approverule1" {
+  project            = gitlab_project.project.id
+  name               = "Users allowed to approve a MR"
+  approvals_required = 1
+  user_ids           = local.dui
+  rule_type          = "regular"
+  # group_ids          = [51]
 }

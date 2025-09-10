@@ -1,0 +1,166 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 0.13
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_aws]] <<provider_aws,aws>> |n/a
+|[[provider_template]] <<provider_template,template>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_lifecycle_policy[aws_ecr_lifecycle_policy.lifetimepolicy] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository[aws_ecr_repository.repo] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ecr_repository_policy[aws_ecr_repository_policy.accesspolicy] |resource
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/caller_identity[aws_caller_identity.current] |data source
+|https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/iam_policy_document[aws_iam_policy_document.accesspolicydocument] |data source
+|https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file[template_file.tagged] |data source
+|https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file[template_file.untagged] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_deleteUntaggedAfterDays]] <<input_deleteUntaggedAfterDays,deleteUntaggedAfterDays>>
+|n/a
+|`number`
+|`14`
+|no
+
+|[[input_keepTagsCount]] <<input_keepTagsCount,keepTagsCount>>
+|n/a
+|`number`
+|`30`
+|no
+
+|[[input_name]] <<input_name,name>>
+|n/a
+|`string`
+|n/a
+|yes
+
+|[[input_publicPull]] <<input_publicPull,publicPull>>
+|n/a
+|`bool`
+|`false`
+|no
+
+|[[input_pullArns]] <<input_pullArns,pullArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_pullPermissions]] <<input_pullPermissions,pullPermissions>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "ecr:GetAuthorizationToken",
+  "ecr:BatchCheckLayerAvailability",
+  "ecr:GetDownloadUrlForLayer",
+  "ecr:GetRepositoryPolicy",
+  "ecr:DescribeRepositories",
+  "ecr:ListImages",
+  "ecr:DescribeImages",
+  "ecr:BatchGetImage",
+  "ecr:GetLifecyclePolicy",
+  "ecr:GetLifecyclePolicyPreview",
+  "ecr:ListTagsForResource",
+  "ecr:DescribeImageScanFindings"
+]
+----
+
+|no
+
+|[[input_pushArns]] <<input_pushArns,pushArns>>
+|n/a
+|`set(string)`
+|`null`
+|no
+
+|[[input_pushPermissions]] <<input_pushPermissions,pushPermissions>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "ecr:GetAuthorizationToken",
+  "ecr:BatchCheckLayerAvailability",
+  "ecr:GetDownloadUrlForLayer",
+  "ecr:GetRepositoryPolicy",
+  "ecr:DescribeRepositories",
+  "ecr:ListImages",
+  "ecr:DescribeImages",
+  "ecr:BatchGetImage",
+  "ecr:GetLifecyclePolicy",
+  "ecr:GetLifecyclePolicyPreview",
+  "ecr:ListTagsForResource",
+  "ecr:DescribeImageScanFindings",
+  "ecr:InitiateLayerUpload",
+  "ecr:UploadLayerPart",
+  "ecr:CompleteLayerUpload",
+  "ecr:PutImage"
+]
+----
+
+|no
+
+|[[input_scanOnPush]] <<input_scanOnPush,scanOnPush>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_tagMutable]] <<input_tagMutable,tagMutable>>
+|n/a
+|`bool`
+|`true`
+|no
+
+|[[input_tagPrefixes]] <<input_tagPrefixes,tagPrefixes>>
+|n/a
+|`set(string)`
+|
+
+[source]
+----
+[
+  "v"
+]
+----
+
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_arn]] <<output_arn,arn>> |n/a
+|[[output_repo_url]] <<output_repo_url,repo_url>> |n/a
+|===

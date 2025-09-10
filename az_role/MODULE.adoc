@@ -1,0 +1,83 @@
+== Requirements
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
+|===
+
+== Providers
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Version
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
+|[[provider_random]] <<provider_random,random>> |n/a
+|===
+
+== Modules
+
+No modules.
+
+== Resources
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Type
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_definition[azurerm_role_definition.roledef] |resource
+|https://registry.terraform.io/providers/hashicorp/random/latest/docs/resources/uuid[random_uuid.roledef] |resource
+|https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/subscription[azurerm_subscription.primary] |data source
+|===
+
+== Inputs
+
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_actions]] <<input_actions,actions>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_dataActions]] <<input_dataActions,dataActions>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_description]] <<input_description,description>>
+|the description of the role
+|`string`
+|`null`
+|no
+
+|[[input_name]] <<input_name,name>>
+|Name of the role
+|`string`
+|n/a
+|yes
+
+|[[input_notActions]] <<input_notActions,notActions>>
+|n/a
+|`set(string)`
+|`[]`
+|no
+
+|[[input_scopes]] <<input_scopes,scopes>>
+|n/a
+|`list(string)`
+|`[]`
+|no
+
+|===
+
+== Outputs
+
+[cols="a,a",options="header,autowidth"]
+|===
+|Name |Description
+|[[output_id]] <<output_id,id>> |The role definition id, again
+|[[output_resourceId]] <<output_resourceId,resourceId>> |the resource id of this role
+|[[output_role_definition_id]] <<output_role_definition_id,role_definition_id>> |The role definition id
+|===
