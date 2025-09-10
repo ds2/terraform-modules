@@ -22,6 +22,10 @@ All notable changes to this project will be documented in this file.
 
 * Give hint on how to format the tofu files - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/3309999c132bb223d82bd6d54b9a0f624b4a154e[3309999]
 
+* Update changelog - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/0de477fe2e12b151ccfd7cb7e464bf7b569f4346[0de477f]
+
+* Include changelog in readme - 🔗link:https://gitlab.com/ds_2/terraform-modules/-/commit/078a1f62c46de5641b729e1c0f336028458848fa[078a1f6]
+
 
 
 === 🚀 Features
