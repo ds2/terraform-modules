@@ -1,4 +1,5 @@
 = DS/2 Terraform Modules
+:toc:
 
 [![pipeline status](https://gitlab.com/ds_2/terraform-modules/badges/develop/pipeline.svg)](https://gitlab.com/ds_2/terraform-modules/-/commits/develop)
 
@@ -48,3 +49,5 @@ git tag -s ${MYTAG} -m "Releasing version ${MYTAG}" && git tag -v ${MYTAG} && gi
 == Modules list
 
 include::gitlab_project/MODULE.adoc[leveloffset=1]
+
+include::CHANGELOG.adoc[leveloffset=+1]
