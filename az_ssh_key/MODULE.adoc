@@ -3,8 +3,8 @@
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |~> 3.0
-|[[requirement_tls]] <<requirement_tls,tls>> |~>4.0
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
+|[[requirement_tls]] <<requirement_tls,tls>> |>=4.0
 |===
 
 == Providers
@@ -12,8 +12,8 @@
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_azurerm]] <<provider_azurerm,azurerm>> |~> 3.0
-|[[provider_tls]] <<provider_tls,tls>> |~>4.0
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
+|[[provider_tls]] <<provider_tls,tls>> |>=4.0
 |===
 
 == Modules

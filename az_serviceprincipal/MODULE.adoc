@@ -3,7 +3,7 @@
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[requirement_azuread]] <<requirement_azuread,azuread>> |~> 2.0
+|[[requirement_azuread]] <<requirement_azuread,azuread>> |>=2.0
 |===
 
 == Providers
@@ -11,7 +11,7 @@
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_azuread]] <<provider_azuread,azuread>> |~> 2.0
+|[[provider_azuread]] <<provider_azuread,azuread>> |>=2.0
 |[[provider_time]] <<provider_time,time>> |n/a
 |===
 

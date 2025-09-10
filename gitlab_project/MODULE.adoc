@@ -124,7 +124,7 @@ No modules.
 |[[input_issuesEnabled]] <<input_issuesEnabled,issuesEnabled>>
 |n/a
 |`bool`
-|`false`
+|`true`
 |no
 
 |[[input_jiraProjectKey]] <<input_jiraProjectKey,jiraProjectKey>>
@@ -148,6 +148,12 @@ No modules.
 |[[input_jiraUser]] <<input_jiraUser,jiraUser>>
 |n/a
 |`string`
+|`null`
+|no
+
+|[[input_keepLatestArtifact]] <<input_keepLatestArtifact,keepLatestArtifact>>
+|n/a
+|`bool`
 |`null`
 |no
 

@@ -7,7 +7,7 @@ to easily setup an azure resourcegroup via terraform.
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |~> 3.0
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
 |===
 
 == Providers
@@ -15,7 +15,7 @@ to easily setup an azure resourcegroup via terraform.
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_azurerm]] <<provider_azurerm,azurerm>> |~> 3.0
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
 |===
 
 == Modules

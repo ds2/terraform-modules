@@ -4,7 +4,7 @@
 |===
 |Name |Version
 |[[requirement_terraform]] <<requirement_terraform,terraform>> |~> 1.0
-|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |~> 3.0
+|[[requirement_azurerm]] <<requirement_azurerm,azurerm>> |>=3.0
 |===
 
 == Providers
@@ -12,7 +12,7 @@
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_azurerm]] <<provider_azurerm,azurerm>> |~> 3.0
+|[[provider_azurerm]] <<provider_azurerm,azurerm>> |>=3.0
 |===
 
 == Modules
