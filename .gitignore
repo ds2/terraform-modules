@@ -11,8 +11,12 @@ dist
 node_modules
 test-output
 #famous file extensions
-.*
+# .*
+.terraform
 !.git-crypt
+!.github
+!.gitlab
+!.pre-commit-config.yaml
 *.iml
 *.iws
 *.ipr
