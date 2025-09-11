@@ -6,27 +6,46 @@
     "before 5am every weekday",
     "every weekend"
   ],
-  "extends": ["config:base"],
+  "extends": [
+    "config:recommended"
+  ],
   "packageRules": [
     {
       "description": "Automatically merge minor and patch-level updates",
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest"
+      ],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["eslint"],
-      "labels": ["linting"]
+      "labels": [
+        "linting"
+      ],
+      "matchPackageNames": [
+        "/eslint/"
+      ]
     },
     {
-      "matchDepTypes": ["optionalDependencies"],
-      "addLabels": ["optional"]
+      "matchDepTypes": [
+        "optionalDependencies"
+      ],
+      "addLabels": [
+        "optional"
+      ]
     }
   ],
   "commitMessagePrefix": "⬆️",
-  "addLabels": ["dependencies"],
+  "addLabels": [
+    "dependencies"
+  ],
   "reviewersFromCodeOwners": true,
-  "additionalReviewers": ["lexxy23", "rusty232"],
+  "additionalReviewers": [
+    "lexxy23",
+    "rusty232"
+  ],
   "branchConcurrentLimit": 5,
   "prConcurrentLimit": 9
 }
