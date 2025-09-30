@@ -27,11 +27,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v5
       - uses: opentofu/setup-opentofu@v1
-      - run: cd tests/${{ matrix.testdir }}
       - run: pwd
-      - name: OpenTofu fmt
+      - name: Fmt check
         id: fmt
-        run: tofu fmt -check
+        run: tofu fmt -check tests/${{ matrix.testdir }}
         continue-on-error: true
-      - run: tofu init -input=false
-      - run: tofu validate
+      - name: OpenTofu init
+        run: tofu init -input=false tests/${{ matrix.testdir }}
+      - name: Validating
+        run: tofu validate tests/${{ matrix.testdir }}
