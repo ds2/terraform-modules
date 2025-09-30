@@ -26,6 +26,16 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
-      - run: cd tests/${{ matrix.testdir }}
-      - run: terraform init -input=false
-      - run: terraform validate
+      - uses: opentofu/setup-opentofu@000eeb8522f0572907c393e8151076c205fdba1b #v1.0.6
+      - run: pwd
+      - name: Fmt check
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu fmt-check
+        continue-on-error: true
+      - name: OpenTofu init
+        if: always()
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu init -input=false
+      - name: Validating
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu validate
