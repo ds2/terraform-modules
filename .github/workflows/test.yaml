@@ -29,10 +29,13 @@ jobs:
       - uses: opentofu/setup-opentofu@v1
       - run: pwd
       - name: Fmt check
-        id: fmt
-        run: tofu fmt -check tests/${{ matrix.testdir }}
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu fmt-check
         continue-on-error: true
       - name: OpenTofu init
-        run: tofu init -input=false tests/${{ matrix.testdir }}
+        if: always()
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu init -input=false
       - name: Validating
-        run: tofu validate tests/${{ matrix.testdir }}
+        working-directory: tests/${{ matrix.testdir }}
+        run: tofu validate
