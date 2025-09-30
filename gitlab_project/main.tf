@@ -57,12 +57,12 @@ resource "gitlab_branch_protection" "release_protect" {
 }
 
 resource "gitlab_integration_jira" "jira" {
-  for_each    = var.jiraUrl != null ? toset([""]) : []
-  project     = gitlab_project.project.id
-  project_key = var.jiraProjectKey
-  url         = var.jiraUrl
-  username    = var.jiraUser
-  password    = var.jiraPw
+  for_each     = var.jiraUrl != null ? toset([""]) : []
+  project      = gitlab_project.project.id
+  project_keys = [var.jiraProjectKey]
+  url          = var.jiraUrl
+  username     = var.jiraUser
+  password     = var.jiraPw
 }
 
 resource "gitlab_tag_protection" "protect_tags" {

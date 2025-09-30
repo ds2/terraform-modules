@@ -10,7 +10,7 @@ Be aware that on GitLab SaaS (aka gitlab.com), you must use the GitLab UI to cre
 |===
 |Name |Version
 |[[requirement_terraform]] <<requirement_terraform,terraform>> |>= 1.0
-|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=17.0
+|[[requirement_gitlab]] <<requirement_gitlab,gitlab>> |>=18.0
 |===
 
 == Providers
@@ -18,7 +18,7 @@ Be aware that on GitLab SaaS (aka gitlab.com), you must use the GitLab UI to cre
 [cols="a,a",options="header,autowidth"]
 |===
 |Name |Version
-|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=17.0
+|[[provider_gitlab]] <<provider_gitlab,gitlab>> |>=18.0
 |===
 
 == Modules
@@ -51,19 +51,19 @@ No modules.
 |no
 
 |[[input_description]] <<input_description,description>>
-|n/a
+|The description of the group, a sub title
 |`string`
 |`"Another group"`
 |no
 
 |[[input_name]] <<input_name,name>>
-|n/a
+|The name of the group
 |`string`
 |`"My group name"`
 |no
 
 |[[input_parent_group_id]] <<input_parent_group_id,parent_group_id>>
-|n/a
+|In case this group is a sub group, this number is the id of the parent group
 |`number`
 |`null`
 |no
