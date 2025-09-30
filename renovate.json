@@ -1,32 +1,58 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "timezone": "Europe/Berlin",
-  "schedule": [
-    "after 10pm every weekday",
-    "before 5am every weekday",
-    "every weekend"
+  "extends": [
+    "config:recommended"
   ],
-  "extends": ["config:base"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "schedule": [
+	    "* * * * 0,6"
+    ],
+    "automergeType": "branch"
+  },
   "packageRules": [
     {
       "description": "Automatically merge minor and patch-level updates",
-      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch",
+        "digest",
+        "pin"
+      ],
       "automerge": true,
       "automergeType": "branch"
     },
     {
-      "matchPackagePatterns": ["eslint"],
-      "labels": ["linting"]
+      "matchDepTypes": [
+        "devDependencies"
+      ],
+      "automerge": true
     },
     {
-      "matchDepTypes": ["optionalDependencies"],
-      "addLabels": ["optional"]
+      "labels": [
+        "linting"
+      ],
+      "matchPackageNames": [
+        "/eslint/"
+      ]
+    },
+    {
+      "matchDepTypes": [
+        "optionalDependencies"
+      ],
+      "addLabels": [
+        "optional"
+      ]
     }
   ],
-  "commitMessagePrefix": "⬆️",
-  "addLabels": ["dependencies"],
+  "commitMessagePrefix": "chore(deps): ⬆️",
+  "addLabels": [
+    "dependencies"
+  ],
+  "assigneesFromCodeOwners": true,
   "reviewersFromCodeOwners": true,
-  "additionalReviewers": ["lexxy23", "rusty232"],
   "branchConcurrentLimit": 5,
   "prConcurrentLimit": 9
 }

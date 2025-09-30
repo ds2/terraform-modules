@@ -3,13 +3,15 @@ variable "path" {
 }
 
 variable "name" {
-  type    = string
-  default = "My group name"
+  type        = string
+  description = "The name of the group"
+  default     = "My group name"
 }
 
 variable "description" {
-  type    = string
-  default = "Another group"
+  type        = string
+  description = "The description of the group, a sub title"
+  default     = "Another group"
 }
 
 variable "visibility" {
@@ -18,8 +20,9 @@ variable "visibility" {
 }
 
 variable "parent_group_id" {
-  type    = number
-  default = null
+  type        = number
+  description = "In case this group is a sub group, this number is the id of the parent group"
+  default     = null
 }
 
 variable "require2FA" {

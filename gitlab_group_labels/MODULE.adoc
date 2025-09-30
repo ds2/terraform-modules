@@ -32,7 +32,16 @@ No modules.
 
 == Inputs
 
-No inputs.
+[cols="a,a,a,a,a",options="header,autowidth"]
+|===
+|Name |Description |Type |Default |Required
+|[[input_groupId]] <<input_groupId,groupId>>
+|The ID of the GitLab group
+|`string`
+|`null`
+|no
+
+|===
 
 == Outputs
 

@@ -2,7 +2,7 @@ terraform {
   required_providers {
     gitlab = {
       source  = "gitlabhq/gitlab"
-      version = "~> 17.0"
+      version = "~> 18.0"
     }
   }
   required_version = "~> 1.0"
@@ -24,5 +24,10 @@ module "glgrp01" {
 module "gitlab_test" {
   source  = "../../gitlab_project"
   name    = "infra001-test-bucket-20230524"
+  groupId = module.glgrp01.id
+}
+
+module "group_labels" {
+  source  = "../../gitlab_group_labels"
   groupId = module.glgrp01.id
 }
