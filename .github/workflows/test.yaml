@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v5
-      - uses: opentofu/setup-opentofu@v1.0.6
+      - uses: opentofu/setup-opentofu@000eeb8522f0572907c393e8151076c205fdba1b #v1.0.6
       - run: pwd
       - name: Fmt check
         working-directory: tests/${{ matrix.testdir }}
