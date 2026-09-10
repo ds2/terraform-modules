@@ -1,82 +1,56 @@
-image:
-  name: registry.gitlab.com/gitlab-org/terraform-images/stable:latest
+# OpenTofu CI/CD component based pipeline.
+# Component: https://gitlab.com/components/opentofu
+# Releases & supported component/OpenTofu version combinations:
+# https://gitlab.com/components/opentofu/-/releases
+# Run one validate job per test directory.
+include:
+  - project: 'ds_2/ci-templates'
+    ref: v3.11.0
+    file:
+      - '/templates/stages.yaml'
+      - '/templates/global-vars.yaml'
+      - '/templates/release-marker.yaml'
+  - component: $CI_SERVER_FQDN/components/opentofu/validate@4.9.0
+    inputs:
+      as: validate-aws
+      opentofu_version: 1.12.6
+      root_dir: tests/aws
+  - component: $CI_SERVER_FQDN/components/opentofu/validate@4.9.0
+    inputs:
+      as: validate-bb
+      opentofu_version: 1.12.6
+      root_dir: tests/bitbucket
+  - component: $CI_SERVER_FQDN/components/opentofu/validate@4.9.0
+    inputs:
+      as: validate-gl
+      opentofu_version: 1.12.6
+      root_dir: tests/gitlab
+  - component: $CI_SERVER_FQDN/components/opentofu/validate@4.9.0
+    inputs:
+      as: validate-gh
+      opentofu_version: 1.12.6
+      root_dir: tests/github
+  - component: $CI_SERVER_FQDN/components/opentofu/validate@4.9.0
+    inputs:
+      as: validate-az
+      opentofu_version: 1.12.6
+      root_dir: tests/azure
 
-# Default output file for Terraform plan
-variables:
-  TF_PLAN: "plan.tfplan"
-  TF_INPUT: "true"
-  TF_IN_AUTOMATION: "yes"
-  JSON_PLAN_FILE: "tfplan.json"
+# stages:
+#   - validate
+#   - release
 
-cache:
-  paths:
-    - tests/aws/.terraform
-    - tests/bitbucket/.terraform
-    - tests/github/.terraform
-    - tests/gitlab/.terraform
-    - tests/azure/.terraform
-
-stages:
-  - init
-  - validate
-  - release
-
-init:
-  stage: init
-  script:
-    - terraform --version
-
-validate-aws:
-  stage: validate
-  script:
-    - echo "pwd is $(pwd)"
-    - cd tests/aws
-    - terraform init -input=false
-    - terraform validate
-
-validate-bb:
-  stage: validate
-  script:
-    - echo "pwd is $(pwd)"
-    - cd tests/bitbucket
-    - terraform init -input=false
-    - terraform validate
-
-validate-gl:
-  stage: validate
-  script:
-    - echo "pwd is $(pwd)"
-    - cd tests/gitlab
-    - terraform init -input=false
-    - terraform validate
-
-validate-gh:
-  stage: validate
-  script:
-    - echo "pwd is $(pwd)"
-    - cd tests/github
-    - terraform init -input=false
-    - terraform validate
-
-validate-az:
-  stage: validate
-  script:
-    - echo "pwd is $(pwd)"
-    - cd tests/azure
-    - terraform init -input=false
-    - terraform validate
-
-release:
-  stage: release
-  image: registry.gitlab.com/gitlab-org/release-cli:latest
-  rules:
-    - if: $CI_COMMIT_TAG
-  script:
-    - echo "Nothing special to do here"
-  release:
-    name: "Release $CI_COMMIT_TAG"
-    description: "Created using the release-cli $EXTRA_DESCRIPTION"
-    tag_name: "$CI_COMMIT_TAG"
-    ref: "$CI_COMMIT_TAG"
-    milestones:
-      - "v0.4"
+# release:
+#   stage: release
+#   image: registry.gitlab.com/gitlab-org/release-cli:latest
+#   rules:
+#     - if: $CI_COMMIT_TAG
+#   script:
+#     - echo "Nothing special to do here"
+#   release:
+#     name: "Release $CI_COMMIT_TAG"
+#     description: "Created using the release-cli $EXTRA_DESCRIPTION"
+#     tag_name: "$CI_COMMIT_TAG"
+#     ref: "$CI_COMMIT_TAG"
+#     milestones:
+#       - "v0.4"
